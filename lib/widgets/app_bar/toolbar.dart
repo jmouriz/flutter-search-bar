@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mutable_icon/mutable_icon.dart';
 import 'package:toolbar/controllers/controllers.dart';
 
 class ToolbarWidget extends StatelessWidget {
   ToolbarWidget({super.key});
 
   final _appBar = Get.put(AppBarController());
+  final _sidenav = Get.put(SidenavController());
+  final MutableIconController _icon = MutableIconController();
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +19,23 @@ class ToolbarWidget extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
+            icon: MutableIcon(
+              startIcon: Icons.menu,
+              endIcon: Icons.close,
+              controller: _icon,
+              size: 28.0,
+              duration: const Duration(milliseconds: 400),
+              startIconColor: Colors.white,
+              endIconColor: Colors.white,
+              clockwise: false,
+              initFrom: InitFrom.start,
             ),
             onPressed: () {
-              if (Scaffold.of(context).isDrawerOpen) {
-                Scaffold.of(context).closeDrawer();
-              } else {
-                Scaffold.of(context).openDrawer();
+              _sidenav.open.value = !_sidenav.open.value;
+              if (_icon.isStart()) {
+                _icon.animateToEnd();
+              } else if (_icon.isEnd()) {
+                _icon.animateToStart();
               }
             },
           ),

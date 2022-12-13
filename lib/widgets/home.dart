@@ -11,7 +11,7 @@ class HomeWidget extends StatelessWidget {
     print(width);
 
     List<Widget> children = const [
-      //DrawerWidget(), // TODO
+      SidenavWidget(),
       BodyWidget(),
     ];
 
