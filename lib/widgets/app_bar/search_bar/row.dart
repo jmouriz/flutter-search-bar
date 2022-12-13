@@ -6,7 +6,7 @@ import 'package:toolbar/widgets/app_bar/search_bar/search_bar.dart';
 class SearchBarRowWidget extends StatelessWidget {
   SearchBarRowWidget({super.key});
 
-  final _searchbar = Get.put(SearchBarController());
+  final _searchBar = Get.put(SearchBarController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class SearchBarRowWidget extends StatelessWidget {
               color: Colors.black,
             ),
             onPressed: () {
-              _searchbar.rows.value--;
+              _searchBar.rows.value--;
             },
           ),
         ],

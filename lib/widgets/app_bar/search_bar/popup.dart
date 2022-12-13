@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 
 class SearchBarPopupWidget extends StatelessWidget {
-  final _controller = Get.put(SearchBarController());
+  final _searchBar = Get.put(SearchBarController());
 
   SearchBarPopupWidget({super.key});
 
@@ -31,12 +31,12 @@ class SearchBarPopupWidget extends StatelessWidget {
   }
 
   PopupMenuItem<int> _popupMenuItem(int value, IconData icon, String label) {
-    final _controller = Get.put(SearchBarController());
+    final _searchBar = Get.put(SearchBarController());
 
     return PopupMenuItem(
       value: value,
       onTap: () {
-        _controller.rows.value++;
+        _searchBar.rows.value++;
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -5,7 +5,7 @@ import 'package:toolbar/controllers/controllers.dart';
 class ToolbarWidget extends StatelessWidget {
   ToolbarWidget({super.key});
 
-  final _controller = Get.put(AppBarController());
+  final _appBar = Get.put(AppBarController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,11 @@ class ToolbarWidget extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              print('toggle menu');
+              if (Scaffold.of(context).isDrawerOpen) {
+                Scaffold.of(context).closeDrawer();
+              } else {
+                Scaffold.of(context).openDrawer();
+              }
             },
           ),
           const Expanded(
@@ -41,7 +45,7 @@ class ToolbarWidget extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              _controller.searching.value = !_controller.searching.value;
+              _appBar.searching.value = true;
             },
           ),
         ],

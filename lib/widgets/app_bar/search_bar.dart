@@ -11,11 +11,11 @@ class SearchBarWidget extends StatefulWidget {
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-  final _searchbar = Get.put(SearchBarController());
+  final _searchBar = Get.put(SearchBarController());
 
   @override
   void initState() {
-    _searchbar.rows.listen((value) {
+    _searchBar.rows.listen((value) {
       if (mounted) {
         setState(() {});
       }
@@ -26,7 +26,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   @override
   void dispose() {
     if (!mounted) {
-      _searchbar.dispose();
+      _searchBar.dispose();
     }
     super.dispose();
   }
@@ -35,14 +35,14 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      height: _searchbar.rows.value * kToolbarHeight,
+      height: (1 + _searchBar.rows.value) * kToolbarHeight,
       width: double.infinity,
       color: Colors.white,
       child: SingleChildScrollView(
         child: Column(
           children: [
             SearchBarMainWidget(),
-            ...List.generate(_searchbar.rows.value, (index) {
+            ...List.generate(_searchBar.rows.value, (index) {
               return SearchBarRowWidget();
             }).toList(),
           ]

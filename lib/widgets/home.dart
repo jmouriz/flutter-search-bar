@@ -6,14 +6,24 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Container(
-        height: MediaQuery.of(context).padding.top,
-        width: double.infinity,
-        color: Colors.blue,
-      ),
-      const AppBarWidget(),
-      const BodyWidget(),
-    ]);
+    double width = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.shortestSide;
+
+    print(width);
+
+    List<Widget> children = const [
+      //DrawerWidget(), // TODO
+      BodyWidget(),
+    ];
+
+    return Column(
+      children: [
+        const AppBarWidget(),
+        Expanded(
+          child: width < 550
+            ? Stack(children: children.reversed.toList())
+            : Row(children: children)
+        ),
+      ]
+    );
   }
 }

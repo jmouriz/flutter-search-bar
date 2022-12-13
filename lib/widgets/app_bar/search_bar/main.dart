@@ -8,8 +8,8 @@ import 'package:toolbar/widgets/app_bar/search_bar/search_bar.dart';
 class SearchBarMainWidget extends StatelessWidget {
   SearchBarMainWidget({super.key});
 
-  final _controller = Get.put(AppBarController());
-  final _searchbar = Get.put(SearchBarController());
+  final _appBar = Get.put(AppBarController());
+  final _searchBar = Get.put(SearchBarController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,11 @@ class SearchBarMainWidget extends StatelessWidget {
               color: Colors.black,
             ),
             onPressed: () {
-              Timer(Duration(milliseconds: 35 * _searchbar.rows.value), () {
-                _controller.searching.value = !_controller.searching.value;
+              int duration = (1 + _searchBar.rows.value) * 32;
+              Timer(Duration(milliseconds: duration), () {
+                _appBar.searching.value = false;
               });
-              _searchbar.rows.value = 1;
+              _searchBar.rows.value = 0;
             },
           ),
         ],
