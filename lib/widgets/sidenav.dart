@@ -33,26 +33,40 @@ class _SidenavWidgetState extends State<SidenavWidget> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        double begin = animation.isCompleted ? -1.0 : 1.0;
-        if (_sidenav.open.value) {
-          begin *= -1;
-        }
-        return SlideTransition(
-          position: Tween(
-            begin: Offset(begin, 0.0),
-            end: Offset.zero
-          ).animate(animation),
-          child: child
-        );
-      },
-      child: _sidenav.open.value ? const Drawer(
-        key: ValueKey<String>('sidenav'),
-        child: Center(
-          child: Text('Sidenav')
-        ),
-      ) : null
-    );
+        duration: const Duration(milliseconds: 300),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          double begin = animation.isCompleted ? -1.0 : 1.0;
+          if (_sidenav.open.value) {
+            begin *= -1;
+          }
+          return SlideTransition(
+              position: Tween(begin: Offset(begin, 0.0), end: Offset.zero)
+                  .animate(animation),
+              child: child);
+        },
+        child: _sidenav.open.value
+            ? Drawer(
+                key: const ValueKey<String>('sidenav'),
+                child: ListView.builder(
+                  itemCount: _sidenav.items.length,
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: Icon(_sidenav.items[index].icon),
+                      horizontalTitleGap: 0,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12.0
+                      ),
+                      iconColor: Colors.black,
+                      textColor: Colors.black,
+                      title: Text(_sidenav.items[index].title),
+                      onTap: () {
+                        _sidenav.selected.value = index;
+                      },
+                    );
+                  },
+                )
+              )
+            : null);
   }
 }

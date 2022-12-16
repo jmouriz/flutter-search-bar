@@ -21,7 +21,7 @@ class Application extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.lightBlue[50],
-        body: const HomeWidget(),
+        body: const BodyWidget(),
       )
     );
   }

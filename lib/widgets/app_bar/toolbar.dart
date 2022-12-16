@@ -32,9 +32,9 @@ class ToolbarWidget extends StatelessWidget {
             ),
             onPressed: () {
               _sidenav.open.value = !_sidenav.open.value;
-              if (_icon.isStart()) {
+              if (_sidenav.open.value) {
                 _icon.animateToEnd();
-              } else if (_icon.isEnd()) {
+              } else {
                 _icon.animateToStart();
               }
             },
