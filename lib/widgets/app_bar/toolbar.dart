@@ -3,12 +3,52 @@ import 'package:get/get.dart';
 import 'package:mutable_icon/mutable_icon.dart';
 import 'package:toolbar/controllers/controllers.dart';
 
-class ToolbarWidget extends StatelessWidget {
-  ToolbarWidget({super.key});
+class ToolbarWidget extends StatefulWidget {
+  const ToolbarWidget({ super.key });
 
+  @override
+  State<ToolbarWidget> createState() => _ToolbarWidgetState();
+}
+
+class _ToolbarWidgetState extends State<ToolbarWidget> {
   final _appBar = Get.put(AppBarController());
+  final _toolbar = Get.put(ToolbarController());
   final _sidenav = Get.put(SidenavController());
   final MutableIconController _icon = MutableIconController();
+  
+  @override
+  void initState() {
+    _toolbar.search.listen((value) {
+      if (mounted) {
+        Future.delayed(Duration.zero, () {
+          setState(() {});
+        });
+      }
+    });
+    _sidenav.open.listen((value) {
+      if (mounted) {
+        Future.delayed(Duration.zero, () {
+          if (_sidenav.open.value) {
+            _icon.animateToEnd();
+          } else {
+            _icon.animateToStart();
+          }
+          setState(() {});
+        });
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (!mounted) {
+      _appBar.dispose();
+      _toolbar.dispose();
+      _sidenav.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +72,6 @@ class ToolbarWidget extends StatelessWidget {
             ),
             onPressed: () {
               _sidenav.open.value = !_sidenav.open.value;
-              if (_sidenav.open.value) {
-                _icon.animateToEnd();
-              } else {
-                _icon.animateToStart();
-              }
             },
           ),
           const Expanded(
@@ -50,7 +85,7 @@ class ToolbarWidget extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
+          if (_toolbar.search.value) IconButton(
             icon: const Icon(
               Icons.search,
               color: Colors.white,
@@ -58,6 +93,8 @@ class ToolbarWidget extends StatelessWidget {
             onPressed: () {
               _appBar.searching.value = true;
             },
+          ) else const SizedBox(
+            width: 48.0,
           ),
         ],
       ),

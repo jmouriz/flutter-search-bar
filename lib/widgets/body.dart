@@ -12,11 +12,13 @@ class BodyWidget extends StatefulWidget {
 }
 
 class _BodyWidgetState extends State<BodyWidget> {
+  final _toolbar = Get.put(ToolbarController());
   final _sidenav = Get.put(SidenavController());
 
   @override
   void initState() {
     _sidenav.selected.listen((value) {
+      _toolbar.search.value = false;
       if (mounted) {
         setState(() {});
       }

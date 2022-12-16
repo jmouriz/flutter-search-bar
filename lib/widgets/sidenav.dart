@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 
 class SidenavWidget extends StatefulWidget {
-  const SidenavWidget({super.key});
+  const SidenavWidget({ super.key });
 
   @override
   State<SidenavWidget> createState() => _SidenavWidgetState();
 }
 
 class _SidenavWidgetState extends State<SidenavWidget> {
+  double width = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.shortestSide;
   final _sidenav = Get.put(SidenavController());
 
   @override
@@ -62,6 +63,9 @@ class _SidenavWidgetState extends State<SidenavWidget> {
                       title: Text(_sidenav.items[index].title),
                       onTap: () {
                         _sidenav.selected.value = index;
+                        if (width < 550) {
+                          _sidenav.open.value = false;
+                        }
                       },
                     );
                   },
