@@ -4,8 +4,12 @@ import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/widgets/app_bar/search_bar/search_bar.dart';
 
 class SearchBarRowWidget extends StatelessWidget {
-  SearchBarRowWidget({super.key});
+  SearchBarRowWidget({
+    this.index,
+    super.key
+  });
 
+  final index;
   final _searchBar = Get.put(SearchBarController());
 
   @override
@@ -15,8 +19,8 @@ class SearchBarRowWidget extends StatelessWidget {
       child: Row(
         children: [
           SearchBarPopupWidget(),
-          const Expanded(
-            child: SearchBarInputWidget(),
+          Expanded(
+            child: SearchBarInputWidget(index: index),
           ),
           IconButton(
             icon: const Icon(

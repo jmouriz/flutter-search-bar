@@ -40,7 +40,7 @@ class _BodyWidgetState extends State<BodyWidget> {
 
     List<Widget> children = [
       const SidenavWidget(),
-      _sidenav.items[_sidenav.selected.value].target,
+      Expanded(child: _sidenav.items[_sidenav.selected.value].target),
     ];
 
     return Column(

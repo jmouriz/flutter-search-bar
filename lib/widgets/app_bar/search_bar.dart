@@ -10,13 +10,23 @@ class SearchBarWidget extends StatefulWidget {
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
 }
 
+enum Direction {
+  increase,
+  decrease,
+}
+
 class _SearchBarWidgetState extends State<SearchBarWidget> {
   final _searchBar = Get.put(SearchBarController());
+  int rows = 0;
+  Direction direction = Direction.increase;
 
   @override
   void initState() {
+    rows = _searchBar.rows.value;
     _searchBar.rows.listen((value) {
       if (mounted) {
+        direction = rows < value ? Direction.increase : Direction.decrease;
+        rows = value;
         setState(() {});
       }
     });
@@ -43,7 +53,19 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           children: [
             SearchBarMainWidget(),
             ...List.generate(_searchBar.rows.value, (index) {
-              return SearchBarRowWidget();
+              bool delay = index == _searchBar.rows.value - 1
+                && direction == Direction.increase;
+              return FutureBuilder(
+                future: delay
+                  ? Future.delayed(const Duration(milliseconds: 320))
+                  : Future.delayed(Duration.zero),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return SearchBarRowWidget(index: index);
+                  }
+                  return const Text('');
+                }
+              );
             }).toList(),
           ]
         ),

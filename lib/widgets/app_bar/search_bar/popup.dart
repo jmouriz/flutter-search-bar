@@ -21,22 +21,30 @@ class SearchBarPopupWidget extends StatelessWidget {
       ),
       itemBuilder: (_) {
         return [
-          _popupMenuItem(0, Icons.radio_button_off, 'Email'),
-          _popupMenuItem(0, Icons.radio_button_on, 'Name'),
-          _popupMenuItem(0, Icons.radio_button_off, 'Date'),
-          _popupMenuItem(0, Icons.add, 'New condition'),
+          ...List.generate(_searchBar.conditions.length, (index) {
+            return _popupMenuItem(index, _searchBar.conditions[index].checked
+              ? Icons.radio_button_checked : Icons.radio_button_off,
+              _searchBar.conditions[index].label
+            );
+          }).toList(),
+          if (_searchBar.rows.value < _searchBar.conditions.length - 1)
+            _popupMenuItem(-1, Icons.add, 'New condition'),
         ];
       }
     );
   }
 
-  PopupMenuItem<int> _popupMenuItem(int value, IconData icon, String label) {
+  PopupMenuItem<int> _popupMenuItem(int index, IconData icon, String label) {
     final _searchBar = Get.put(SearchBarController());
 
     return PopupMenuItem(
-      value: value,
+      value: index,
       onTap: () {
-        _searchBar.rows.value++;
+        if (index == -1) {
+          _searchBar.rows.value++;
+        } else {
+          _searchBar.conditions.check(index);
+        }
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

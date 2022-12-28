@@ -18,8 +18,8 @@ class SearchBarMainWidget extends StatelessWidget {
       child: Row(
         children: [
           SearchBarPopupWidget(),
-          const Expanded(
-            child: SearchBarInputWidget(),
+          Expanded(
+            child: SearchBarInputWidget(index: -1),
           ),
           IconButton(
             icon: const Icon(
