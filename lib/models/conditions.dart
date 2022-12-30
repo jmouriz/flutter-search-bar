@@ -37,7 +37,7 @@ class ConditionModel {
 
   @override
   String toString() {
-    return 'label: "$label", name: $name, type: $type, operator: $operator';
+    return '{ label: "$label", name: $name, type: $type, operator: $operator, value: "$value" }';
   }
 }
 

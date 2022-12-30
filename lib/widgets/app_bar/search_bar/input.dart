@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/models/models.dart';
 
 class SearchBarInputWidget extends StatelessWidget {
-  SearchBarInputWidget({required this.condition, super.key});
+  SearchBarInputWidget({
+    required this.condition,
+    super.key
+  });
 
   final ConditionModel condition;
   final FocusNode node = FocusNode();
@@ -35,7 +40,7 @@ class SearchBarInputWidget extends StatelessWidget {
 }
 
 class InputStringWidget extends StatelessWidget {
-  const InputStringWidget({
+  InputStringWidget({
     Key? key,
     required this.focus,
     required this.condition,
@@ -43,6 +48,8 @@ class InputStringWidget extends StatelessWidget {
 
   final FocusNode focus;
   final ConditionModel condition;
+
+  final searchBar = Get.put(SearchBarController());
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +65,10 @@ class InputStringWidget extends StatelessWidget {
         disabledBorder: InputBorder.none,
         hintText: condition.label,
       ),
+      onChanged: (value) {
+        condition.value = value;
+        searchBar.state();
+      }
     );
   }
 }

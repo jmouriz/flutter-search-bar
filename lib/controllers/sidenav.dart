@@ -15,7 +15,7 @@ class SidenavController extends GetxController {
       target: const HomeWidget()
     ));
     items.add(ItemModel(
-      title: 'Test data table',
+      title: 'Search Test',
       icon: Icons.list,
       target: const TableWidget()
     ));

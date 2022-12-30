@@ -3,14 +3,34 @@ import 'package:get/instance_manager.dart';
 import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/models/models.dart';
 
-class TableWidget extends StatelessWidget {
+class TableWidget extends StatefulWidget {
   const TableWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final toolbar = Get.put(ToolbarController());
-    final searchBar = Get.put(SearchBarController());
+  State<TableWidget> createState() => _TableWidgetState();
+}
 
+class _TableWidgetState extends State<TableWidget> {
+  final toolbar = Get.put(ToolbarController());
+  final searchBar = Get.put(SearchBarController());
+
+  @override
+  void initState() {
+    searchBar.version.listen((value) {
+      print(searchBar.getConditions());
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    toolbar.dispose();
+    searchBar.dispose();
+    super.dispose();
+  }
+ 
+  @override
+  Widget build(BuildContext context) {
     toolbar.title.value = 'Search Test';
     toolbar.search.value = true;
     searchBar.conditions.clear();
@@ -37,7 +57,7 @@ class TableWidget extends StatelessWidget {
       ),
       'checked': ConditionModel(
         label: 'Checked',
-        name: 'chacked',
+        name: 'checked',
         type: Type.boolean,
       ),
     });
