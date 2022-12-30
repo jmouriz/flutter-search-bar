@@ -37,19 +37,28 @@ class _BodyWidgetState extends State<BodyWidget> {
   Widget build(BuildContext context) {
     double width = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.shortestSide;
 
-    List<Widget> children = [
-      const SidenavWidget(),
-      _sidenav.items[_sidenav.selected.value].target,
-    ];
+    Widget child;
+    
+    if (width < 550) {
+      child = Stack(
+        children: [
+          _sidenav.items[_sidenav.selected.value].target,
+          const SidenavWidget(),
+        ]
+      );
+    } else {
+      child = Row(
+        children: [
+          const SidenavWidget(),
+          Expanded(child: _sidenav.items[_sidenav.selected.value].target),
+        ]
+      );
+    }
 
     return Column(
       children: [
         const AppBarWidget(),
-        Expanded(
-          child: width < 550
-            ? Stack(children: children.reversed.toList())
-            : Row(children: children)
-        ),
+        Expanded(child: child),
       ]
     );
   }

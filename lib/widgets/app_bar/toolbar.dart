@@ -18,6 +18,13 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
   
   @override
   void initState() {
+    _toolbar.title.listen((value) {
+      if (mounted) {
+        Future.delayed(Duration.zero, () {
+          setState(() {});
+        });
+      }
+    });
     _toolbar.search.listen((value) {
       if (mounted) {
         Future.delayed(Duration.zero, () {
@@ -68,17 +75,17 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
               startIconColor: Colors.white,
               endIconColor: Colors.white,
               clockwise: false,
-              initFrom: InitFrom.start,
+              initFrom: _sidenav.open.value ? InitFrom.end : InitFrom.start,
             ),
             onPressed: () {
               _sidenav.open.value = !_sidenav.open.value;
             },
           ),
-          const Expanded(
+          Expanded(
             child: Text(
-              'SearchBar Widget Demo',
+              _toolbar.title.value,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 22,
                 fontWeight: FontWeight.w500

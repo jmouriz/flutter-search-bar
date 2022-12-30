@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'dart:ffi';
 
 enum Operator {
   start,
@@ -13,6 +12,7 @@ enum Type {
   string,
   number,
   date,
+  list,
   boolean,
 }
 
@@ -22,6 +22,7 @@ class ConditionModel {
   Operator operator;
   Type type;
   bool checked;
+  List<String>? values;
   String? value;
 
   ConditionModel({
@@ -30,45 +31,15 @@ class ConditionModel {
     this.operator = Operator.equal,
     this.type = Type.string,
     this.checked = false,
+    this.values,
     this.value,
   });
-}
-
-/*
-class ConditionModel<Node> extends ListBase<Node> {
-  final List<Node> _conditions = [];
-
-  //@override
-  //set length(int length) {
-  //  _conditions.length = length;
-  //}
 
   @override
-  set length(int length) => _conditions.length = length;
-
-  @override
-  int get length => _conditions.length;
-
-  //@override
-  //void operator []= (int index, Node value) {
-  //  _conditions[index] = value;
-  //}
-
-  @override
-  void operator []= (int index, Node value) => _conditions[index] = value;
-
-  @override
-  Node operator [] (int index) => _conditions[index];
-
-  void check(int index) {
-    List<ConditionModel> list = cast<ConditionModel>();
-    for (ConditionModel condition in list) {
-      condition.checked = false;
-    }
-    list[index].checked = true;
+  String toString() {
+    return 'label: "$label", name: $name, type: $type, operator: $operator';
   }
 }
-*/
 
 class ConditionsModel extends MapBase<String, ConditionModel> {
   final Map<String, ConditionModel> _conditions = {};
@@ -97,9 +68,6 @@ class ConditionsModel extends MapBase<String, ConditionModel> {
       map.forEach((each, value) {
         value.checked = each == key;
       });
-      //for (String each in map.keys) {
-      //  map[each]!.checked = each == key;
-      //}
     } // else { }
   }
 }

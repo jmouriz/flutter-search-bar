@@ -6,7 +6,7 @@ import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/widgets/app_bar/search_bar/search_bar.dart';
 
 class SearchBarMainWidget extends StatelessWidget {
-  SearchBarMainWidget({super.key});
+  SearchBarMainWidget({ super.key });
 
   final _appBar = Get.put(AppBarController());
   final _searchBar = Get.put(SearchBarController());

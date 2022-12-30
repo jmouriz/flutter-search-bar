@@ -37,21 +37,22 @@ class _AppBarWidgetState extends State<AppBarWidget> {
         Material(
           elevation: 2,
           child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                double begin = animation.isCompleted ? 1.0 : -1.0;
-                if (_controller.searching.value) {
-                  begin *= -1;
-                }
-                return SlideTransition(
-                  position: Tween(begin: Offset(begin, 0.0), end: Offset.zero)
-                    .animate(animation),
-                  child: child,
-                );
-              },
-              child: _controller.searching.value
-                ? const SearchBarWidget(key: ValueKey<String>('searchbar'))
-                : ToolbarWidget(key: const ValueKey<String>('toolbar'))),
+            duration: const Duration(milliseconds: 300),
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              double begin = animation.isCompleted ? 1.0 : -1.0;
+              if (_controller.searching.value) {
+                begin *= -1;
+              }
+              return SlideTransition(
+                position: Tween(begin: Offset(begin, 0.0), end: Offset.zero)
+                  .animate(animation),
+                child: child,
+              );
+            },
+            child: _controller.searching.value
+              ? const SearchBarWidget(key: ValueKey<String>('searchbar'))
+              : const ToolbarWidget(key: ValueKey<String>('toolbar'))
+          ),
         ),
       ],
     );

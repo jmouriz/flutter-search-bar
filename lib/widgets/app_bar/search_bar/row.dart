@@ -9,7 +9,7 @@ class SearchBarRowWidget extends StatelessWidget {
     super.key,
   });
 
-  final index;
+  final int index;
   final _searchBar = Get.put(SearchBarController());
 
   @override

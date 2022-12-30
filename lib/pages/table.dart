@@ -8,35 +8,37 @@ class TableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _toolbar = Get.put(ToolbarController());
-    final _searchBar = Get.put(SearchBarController());
+    final toolbar = Get.put(ToolbarController());
+    final searchBar = Get.put(SearchBarController());
 
-    _toolbar.search.value = true;
-    _searchBar.conditions.clear();
-    _searchBar.conditions.addAll({
+    toolbar.title.value = 'Search Test';
+    toolbar.search.value = true;
+    searchBar.conditions.clear();
+    searchBar.conditions.addAll({
       'date': ConditionModel(
         label: 'Date',
         name: 'date',
-        type: Type.date
+        type: Type.date,
       ),
       'email': ConditionModel(
         label: 'Email',
         name: 'email',
-        operator: Operator.contain
+        operator: Operator.contain,
       ),
       'min-amount': ConditionModel(
         label: 'Min Amount',
         name: 'amount',
-        operator: Operator.greater
+        operator: Operator.greater,
       ),
       'max-amount': ConditionModel(
         label: 'Max Amount',
         name: 'amount',
-        operator: Operator.less
+        operator: Operator.less,
       ),
       'checked': ConditionModel(
         label: 'Checked',
-        name: 'chacked'
+        name: 'chacked',
+        type: Type.boolean,
       ),
     });
 

@@ -19,13 +19,11 @@ class SearchBarPopupWidget extends StatelessWidget {
     super.key
   });
 
-  final index;
+  final int index;
   final _searchBar = Get.put(SearchBarController());
 
   @override
   Widget build(BuildContext context) {
-    //final List<ConditionModel> conditions = [];
-    int index = 0;
     final List<Relation> conditions = [];
     _searchBar.conditions.forEach((key, value) => conditions.add(Relation(
       key: key,
