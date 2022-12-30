@@ -17,9 +17,9 @@ class SearchBarMainWidget extends StatelessWidget {
       height: kToolbarHeight,
       child: Row(
         children: [
-          SearchBarPopupWidget(),
+          SearchBarPopupWidget(index: 0),
           Expanded(
-            child: SearchBarInputWidget(index: -1),
+            child: SearchBarInputWidget(condition: _searchBar.getCondition(0)!),
           ),
           IconButton(
             icon: const Icon(
@@ -32,6 +32,7 @@ class SearchBarMainWidget extends StatelessWidget {
                 _appBar.searching.value = false;
               });
               _searchBar.rows.value = 0;
+              //_searchBar.init();
             },
           ),
         ],

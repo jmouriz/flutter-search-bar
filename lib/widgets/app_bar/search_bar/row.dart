@@ -5,8 +5,8 @@ import 'package:toolbar/widgets/app_bar/search_bar/search_bar.dart';
 
 class SearchBarRowWidget extends StatelessWidget {
   SearchBarRowWidget({
-    this.index,
-    super.key
+    required this.index,
+    super.key,
   });
 
   final index;
@@ -18,9 +18,9 @@ class SearchBarRowWidget extends StatelessWidget {
       height: kToolbarHeight,
       child: Row(
         children: [
-          SearchBarPopupWidget(),
+          SearchBarPopupWidget(index: index),
           Expanded(
-            child: SearchBarInputWidget(index: index),
+            child: SearchBarInputWidget(condition: _searchBar.getCondition(index)!),
           ),
           IconButton(
             icon: const Icon(
@@ -29,6 +29,7 @@ class SearchBarRowWidget extends StatelessWidget {
             ),
             onPressed: () {
               _searchBar.rows.value--;
+              _searchBar.deleteCondition(index);
             },
           ),
         ],

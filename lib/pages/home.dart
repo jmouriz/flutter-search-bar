@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -5,14 +7,11 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'SearchBar Demo',
-        style: TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.w900,
-        )
-      )
+    Size size = MediaQuery.of(context).size;
+    return Center(
+      child: FlutterLogo(
+        size: min(size.width, size.height) * 3/4
+      ),
     );
   }
 }

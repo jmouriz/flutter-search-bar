@@ -1,22 +1,22 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
 
-class Item {
+class ItemModel {
   String title;
   IconData icon;
   Widget target;
 
-  Item({
+  ItemModel({
     required this.title,
     required this.icon,
     required this.target,
   });
 }
 
-class Items<Item> extends ListBase<Item> {
-  final List<Item> _items = [];
+class ItemsModel<ItemModel> extends ListBase<ItemModel> {
+  final List<ItemModel> _items = [];
 
-  Items();
+  ItemsModel();
 
   @override
   set length(int length) {
@@ -27,10 +27,10 @@ class Items<Item> extends ListBase<Item> {
   int get length => _items.length;
 
   @override
-  void operator []= (int index, Item value) {
+  void operator []= (int index, ItemModel value) {
     _items[index] = value;
   }
 
   @override
-  Item operator [] (int index) => _items[index];
+  ItemModel operator [] (int index) => _items[index];
 }

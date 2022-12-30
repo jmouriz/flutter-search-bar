@@ -22,7 +22,9 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
 
   @override
   void initState() {
-    rows = _searchBar.rows.value;
+    _searchBar.rows.value = 0;
+    _searchBar.setState = setState;
+    _searchBar.init();
     _searchBar.rows.listen((value) {
       if (mounted) {
         direction = rows < value ? Direction.increase : Direction.decrease;
@@ -61,7 +63,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   : Future.delayed(Duration.zero),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    return SearchBarRowWidget(index: index);
+                    return SearchBarRowWidget(index: index +1);
                   }
                   return const Text('');
                 }

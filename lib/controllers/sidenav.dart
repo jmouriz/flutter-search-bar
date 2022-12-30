@@ -6,15 +6,15 @@ import 'package:toolbar/pages/pages.dart';
 class SidenavController extends GetxController {
   RxBool open = false.obs;
   RxInt selected = 0.obs;
-  Items items = Items();
+  ItemsModel items = ItemsModel();
 
   SidenavController() {
-    items.add(Item(
+    items.add(ItemModel(
       title: 'Home',
       icon: Icons.home,
       target: const HomeWidget()
     ));
-    items.add(Item(
+    items.add(ItemModel(
       title: 'Test data table',
       icon: Icons.list,
       target: const TableWidget()

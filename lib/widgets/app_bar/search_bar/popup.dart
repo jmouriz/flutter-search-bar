@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
+import 'package:toolbar/models/models.dart';
+
+class Relation {
+  String key;
+  ConditionModel condition;
+
+  Relation({
+    required this.key,
+    required this.condition,
+  });
+}
 
 class SearchBarPopupWidget extends StatelessWidget {
-  final _searchBar = Get.put(SearchBarController());
+  SearchBarPopupWidget({
+    required this.index,
+    super.key
+  });
 
-  SearchBarPopupWidget({super.key});
+  final index;
+  final _searchBar = Get.put(SearchBarController());
 
   @override
   Widget build(BuildContext context) {
+    //final List<ConditionModel> conditions = [];
+    int index = 0;
+    final List<Relation> conditions = [];
+    _searchBar.conditions.forEach((key, value) => conditions.add(Relation(
+      key: key,
+      condition: value,
+    )));
+
     return PopupMenuButton(
       position: PopupMenuPosition.under,
       tooltip: 'Available conditions',
@@ -21,29 +44,39 @@ class SearchBarPopupWidget extends StatelessWidget {
       ),
       itemBuilder: (_) {
         return [
-          ...List.generate(_searchBar.conditions.length, (index) {
-            return _popupMenuItem(index, _searchBar.conditions[index].checked
-              ? Icons.radio_button_checked : Icons.radio_button_off,
-              _searchBar.conditions[index].label
-            );
+          ...List.generate(conditions.length, (last) {
+            Relation relation = conditions[last];
+            return _popupMenuItem(relation.key, relation.condition);
           }).toList(),
           if (_searchBar.rows.value < _searchBar.conditions.length - 1)
-            _popupMenuItem(-1, Icons.add, 'New condition'),
+            _popupMenuItem(),
         ];
       }
     );
   }
 
-  PopupMenuItem<int> _popupMenuItem(int index, IconData icon, String label) {
-    final _searchBar = Get.put(SearchBarController());
+  PopupMenuItem<int> _popupMenuItem([String? key, ConditionModel? condition]) {
+    late final IconData icon;
+    late final String label;
+
+    if (condition == null) {
+      icon = Icons.add;
+      label = 'New condition';
+    } else {
+      icon = condition.checked
+        ? Icons.radio_button_checked
+        : Icons.radio_button_off;
+      label = condition.label;
+    }
 
     return PopupMenuItem(
-      value: index,
+      enabled: condition == null || !condition.checked,
       onTap: () {
-        if (index == -1) {
+        if (key == null) {
           _searchBar.rows.value++;
+          _searchBar.addCondition();
         } else {
-          _searchBar.conditions.check(index);
+          _searchBar.checkCondition(index, key);
         }
       },
       child: Row(

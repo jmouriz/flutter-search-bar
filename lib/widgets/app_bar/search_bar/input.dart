@@ -1,33 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:toolbar/controllers/controllers.dart';
+import 'package:toolbar/models/models.dart';
 
 class SearchBarInputWidget extends StatelessWidget {
   SearchBarInputWidget({
-    this.index,
+    required this.condition,
     super.key
   });
 
-  final index;
-  final _searchBar = Get.put(SearchBarController());
+  //final _searchBar = Get.put(SearchBarController());
+  final ConditionModel condition;
   final FocusNode focus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    int _index = index + 1;
-
-    if (index == _searchBar.rows.value - 1) {
     Future.delayed(Duration.zero, () {
-        focus.requestFocus();
+      focus.requestFocus();
     });
-    }
 
-    return Container(
+    return condition == null ? const Text('Error') : Container(
       color: Colors.white,
       child: TextFormField(
-        //autofocus: true,
         focusNode: focus,
-        initialValue: _searchBar.conditions[_index].value,
+        //initialValue: '', // _searchBar.conditions[_index].value,
+        initialValue: condition!.value,
         style: const TextStyle(fontSize: 20),
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -35,7 +30,8 @@ class SearchBarInputWidget extends StatelessWidget {
           enabledBorder: InputBorder.none,
           errorBorder: InputBorder.none,
           disabledBorder: InputBorder.none,
-          hintText: _searchBar.conditions[_index].label,
+          //hintText: 'Search...', // _searchBar.conditions[_index].label,
+          hintText: condition!.label,
         ),
       ),
     );

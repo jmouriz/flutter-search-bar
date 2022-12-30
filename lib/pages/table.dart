@@ -13,32 +13,32 @@ class TableWidget extends StatelessWidget {
 
     _toolbar.search.value = true;
     _searchBar.conditions.clear();
-    _searchBar.conditions.addAll([
-      Condition(
+    _searchBar.conditions.addAll({
+      'date': ConditionModel(
         label: 'Date',
         name: 'date',
         type: Type.date
       ),
-      Condition(
+      'email': ConditionModel(
         label: 'Email',
         name: 'email',
         operator: Operator.contain
       ),
-      Condition(
+      'min-amount': ConditionModel(
         label: 'Min Amount',
         name: 'amount',
         operator: Operator.greater
       ),
-      Condition(
+      'max-amount': ConditionModel(
         label: 'Max Amount',
         name: 'amount',
         operator: Operator.less
       ),
-      Condition(
+      'checked': ConditionModel(
         label: 'Checked',
         name: 'chacked'
       ),
-    ]);
+    });
 
     return const Center(
       child: Text(

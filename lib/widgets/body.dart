@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/widgets/widgets.dart';
-import 'package:toolbar/pages/pages.dart';
 
 class BodyWidget extends StatefulWidget {
   const BodyWidget({super.key});
@@ -40,7 +39,7 @@ class _BodyWidgetState extends State<BodyWidget> {
 
     List<Widget> children = [
       const SidenavWidget(),
-      Expanded(child: _sidenav.items[_sidenav.selected.value].target),
+      _sidenav.items[_sidenav.selected.value].target,
     ];
 
     return Column(
