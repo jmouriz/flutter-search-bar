@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:intl/intl.dart';
+
 enum Operator {
   start,
   contain,
@@ -42,8 +44,9 @@ class ConditionModel {
       switch (type) {
         case Type.date:
           DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(value!));
-          return '${date.day}/${date.month}/${date.year}';
+          return DateFormat('dd/MM/yyyy').format(date);
         default:
+          return value!;
       }
     }
     return '';

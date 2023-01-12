@@ -42,6 +42,9 @@ dependencies:
   mutable_icon: ^1.1.1
   window_manager: ^0.2.8
   intl: ^0.17.0
+  flutter_rounded_date_picker:
+    git:
+      url: git@github.com:jmouriz/flutter_rounded_date_picker.git
 
 dev_dependencies:
   flutter_test:
