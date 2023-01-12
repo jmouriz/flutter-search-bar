@@ -4,6 +4,7 @@ import 'package:toolbar/models/models.dart';
 class SearchBarController extends GetxController {
   RxInt rows = 0.obs;
   RxInt version = DateTime.now().millisecondsSinceEpoch.obs;
+  //int minLength = 3;
   ConditionsModel conditions = ConditionsModel();
   List<String> entries = [];
   Function setState = () {};
@@ -36,6 +37,7 @@ class SearchBarController extends GetxController {
     condition.checked = false;
     condition.value = null;
     entries.removeAt(index);
+    state();
   }
 
   ConditionModel? getCondition(int index) {
@@ -44,9 +46,9 @@ class SearchBarController extends GetxController {
 
   List<ConditionModel> getConditions() {
     List<ConditionModel> result = [];
-    conditions.forEach((key, value) {
-      if (value.checked) {
-        result.add(value);
+    conditions.forEach((key, condition) {
+      if (condition.checked && condition.value != null) {
+        result.add(condition);
       }
     });
     return result;

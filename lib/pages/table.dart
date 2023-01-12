@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:toolbar/controllers/controllers.dart';
@@ -17,7 +19,8 @@ class _TableWidgetState extends State<TableWidget> {
   @override
   void initState() {
     searchBar.version.listen((value) {
-      print(searchBar.getConditions());
+      //print(searchBar.getConditions());
+      print(jsonEncode(searchBar.getConditions()));
     });
     super.initState();
   }

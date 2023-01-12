@@ -10,6 +10,7 @@ enum Operator {
 
 enum Type {
   string,
+  email,
   number,
   date,
   list,
@@ -22,7 +23,7 @@ class ConditionModel {
   Operator operator;
   Type type;
   bool checked;
-  List<String>? values;
+  Map<int, String>? values;
   String? value;
 
   ConditionModel({
@@ -37,7 +38,26 @@ class ConditionModel {
 
   @override
   String toString() {
-    return '{ label: "$label", name: $name, type: $type, operator: $operator, value: "$value" }';
+    if (value != null) {
+      switch (type) {
+        case Type.date:
+          DateTime date = DateTime.fromMillisecondsSinceEpoch(int.parse(value!));
+          return '${date.day}/${date.month}/${date.year}';
+        default:
+      }
+    }
+    return '';
+  }
+
+  Map? toJson() {
+    if (value != null) {
+      return {
+        'type': type.index,
+        'operator': operator.index,
+        'value': value 
+      };
+    }
+    return null;
   }
 }
 
