@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:toolbar/models/models.dart';
+import 'package:toolbar/controllers/controllers.dart';
 
 class InputBooleanWidget extends StatefulWidget {
   const InputBooleanWidget({
@@ -17,6 +19,7 @@ class InputBooleanWidget extends StatefulWidget {
 
 class _InputBooleanWidgetState extends State<InputBooleanWidget> {
   late bool value = '${widget.condition}' == 'true';
+  final searchBar = Get.put(SearchBarController());
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,8 @@ class _InputBooleanWidgetState extends State<InputBooleanWidget> {
       onTap: () {
         value = !value;
         widget.condition.value = '$value';
+        print('${widget.condition}');
+        searchBar.state();
         setState(() {});
       },
     );

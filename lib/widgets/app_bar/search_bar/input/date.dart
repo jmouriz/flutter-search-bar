@@ -20,6 +20,8 @@ class InputDateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
 
+    controller.text = '$condition';
+
     void tap() async {
       //DateTime? date = await showDatePicker(
       DateTime? date = await showRoundedDatePicker(

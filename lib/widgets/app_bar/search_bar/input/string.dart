@@ -31,6 +31,7 @@ class InputStringWidget extends StatelessWidget {
         ),
         onChanged: (value) {
           condition.value = value;
+          print(value);
           searchBar.state();
         });
   }

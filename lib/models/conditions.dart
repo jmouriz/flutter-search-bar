@@ -55,7 +55,7 @@ class ConditionModel {
   Map? toJson() {
     if (value != null) {
       return {
-        'type': type.index,
+        'type': type.name,
         'operator': operator.index,
         'value': value 
       };
