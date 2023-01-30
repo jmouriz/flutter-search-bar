@@ -16,7 +16,7 @@ class TableWidget extends StatefulWidget {
 class _TableWidgetState extends State<TableWidget> {
   final toolbar = Get.put(ToolbarController());
   final searchBar = Get.put(SearchBarController());
-  //final controller = ScrollController();
+  final controller = ScrollController();
   //   initialScrollOffset: double.infinity,
   //   keepScrollOffset: true,
   // );
@@ -26,12 +26,11 @@ class _TableWidgetState extends State<TableWidget> {
     searchBar.rows.listen((value) {
       if (mounted) {
         Future.delayed(Duration.zero, () {
-          print('state');
-          // controller.animateTo(
-          //   controller.position.maxScrollExtent,
-          //   duration: const Duration(milliseconds: 200),
-          //   curve: Curves.easeInOut
-          // );
+          controller.animateTo(
+            controller.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeInOut
+          );
           setState(() {});
         });
       }
@@ -51,14 +50,15 @@ class _TableWidgetState extends State<TableWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print(searchBar.visibles);
+
     double safeHeight() {
       final media = MediaQuery.of(context);
       final height =
-          media.size.height - media.padding.top - media.padding.bottom;
+        media.size.height - media.padding.top - media.padding.bottom;
       const padding = 8.0; // XXX
-      return height -
-          2.0 * padding -
-          kToolbarHeight * (searchBar.rows.value + 1);
+      return height - 2 * padding -
+        kToolbarHeight * (searchBar.visibles + 1);
     }
 
     final count = (safeHeight() / kMinInteractiveDimension).floor() - 1;
@@ -94,30 +94,94 @@ class _TableWidgetState extends State<TableWidget> {
         name: 'checked',
         type: Type.boolean,
       ),
+      'checked1': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
+      'checked2': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
+      'checked3': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
+      'checked4': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
+      'checked5': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
+      'checked6': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
+      'checked7': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
+      'checked8': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
+      'checked9': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
+      'checked10': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
+      'checked11': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
+      'checked12': ConditionModel(
+        label: 'Checked',
+        name: 'checked',
+        type: Type.boolean,
+      ),
     });
 
     return Theme(
       data: Theme.of(context).copyWith(
-          cardTheme: const CardTheme(
-        elevation: 0,
-      )),
-      child: SingleChildScrollView(
-        //controller: controller,
-        controller: ScrollController(),
-        physics: const BouncingScrollPhysics(),
-        child: PaginatedDataTable(
-          source: data,
-          sortColumnIndex: 0,
-          //rowsPerPage: (safeHeight() / kMinInteractiveDimension).floor() -1,
-          rowsPerPage: count >= 0 ? count : 10,
-          showCheckboxColumn: false,
-          columns: const [
-            DataColumn(label: Text('#')),
-            DataColumn(label: Text('User')),
-            DataColumn(label: Text('Date')),
-            DataColumn(label: Text('Price')),
-            DataColumn(label: Text('')),
-          ],
+        cardTheme: const CardTheme(
+          elevation: 0,
+        )
+      ),
+      child: Container(
+        height: double.infinity,
+        color: Colors.white,
+        child: SingleChildScrollView(
+          controller: controller,
+          //controller: ScrollController(),
+          physics: const BouncingScrollPhysics(),
+          child: PaginatedDataTable(
+            source: data,
+            sortColumnIndex: 0,
+            rowsPerPage: count,
+            showCheckboxColumn: false,
+            columns: const [
+              DataColumn(label: Text('#')),
+              DataColumn(label: Text('User')),
+              DataColumn(label: Text('Date')),
+              DataColumn(label: Text('Price')),
+              DataColumn(label: Text('')),
+            ],
+          ),
         ),
       ),
     );

@@ -16,16 +16,16 @@ enum Direction {
 }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
-  final _searchBar = Get.put(SearchBarController());
+  final searchBar = Get.put(SearchBarController());
   int rows = 0;
   Direction direction = Direction.increase;
 
   @override
   void initState() {
-    _searchBar.rows.value = 0;
-    _searchBar.setState = setState;
-    _searchBar.init();
-    _searchBar.rows.listen((value) {
+    searchBar.rows.value = 0;
+    searchBar.setState = setState;
+    searchBar.init();
+    searchBar.rows.listen((value) {
       if (mounted) {
         direction = rows < value ? Direction.increase : Direction.decrease;
         rows = value;
@@ -38,24 +38,36 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
   @override
   void dispose() {
     if (!mounted) {
-      _searchBar.dispose();
+      searchBar.dispose();
     }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    final screen =
+      media.size.height - media.padding.top - media.padding.bottom;
+    int rows = searchBar.rows.value;
+    double height = (1 + rows) * kToolbarHeight;
+
+    while (screen / 2 - height < 0) {
+      height = (1 + --rows) * kToolbarHeight;
+    }
+
+    searchBar.visibles = rows;
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
-      height: (1 + _searchBar.rows.value) * kToolbarHeight,
+      height: height,
       width: double.infinity,
       color: Colors.white,
       child: SingleChildScrollView(
         child: Column(
           children: [
             SearchBarMainWidget(),
-            ...List.generate(_searchBar.rows.value, (index) {
-              bool delay = index == _searchBar.rows.value - 1
+            ...List.generate(searchBar.rows.value, (index) {
+              bool delay = index == searchBar.rows.value - 1
                 && direction == Direction.increase;
               return FutureBuilder(
                 future: delay
