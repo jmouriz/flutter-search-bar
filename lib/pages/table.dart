@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
@@ -15,11 +16,27 @@ class TableWidget extends StatefulWidget {
 class _TableWidgetState extends State<TableWidget> {
   final toolbar = Get.put(ToolbarController());
   final searchBar = Get.put(SearchBarController());
+  //final controller = ScrollController();
+  //   initialScrollOffset: double.infinity,
+  //   keepScrollOffset: true,
+  // );
 
   @override
   void initState() {
+    searchBar.rows.listen((value) {
+      if (mounted) {
+        Future.delayed(Duration.zero, () {
+          print('state');
+          // controller.animateTo(
+          //   controller.position.maxScrollExtent,
+          //   duration: const Duration(milliseconds: 200),
+          //   curve: Curves.easeInOut
+          // );
+          setState(() {});
+        });
+      }
+    });
     searchBar.version.listen((value) {
-      //print(searchBar.getConditions());
       print(jsonEncode(searchBar.getConditions()));
     });
     super.initState();
@@ -31,11 +48,25 @@ class _TableWidgetState extends State<TableWidget> {
     searchBar.dispose();
     super.dispose();
   }
- 
+
   @override
   Widget build(BuildContext context) {
+    double safeHeight() {
+      final media = MediaQuery.of(context);
+      final height =
+          media.size.height - media.padding.top - media.padding.bottom;
+      const padding = 8.0; // XXX
+      return height -
+          2.0 * padding -
+          kToolbarHeight * (searchBar.rows.value + 1);
+    }
+
+    final count = (safeHeight() / kMinInteractiveDimension).floor() - 1;
+    final DataTableSource data = DataSource();
+
     toolbar.title.value = 'Search Test';
     toolbar.search.value = true;
+
     searchBar.conditions.clear();
     searchBar.conditions.addAll({
       'date': ConditionModel(
@@ -65,14 +96,61 @@ class _TableWidgetState extends State<TableWidget> {
       ),
     });
 
-    return const Center(
-      child: Text(
-        'Data Table',
-        style: TextStyle(
-          fontSize: 30,
-          fontWeight: FontWeight.w900,
-        )
-      )
+    return Theme(
+      data: Theme.of(context).copyWith(
+          cardTheme: const CardTheme(
+        elevation: 0,
+      )),
+      child: SingleChildScrollView(
+        //controller: controller,
+        controller: ScrollController(),
+        physics: const BouncingScrollPhysics(),
+        child: PaginatedDataTable(
+          source: data,
+          sortColumnIndex: 0,
+          //rowsPerPage: (safeHeight() / kMinInteractiveDimension).floor() -1,
+          rowsPerPage: count >= 0 ? count : 10,
+          showCheckboxColumn: false,
+          columns: const [
+            DataColumn(label: Text('#')),
+            DataColumn(label: Text('User')),
+            DataColumn(label: Text('Date')),
+            DataColumn(label: Text('Price')),
+            DataColumn(label: Text('')),
+          ],
+        ),
+      ),
     );
+  }
+}
+
+class DataSource extends DataTableSource {
+  final List<Map<String, dynamic>> _data = List.generate(
+      1000,
+      (index) => {
+            'id': index,
+            'user': 'user$index@domain.com',
+            'vendor': 'vendor$index@domain.com',
+            'price': Random().nextDouble() * 500,
+          });
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => _data.length;
+
+  @override
+  int get selectedRowCount => 0;
+
+  @override
+  DataRow getRow(int index) {
+    return DataRow(cells: [
+      DataCell(Text(_data[index]['id'].toString())),
+      DataCell(Text(_data[index]['user'])),
+      DataCell(Text(_data[index]['vendor'])),
+      DataCell(Text(_data[index]['price'].toStringAsFixed(2))),
+      const DataCell(Icon(Icons.delete)),
+    ]);
   }
 }
