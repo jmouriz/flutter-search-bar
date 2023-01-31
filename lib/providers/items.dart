@@ -13,12 +13,17 @@ class ItemsProvider {
       ItemModel(
         title: 'Home',
         icon: Icons.home,
-        target: const HomeWidget()
+        target: const HomePage()
       ),
       ItemModel(
         title: 'Search Test',
         icon: Icons.list,
-        target: const TableWidget()
+        target: const TablePage()
+      ),
+      ItemModel(
+        title: 'Bottom Sheet Test',
+        icon: Icons.keyboard_capslock,
+        target: const BottomSheetPage()
       ),
       if (PlatformDetails().isDesktop) ItemModel(
         title: 'Exit',

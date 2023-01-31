@@ -50,30 +50,32 @@ class _SidenavWidgetState extends State<SidenavWidget> {
       },
       child: sidenav.open.value ? Drawer(
         key: const ValueKey<String>('sidenav'),
-        child: ListView.builder(
-          itemCount: sidenav.items.length,
-          padding: EdgeInsets.zero,
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: Icon(sidenav.items[index].icon),
-              horizontalTitleGap: 0,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12.0
-              ),
-              iconColor: Colors.black,
-              textColor: Colors.black,
-              title: Text(sidenav.items[index].title),
-              onTap: () {
-                if (sidenav.items[index].target == null) {
-                  exit(0);
-                }
-                sidenav.selected.value = index;
-                if (width < 550) {
-                  sidenav.open.value = false;
-                }
-              },
-            );
-          },
+        child: SafeArea(
+          child: ListView.builder(
+            itemCount: sidenav.items.length,
+            padding: EdgeInsets.zero,
+            itemBuilder: (context, index) {
+              return ListTile(
+                leading: Icon(sidenav.items[index].icon),
+                horizontalTitleGap: 0,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12.0
+                ),
+                iconColor: Colors.black,
+                textColor: Colors.black,
+                title: Text(sidenav.items[index].title),
+                onTap: () {
+                  if (sidenav.items[index].target == null) {
+                    exit(0);
+                  }
+                  sidenav.selected.value = index;
+                  if (width < 550) {
+                    sidenav.open.value = false;
+                  }
+                },
+              );
+            },
+          ),
         )
       ) : null
     );

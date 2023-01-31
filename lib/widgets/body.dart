@@ -48,14 +48,15 @@ class _BodyWidgetState extends State<BodyWidget> {
             child: sidenav.items[sidenav.selected.value].target,
           ),
         ),
-        // TODO
-        const SafeArea(
-          child: Padding(
-            padding: EdgeInsets.only(top: kToolbarHeight),
-            child: SidenavWidget(),
-          ),
+        const Padding(
+          padding: EdgeInsets.only(top: kToolbarHeight),
+          child: SidenavWidget(),
         ),
         const AppBarWidget(),
+        const Positioned(
+          bottom: 0,
+          child: BottomSheetWidget(),
+        )
       ];
   }
 
@@ -73,6 +74,10 @@ class _BodyWidgetState extends State<BodyWidget> {
           ),
         ),
         const AppBarWidget(),
+        const Positioned(
+          bottom: 0,
+          child: BottomSheetWidget(),
+        )
       ];
   }
 }

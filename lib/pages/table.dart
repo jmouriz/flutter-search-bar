@@ -7,14 +7,14 @@ import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/providers/providers.dart';
 import 'package:toolbar/models/models.dart';
 
-class TableWidget extends StatefulWidget {
-  const TableWidget({super.key});
+class TablePage extends StatefulWidget {
+  const TablePage({super.key});
 
   @override
-  State<TableWidget> createState() => _TableWidgetState();
+  State<TablePage> createState() => _TablePageState();
 }
 
-class _TableWidgetState extends State<TableWidget> {
+class _TablePageState extends State<TablePage> {
   final toolbar = Get.put(ToolbarController());
   final searchBar = Get.put(SearchBarController());
 
@@ -142,6 +142,17 @@ class _TableWidgetState extends State<TableWidget> {
       // ),
     });
 
+    int sortColumnIndex = 1;
+    bool sortAscending = true;
+
+    void sort<T>(Comparable<T> Function(dynamic d) getField, int columnIndex, bool ascending) {
+      //_data._sort<T>(getField, ascending);
+      setState(() {
+        sortColumnIndex = columnIndex;
+        sortAscending = ascending;
+      });
+    }
+
     return Theme(
       data: Theme.of(context).copyWith(
         cardTheme: const CardTheme(elevation: 0)
@@ -150,15 +161,22 @@ class _TableWidgetState extends State<TableWidget> {
         child: PaginatedDataTable(
           headingRowHeight: headingRowHeight,
           source: data,
-          sortColumnIndex: 1,
+          sortColumnIndex: sortColumnIndex,
+          sortAscending: sortAscending,
           rowsPerPage: rows,
           showCheckboxColumn: false,
-          columns: const [
-            DataColumn(label: Text('#')),
-            DataColumn(label: Text('User')),
-            DataColumn(label: Text('Date')),
-            DataColumn(label: Text('Price')),
-            DataColumn(label: Text('')),
+          columns: [
+            const DataColumn(label: Text('#')),
+            DataColumn(
+              label: const Text('User'),
+              onSort: (int columnIndex, bool ascending) => sort<String>((d) => d, columnIndex, ascending)
+            ),
+            DataColumn(
+              label: const Text('Date'),
+              onSort: (int columnIndex, bool ascending) => sort<String>((d) => d, columnIndex, ascending)
+            ),
+            const DataColumn(label: Text('Price')),
+            const DataColumn(label: Text('')),
           ],
         ),
       ),
