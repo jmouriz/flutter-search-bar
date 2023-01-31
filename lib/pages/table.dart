@@ -16,25 +16,31 @@ class TableWidget extends StatefulWidget {
 class _TableWidgetState extends State<TableWidget> {
   final toolbar = Get.put(ToolbarController());
   final searchBar = Get.put(SearchBarController());
-  final controller = ScrollController();
+  //final controller = ScrollController();
   //   initialScrollOffset: double.infinity,
   //   keepScrollOffset: true,
   // );
 
   @override
   void initState() {
-    searchBar.rows.listen((value) {
-      if (mounted) {
-        Future.delayed(Duration.zero, () {
-          controller.animateTo(
-            controller.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeInOut
-          );
-          setState(() {});
-        });
-      }
-    });
+    // searchBar.visibles.listen((value) {
+    //   if (mounted) {
+    //     Future.delayed(Duration.zero, () {
+    //       // print(controller.position);
+    //       // print(controller.position.viewportDimension); //
+    //       // print(controller.position.pixels);
+    //       // print(controller.position.outOfRange);
+    //       // print(controller.position.minScrollExtent);
+    //       // print(controller.position.maxScrollExtent);
+    //       // controller.animateTo(
+    //       //   controller.position.maxScrollExtent,
+    //       //   duration: const Duration(milliseconds: 200),
+    //       //   curve: Curves.easeInOut
+    //       // );
+    //       setState(() {});
+    //     });
+    //   }
+    // });
     searchBar.version.listen((value) {
       print(jsonEncode(searchBar.getConditions()));
     });
@@ -43,26 +49,26 @@ class _TableWidgetState extends State<TableWidget> {
 
   @override
   void dispose() {
-    toolbar.dispose();
-    searchBar.dispose();
+    //toolbar.dispose();
+    //searchBar.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(searchBar.visibles);
-
-    double safeHeight() {
-      final media = MediaQuery.of(context);
-      final height =
-        media.size.height - media.padding.top - media.padding.bottom;
-      const padding = 8.0; // XXX
-      return height - 2 * padding -
-        kToolbarHeight * (searchBar.visibles + 1);
-    }
-
-    final count = (safeHeight() / kMinInteractiveDimension).floor() - 1;
+    final media = MediaQuery.of(context);
+    final safe = media.size.height - media.padding.top - media.padding.bottom -
+      kToolbarHeight - 2 * 56;
+      //kToolbarHeight - 2 * 56;
+    final rows = (safe / kMinInteractiveDimension).floor() - 2;
     final DataTableSource data = DataSource();
+
+    // print('height: $safe');
+    // print('row.height: $kMinInteractiveDimension');
+    // print('fields: ${searchBar.rows.value}');
+    // print('visibles: ${searchBar.visibles.value}');
+    print('rows: $rows');
+    // print('---');
 
     toolbar.title.value = 'Search Test';
     toolbar.search.value = true;
@@ -109,51 +115,51 @@ class _TableWidgetState extends State<TableWidget> {
         name: 'checked',
         type: Type.boolean,
       ),
-      'checked4': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
-      'checked5': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
-      'checked6': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
-      'checked7': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
-      'checked8': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
-      'checked9': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
-      'checked10': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
-      'checked11': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
-      'checked12': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
+      // 'checked4': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
+      // 'checked5': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
+      // 'checked6': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
+      // 'checked7': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
+      // 'checked8': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
+      // 'checked9': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
+      // 'checked10': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
+      // 'checked11': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
+      // 'checked12': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
     });
 
     return Theme(
@@ -162,17 +168,18 @@ class _TableWidgetState extends State<TableWidget> {
           elevation: 0,
         )
       ),
-      child: Container(
-        height: double.infinity,
-        color: Colors.white,
-        child: SingleChildScrollView(
-          controller: controller,
-          //controller: ScrollController(),
-          physics: const BouncingScrollPhysics(),
+      //child: Container(
+        //height: double.infinity,
+        //color: Colors.white,
+        //child: SingleChildScrollView(
+        //  controller: controller,
+        //  //controller: ScrollController(),
+        //  physics: const BouncingScrollPhysics(),
           child: PaginatedDataTable(
+            headingRowHeight: 56.0,
             source: data,
             sortColumnIndex: 0,
-            rowsPerPage: count,
+            rowsPerPage: rows,
             showCheckboxColumn: false,
             columns: const [
               DataColumn(label: Text('#')),
@@ -182,8 +189,8 @@ class _TableWidgetState extends State<TableWidget> {
               DataColumn(label: Text('')),
             ],
           ),
-        ),
-      ),
+        //),
+      //),
     );
   }
 }

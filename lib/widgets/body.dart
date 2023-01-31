@@ -11,13 +11,13 @@ class BodyWidget extends StatefulWidget {
 }
 
 class _BodyWidgetState extends State<BodyWidget> {
-  final _toolbar = Get.put(ToolbarController());
-  final _sidenav = Get.put(SidenavController());
+  final toolbar = Get.put(ToolbarController());
+  final sidenav = Get.put(SidenavController());
 
   @override
   void initState() {
-    _sidenav.selected.listen((value) {
-      _toolbar.search.value = false;
+    sidenav.selected.listen((value) {
+      toolbar.search.value = false;
       if (mounted) {
         setState(() {});
       }
@@ -28,7 +28,7 @@ class _BodyWidgetState extends State<BodyWidget> {
   @override
   void dispose() {
     if (!mounted) {
-      _sidenav.dispose();
+      sidenav.dispose();
     }
     super.dispose();
   }
@@ -37,29 +37,41 @@ class _BodyWidgetState extends State<BodyWidget> {
   Widget build(BuildContext context) {
     double width = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.shortestSide;
 
-    Widget child;
-    
-    if (width < 550) {
-      child = Stack(
-        children: [
-          _sidenav.items[_sidenav.selected.value].target,
-          const SidenavWidget(),
-        ]
-      );
-    } else {
-      child = Row(
-        children: [
-          const SidenavWidget(),
-          Expanded(child: _sidenav.items[_sidenav.selected.value].target),
-        ]
-      );
-    }
+    return Stack(children: width < 550 ? mobile : desktop);
+  }
 
-    return Column(
-      children: [
+  List<Widget> get mobile {
+    return [
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top: kToolbarHeight),
+            child: sidenav.items[sidenav.selected.value].target,
+          ),
+        ),
+        const SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(top: kToolbarHeight),
+            child: SidenavWidget(),
+          ),
+        ),
         const AppBarWidget(),
-        Expanded(child: child),
-      ]
-    );
+      ];
+  }
+
+  List<Widget> get desktop {
+    return [
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top: kToolbarHeight),
+            child: Row(
+              children: [
+                const SidenavWidget(),
+                Expanded(child: sidenav.items[sidenav.selected.value].target),
+              ],
+            ),
+          ),
+        ),
+        const AppBarWidget(),
+      ];
   }
 }

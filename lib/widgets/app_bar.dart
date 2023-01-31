@@ -11,11 +11,11 @@ class AppBarWidget extends StatefulWidget {
 }
 
 class _AppBarWidgetState extends State<AppBarWidget> {
-  final _controller = Get.put(AppBarController());
+  final controller = Get.put(AppBarController());
 
   @override
   void initState() {
-    _controller.searching.listen((value) {
+    controller.searching.listen((value) {
       setState(() {});
     });
     super.initState();
@@ -24,7 +24,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   @override
   void dispose() {
     if (!mounted) {
-      _controller.dispose();
+      controller.dispose();
     }
     super.dispose();
   }
@@ -40,7 +40,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
             duration: const Duration(milliseconds: 300),
             transitionBuilder: (Widget child, Animation<double> animation) {
               double begin = animation.isCompleted ? 1.0 : -1.0;
-              if (_controller.searching.value) {
+              if (controller.searching.value) {
                 begin *= -1;
               }
               return SlideTransition(
@@ -49,7 +49,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                 child: child,
               );
             },
-            child: _controller.searching.value
+            child: controller.searching.value
               ? const SearchBarWidget(key: ValueKey<String>('searchbar'))
               : const ToolbarWidget(key: ValueKey<String>('toolbar'))
           ),
