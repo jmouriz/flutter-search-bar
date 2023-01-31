@@ -11,11 +11,11 @@ class SidenavWidget extends StatefulWidget {
 
 class _SidenavWidgetState extends State<SidenavWidget> {
   double width = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.shortestSide;
-  final _sidenav = Get.put(SidenavController());
+  final sidenav = Get.put(SidenavController());
 
   @override
   void initState() {
-    _sidenav.open.listen((value) {
+    sidenav.open.listen((value) {
       if (mounted) {
         setState(() {});
       }
@@ -26,7 +26,7 @@ class _SidenavWidgetState extends State<SidenavWidget> {
   @override
   void dispose() {
     if (!mounted) {
-      _sidenav.dispose();
+      sidenav.dispose();
     }
     super.dispose();
   }
@@ -37,7 +37,7 @@ class _SidenavWidgetState extends State<SidenavWidget> {
       duration: const Duration(milliseconds: 300),
       transitionBuilder: (Widget child, Animation<double> animation) {
         double begin = animation.isCompleted ? -1.0 : 1.0;
-        if (_sidenav.open.value) {
+        if (sidenav.open.value) {
           begin *= -1;
         }
         return SlideTransition(
@@ -46,25 +46,25 @@ class _SidenavWidgetState extends State<SidenavWidget> {
           child: child
         );
       },
-      child: _sidenav.open.value ? Drawer(
+      child: sidenav.open.value ? Drawer(
         key: const ValueKey<String>('sidenav'),
         child: ListView.builder(
-          itemCount: _sidenav.items.length,
+          itemCount: sidenav.items.length,
           padding: EdgeInsets.zero,
           itemBuilder: (context, index) {
             return ListTile(
-              leading: Icon(_sidenav.items[index].icon),
+              leading: Icon(sidenav.items[index].icon),
               horizontalTitleGap: 0,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 12.0
               ),
               iconColor: Colors.black,
               textColor: Colors.black,
-              title: Text(_sidenav.items[index].title),
+              title: Text(sidenav.items[index].title),
               onTap: () {
-                _sidenav.selected.value = index;
+                sidenav.selected.value = index;
                 if (width < 550) {
-                  _sidenav.open.value = false;
+                  sidenav.open.value = false;
                 }
               },
             );

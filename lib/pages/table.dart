@@ -16,31 +16,9 @@ class TableWidget extends StatefulWidget {
 class _TableWidgetState extends State<TableWidget> {
   final toolbar = Get.put(ToolbarController());
   final searchBar = Get.put(SearchBarController());
-  //final controller = ScrollController();
-  //   initialScrollOffset: double.infinity,
-  //   keepScrollOffset: true,
-  // );
 
   @override
   void initState() {
-    // searchBar.visibles.listen((value) {
-    //   if (mounted) {
-    //     Future.delayed(Duration.zero, () {
-    //       // print(controller.position);
-    //       // print(controller.position.viewportDimension); //
-    //       // print(controller.position.pixels);
-    //       // print(controller.position.outOfRange);
-    //       // print(controller.position.minScrollExtent);
-    //       // print(controller.position.maxScrollExtent);
-    //       // controller.animateTo(
-    //       //   controller.position.maxScrollExtent,
-    //       //   duration: const Duration(milliseconds: 200),
-    //       //   curve: Curves.easeInOut
-    //       // );
-    //       setState(() {});
-    //     });
-    //   }
-    // });
     searchBar.version.listen((value) {
       print(jsonEncode(searchBar.getConditions()));
     });
@@ -59,16 +37,8 @@ class _TableWidgetState extends State<TableWidget> {
     final media = MediaQuery.of(context);
     final safe = media.size.height - media.padding.top - media.padding.bottom -
       kToolbarHeight - 2 * 56;
-      //kToolbarHeight - 2 * 56;
     final rows = (safe / kMinInteractiveDimension).floor() - 2;
     final DataTableSource data = DataSource();
-
-    // print('height: $safe');
-    // print('row.height: $kMinInteractiveDimension');
-    // print('fields: ${searchBar.rows.value}');
-    // print('visibles: ${searchBar.visibles.value}');
-    print('rows: $rows');
-    // print('---');
 
     toolbar.title.value = 'Search Test';
     toolbar.search.value = true;
@@ -100,21 +70,22 @@ class _TableWidgetState extends State<TableWidget> {
         name: 'checked',
         type: Type.boolean,
       ),
-      'checked1': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
-      'checked2': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
-      'checked3': ConditionModel(
-        label: 'Checked',
-        name: 'checked',
-        type: Type.boolean,
-      ),
+      // SCROLL TEST
+      // 'checked1': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
+      // 'checked2': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
+      // 'checked3': ConditionModel(
+      //   label: 'Checked',
+      //   name: 'checked',
+      //   type: Type.boolean,
+      // ),
       // 'checked4': ConditionModel(
       //   label: 'Checked',
       //   name: 'checked',
@@ -168,29 +139,20 @@ class _TableWidgetState extends State<TableWidget> {
           elevation: 0,
         )
       ),
-      //child: Container(
-        //height: double.infinity,
-        //color: Colors.white,
-        //child: SingleChildScrollView(
-        //  controller: controller,
-        //  //controller: ScrollController(),
-        //  physics: const BouncingScrollPhysics(),
-          child: PaginatedDataTable(
-            headingRowHeight: 56.0,
-            source: data,
-            sortColumnIndex: 0,
-            rowsPerPage: rows,
-            showCheckboxColumn: false,
-            columns: const [
-              DataColumn(label: Text('#')),
-              DataColumn(label: Text('User')),
-              DataColumn(label: Text('Date')),
-              DataColumn(label: Text('Price')),
-              DataColumn(label: Text('')),
-            ],
-          ),
-        //),
-      //),
+      child: PaginatedDataTable(
+        headingRowHeight: 56.0,
+        source: data,
+        sortColumnIndex: 0,
+        rowsPerPage: rows,
+        showCheckboxColumn: false,
+        columns: const [
+          DataColumn(label: Text('#')),
+          DataColumn(label: Text('User')),
+          DataColumn(label: Text('Date')),
+          DataColumn(label: Text('Price')),
+          DataColumn(label: Text('')),
+        ],
+      ),
     );
   }
 }

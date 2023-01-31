@@ -4,8 +4,6 @@ import 'package:toolbar/models/models.dart';
 class SearchBarController extends GetxController {
   RxInt rows = 0.obs;
   RxInt version = DateTime.now().millisecondsSinceEpoch.obs;
-  //RxInt visibles = 0.obs;
-  //int minLength = 3;
   ConditionsModel conditions = ConditionsModel();
   List<String> entries = [];
   Function setState = () {};

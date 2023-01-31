@@ -11,34 +11,34 @@ class ToolbarWidget extends StatefulWidget {
 }
 
 class _ToolbarWidgetState extends State<ToolbarWidget> {
-  final _appBar = Get.put(AppBarController());
-  final _toolbar = Get.put(ToolbarController());
-  final _sidenav = Get.put(SidenavController());
-  final MutableIconController _icon = MutableIconController();
+  final appBar = Get.put(AppBarController());
+  final toolbar = Get.put(ToolbarController());
+  final sidenav = Get.put(SidenavController());
+  final MutableIconController icon = MutableIconController();
   
   @override
   void initState() {
-    _toolbar.title.listen((value) {
+    toolbar.title.listen((value) {
       if (mounted) {
         Future.delayed(Duration.zero, () {
           setState(() {});
         });
       }
     });
-    _toolbar.search.listen((value) {
+    toolbar.search.listen((value) {
       if (mounted) {
         Future.delayed(Duration.zero, () {
           setState(() {});
         });
       }
     });
-    _sidenav.open.listen((value) {
+    sidenav.open.listen((value) {
       if (mounted) {
         Future.delayed(Duration.zero, () {
-          if (_sidenav.open.value) {
-            _icon.animateToEnd();
+          if (sidenav.open.value) {
+            icon.animateToEnd();
           } else {
-            _icon.animateToStart();
+            icon.animateToStart();
           }
           setState(() {});
         });
@@ -50,9 +50,9 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
   @override
   void dispose() {
     if (!mounted) {
-      _appBar.dispose();
-      _toolbar.dispose();
-      _sidenav.dispose();
+      appBar.dispose();
+      toolbar.dispose();
+      sidenav.dispose();
     }
     super.dispose();
   }
@@ -69,21 +69,21 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
             icon: MutableIcon(
               startIcon: Icons.menu,
               endIcon: Icons.close,
-              controller: _icon,
+              controller: icon,
               size: 28.0,
               duration: const Duration(milliseconds: 400),
               startIconColor: Colors.white,
               endIconColor: Colors.white,
               clockwise: false,
-              initFrom: _sidenav.open.value ? InitFrom.end : InitFrom.start,
+              initFrom: sidenav.open.value ? InitFrom.end : InitFrom.start,
             ),
             onPressed: () {
-              _sidenav.open.value = !_sidenav.open.value;
+              sidenav.open.value = !sidenav.open.value;
             },
           ),
           Expanded(
             child: Text(
-              _toolbar.title.value,
+              toolbar.title.value,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Colors.white,
@@ -92,13 +92,13 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
               ),
             ),
           ),
-          if (_toolbar.search.value) IconButton(
+          if (toolbar.search.value) IconButton(
             icon: const Icon(
               Icons.search,
               color: Colors.white,
             ),
             onPressed: () {
-              _appBar.searching.value = true;
+              appBar.searching.value = true;
             },
           ) else const SizedBox(
             width: 48.0,

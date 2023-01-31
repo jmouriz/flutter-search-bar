@@ -20,12 +20,12 @@ class SearchBarPopupWidget extends StatelessWidget {
   });
 
   final int index;
-  final _searchBar = Get.put(SearchBarController());
+  final searchBar = Get.put(SearchBarController());
 
   @override
   Widget build(BuildContext context) {
     final List<Relation> conditions = [];
-    _searchBar.conditions.forEach((key, value) => conditions.add(Relation(
+    searchBar.conditions.forEach((key, value) => conditions.add(Relation(
       key: key,
       condition: value,
     )));
@@ -46,7 +46,7 @@ class SearchBarPopupWidget extends StatelessWidget {
             Relation relation = conditions[last];
             return _popupMenuItem(relation.key, relation.condition);
           }).toList(),
-          if (_searchBar.rows.value < _searchBar.conditions.length - 1)
+          if (searchBar.rows.value < searchBar.conditions.length - 1)
             _popupMenuItem(),
         ];
       }
@@ -71,10 +71,10 @@ class SearchBarPopupWidget extends StatelessWidget {
       enabled: condition == null || !condition.checked,
       onTap: () {
         if (key == null) {
-          _searchBar.rows.value++;
-          _searchBar.addCondition();
+          searchBar.rows.value++;
+          searchBar.addCondition();
         } else {
-          _searchBar.checkCondition(index, key);
+          searchBar.checkCondition(index, key);
         }
       },
       child: Row(

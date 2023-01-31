@@ -10,7 +10,7 @@ class SearchBarRowWidget extends StatelessWidget {
   });
 
   final int index;
-  final _searchBar = Get.put(SearchBarController());
+  final searchBar = Get.put(SearchBarController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class SearchBarRowWidget extends StatelessWidget {
         children: [
           SearchBarPopupWidget(index: index),
           Expanded(
-            child: SearchBarInputWidget(condition: _searchBar.getCondition(index)!),
+            child: SearchBarInputWidget(condition: searchBar.getCondition(index)!),
           ),
           IconButton(
             icon: const Icon(
@@ -28,8 +28,8 @@ class SearchBarRowWidget extends StatelessWidget {
               color: Colors.black,
             ),
             onPressed: () {
-              _searchBar.rows.value--;
-              _searchBar.deleteCondition(index);
+              searchBar.rows.value--;
+              searchBar.deleteCondition(index);
             },
           ),
         ],

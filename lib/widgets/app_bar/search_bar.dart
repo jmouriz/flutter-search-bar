@@ -50,7 +50,6 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       media.size.height - media.padding.top - media.padding.bottom;
     int rows = searchBar.rows.value;
     double height = (1 + rows) * kToolbarHeight;
-    bool touched = false;
 
     while (screen / 2 - height < 0) {
       height = (1 + --rows) * kToolbarHeight;
