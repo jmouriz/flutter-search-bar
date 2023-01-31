@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:toolbar/controllers/controllers.dart';
+import 'package:toolbar/providers/providers.dart';
 import 'package:toolbar/models/models.dart';
 
 class TableWidget extends StatefulWidget {
@@ -35,10 +36,18 @@ class _TableWidgetState extends State<TableWidget> {
   @override
   Widget build(BuildContext context) {
     final media = MediaQuery.of(context);
-    final safe = media.size.height - media.padding.top - media.padding.bottom -
-      kToolbarHeight - 2 * 56;
-    final rows = (safe / kMinInteractiveDimension).floor() - 2;
+    const headingRowHeight = 56.0;
+    final safe = media.size.height -
+        media.padding.top -
+        media.padding.bottom -
+        kToolbarHeight -
+        2 * headingRowHeight;
+    int rows = (safe / kMinInteractiveDimension).floor();
     final DataTableSource data = DataSource();
+
+    if (PlatformDetails().isMobile) {
+      rows--;
+    }
 
     toolbar.title.value = 'Search Test';
     toolbar.search.value = true;
@@ -135,23 +144,23 @@ class _TableWidgetState extends State<TableWidget> {
 
     return Theme(
       data: Theme.of(context).copyWith(
-        cardTheme: const CardTheme(
-          elevation: 0,
-        )
+        cardTheme: const CardTheme(elevation: 0)
       ),
-      child: PaginatedDataTable(
-        headingRowHeight: 56.0,
-        source: data,
-        sortColumnIndex: 0,
-        rowsPerPage: rows,
-        showCheckboxColumn: false,
-        columns: const [
-          DataColumn(label: Text('#')),
-          DataColumn(label: Text('User')),
-          DataColumn(label: Text('Date')),
-          DataColumn(label: Text('Price')),
-          DataColumn(label: Text('')),
-        ],
+      child: SingleChildScrollView(
+        child: PaginatedDataTable(
+          headingRowHeight: headingRowHeight,
+          source: data,
+          sortColumnIndex: 1,
+          rowsPerPage: rows,
+          showCheckboxColumn: false,
+          columns: const [
+            DataColumn(label: Text('#')),
+            DataColumn(label: Text('User')),
+            DataColumn(label: Text('Date')),
+            DataColumn(label: Text('Price')),
+            DataColumn(label: Text('')),
+          ],
+        ),
       ),
     );
   }
@@ -159,13 +168,14 @@ class _TableWidgetState extends State<TableWidget> {
 
 class DataSource extends DataTableSource {
   final List<Map<String, dynamic>> _data = List.generate(
-      1000,
-      (index) => {
-            'id': index,
-            'user': 'user$index@domain.com',
-            'vendor': 'vendor$index@domain.com',
-            'price': Random().nextDouble() * 500,
-          });
+    1000,
+    (index) => {
+      'id': index,
+      'user': 'user$index@domain.com',
+      'vendor': 'vendor$index@domain.com',
+      'price': Random().nextDouble() * 500,
+    }
+  );
 
   @override
   bool get isRowCountApproximate => false;

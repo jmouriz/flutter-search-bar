@@ -14,23 +14,23 @@ class ItemModel {
 }
 
 class ItemsModel<ItemModel> extends ListBase<ItemModel> {
-  final List<ItemModel> items = [];
+  final List<ItemModel> _items = [];
 
   ItemsModel();
 
   @override
   set length(int length) {
-    items.length = length;
+    _items.length = length;
   }
 
   @override
-  int get length => items.length;
+  int get length => _items.length;
 
   @override
   void operator []= (int index, ItemModel value) {
-    items[index] = value;
+    _items[index] = value;
   }
 
   @override
-  ItemModel operator [] (int index) => items[index];
+  ItemModel operator [] (int index) => _items[index];
 }
