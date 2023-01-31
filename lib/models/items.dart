@@ -4,33 +4,33 @@ import 'package:flutter/material.dart';
 class ItemModel {
   String title;
   IconData icon;
-  Widget target;
+  Widget? target;
 
   ItemModel({
     required this.title,
     required this.icon,
-    required this.target,
+    this.target,
   });
 }
 
 class ItemsModel<ItemModel> extends ListBase<ItemModel> {
-  final List<ItemModel> _items = [];
+  final List<ItemModel> items = [];
 
   ItemsModel();
 
   @override
   set length(int length) {
-    _items.length = length;
+    items.length = length;
   }
 
   @override
-  int get length => _items.length;
+  int get length => items.length;
 
   @override
   void operator []= (int index, ItemModel value) {
-    _items[index] = value;
+    items[index] = value;
   }
 
   @override
-  ItemModel operator [] (int index) => _items[index];
+  ItemModel operator [] (int index) => items[index];
 }

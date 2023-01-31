@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:toolbar/helpers/platform.dart';
 import 'package:toolbar/models/models.dart';
 import 'package:toolbar/pages/pages.dart';
 
@@ -19,5 +20,11 @@ class SidenavController extends GetxController {
       icon: Icons.list,
       target: const TableWidget()
     ));
+    if (PlatformDetails().isDesktop) {
+      items.add(ItemModel(
+        title: 'Exit',
+        icon: Icons.exit_to_app,
+      ));
+    }
   }
 }

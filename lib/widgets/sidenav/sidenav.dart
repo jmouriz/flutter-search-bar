@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
@@ -62,6 +64,9 @@ class _SidenavWidgetState extends State<SidenavWidget> {
               textColor: Colors.black,
               title: Text(sidenav.items[index].title),
               onTap: () {
+                if (sidenav.items[index].target == null) {
+                  exit(0);
+                }
                 sidenav.selected.value = index;
                 if (width < 550) {
                   sidenav.open.value = false;
