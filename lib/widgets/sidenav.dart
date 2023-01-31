@@ -51,6 +51,7 @@ class _SidenavWidgetState extends State<SidenavWidget> {
       child: sidenav.open.value ? Drawer(
         key: const ValueKey<String>('sidenav'),
         child: SafeArea(
+          // TODO: Hacer común para el BottomSheet
           child: ListView.builder(
             itemCount: sidenav.items.length,
             padding: EdgeInsets.zero,

@@ -10,7 +10,7 @@ class BottomSheetWidget extends StatefulWidget {
 }
 
 class _BottomSheetWidgetState extends State<BottomSheetWidget> {
- final bottomSheet = Get.put(BottomSheetController());
+  final bottomSheet = Get.put(BottomSheetController());
 
   @override
   void initState() {
@@ -32,7 +32,40 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    MediaQueryData query = MediaQuery.of(context);
+    final width = query.size.width;
+    final bottom = query.padding.bottom;
+    final EdgeInsets padding;
+    const value = 10.0;
+
+    if (bottom > 0) {
+      padding = const EdgeInsets.only(
+        left: value,
+        right: value,
+      );
+    } else {
+      padding = const EdgeInsets.only(
+        left: value,
+        right: value,
+        bottom: value,
+      );
+    }
+
+    final material = Material();
+
+    final container = Padding(
+      padding: padding,
+      child: Container(
+          width: width - 2 * value,
+          height: 150.0,
+          child: Expanded(
+            child: Material(
+              borderRadius: BorderRadius.circular(20),
+              elevation: 2,
+              child: const FlutterLogo(size: 64.0)),
+            )
+          ),
+    );
 
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
@@ -42,17 +75,11 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
           begin *= -1;
         }
         return SlideTransition(
-          position: Tween(begin: Offset(0.0, begin), end: Offset.zero)
-            .animate(animation),
-          child: child
-        );
+            position: Tween(begin: Offset(0.0, begin), end: Offset.zero)
+                .animate(animation),
+            child: child);
       },
-      child: bottomSheet.open.value ? Container(
-        width: size.width,
-        height: 150.0,
-        color: Colors.yellow,
-        child: const FlutterLogo(size: 64.0)
-      ) : null,
+      child: bottomSheet.open.value ? container : null,
     );
   }
 }

@@ -41,6 +41,8 @@ class _BodyWidgetState extends State<BodyWidget> {
   }
 
   List<Widget> get mobile {
+    final bottom = MediaQueryData.fromWindow(WidgetsBinding.instance.window).padding.bottom;
+
     return [
         SafeArea(
           child: Padding(
@@ -53,9 +55,9 @@ class _BodyWidgetState extends State<BodyWidget> {
           child: SidenavWidget(),
         ),
         const AppBarWidget(),
-        const Positioned(
-          bottom: 0,
-          child: BottomSheetWidget(),
+        Positioned(
+          bottom: bottom,
+          child: const BottomSheetWidget(),
         )
       ];
   }
