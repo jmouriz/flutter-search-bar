@@ -51,20 +51,17 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
       );
     }
 
-    final material = Material();
-
     final container = Padding(
       padding: padding,
       child: Container(
-          width: width - 2 * value,
-          height: 150.0,
-          child: Expanded(
-            child: Material(
-              borderRadius: BorderRadius.circular(20),
-              elevation: 2,
-              child: const FlutterLogo(size: 64.0)),
-            )
-          ),
+        width: width - 2 * value,
+        height: 150.0,
+        child: Material(
+          borderRadius: BorderRadius.circular(20),
+          elevation: 2,
+          child: const FlutterLogo(size: 64.0)
+        )
+      ),
     );
 
     return AnimatedSwitcher(

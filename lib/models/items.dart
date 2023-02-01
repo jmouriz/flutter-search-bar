@@ -5,11 +5,13 @@ class ItemModel {
   String title;
   IconData icon;
   Widget? target;
+  ItemsModel? items;
 
   ItemModel({
     required this.title,
     required this.icon,
     this.target,
+    this.items,
   });
 }
 

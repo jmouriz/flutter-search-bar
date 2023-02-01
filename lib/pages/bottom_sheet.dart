@@ -14,17 +14,22 @@ class BottomSheetPage extends StatelessWidget {
 
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 32.0),
-          child: ElevatedButton(
-            onPressed: () {
-              bottomSheet.open.value = !bottomSheet.open.value;
-            },
-            child: const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text('Toggle Bottom Sheet'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 32.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  bottomSheet.open.value = !bottomSheet.open.value;
+                },
+                child: const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text('Toggle Bottom Sheet'),
+                ),
+              ),
             ),
-          ),
+          ],
         )
       ],
     );
