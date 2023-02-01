@@ -45,6 +45,7 @@ dependencies:
   flutter_rounded_date_picker:
     git:
       url: git@github.com:jmouriz/flutter_rounded_date_picker.git
+  flutter_markdown: ^0.6.13+1
 
 dev_dependencies:
   flutter_test:

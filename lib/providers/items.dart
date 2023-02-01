@@ -30,6 +30,16 @@ class ItemsProvider {
         icon: Icons.notifications,
         target: const AlertsPage()
       ),
+      ItemModel(
+        title: 'Large Text Test',
+        icon: Icons.text_snippet,
+        target: const InfoPage()
+      ),
+      ItemModel(
+        title: 'About This App',
+        icon: Icons.info,
+        target: const AboutPage()
+      ),
       if (PlatformDetails().isDesktop) ItemModel(
         title: 'Exit',
         icon: Icons.exit_to_app,

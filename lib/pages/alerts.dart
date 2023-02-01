@@ -12,26 +12,17 @@ class AlertsPage extends StatelessWidget {
 
     toolbar.title.value = 'Alerts Test';
 
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 32.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  alert.open.value = true;
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text('Open Alert'),
-                ),
-              ),
-            ),
-          ],
-        )
-      ],
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 32.0),
+        child: ElevatedButton(
+          onPressed: () => alert.open.value = true,
+          child: const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text('Open Alert'),
+          ),
+        ),
+      ),
     );
   }
 }

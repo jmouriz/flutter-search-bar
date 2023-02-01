@@ -12,26 +12,17 @@ class BottomSheetPage extends StatelessWidget {
 
     toolbar.title.value = 'Bottom Sheet Test';
 
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 32.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  bottomSheet.open.value = !bottomSheet.open.value;
-                },
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text('Toggle Bottom Sheet'),
-                ),
-              ),
-            ),
-          ],
-        )
-      ],
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 32.0),
+        child: ElevatedButton(
+          onPressed: () => bottomSheet.open.value = !bottomSheet.open.value,
+          child: const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text('Toggle Bottom Sheet'),
+          ),
+        ),
+      ),
     );
   }
 }

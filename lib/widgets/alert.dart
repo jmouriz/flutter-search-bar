@@ -68,9 +68,7 @@ class _AlertWidgetState extends State<AlertWidget> {
                 ),
                 const SizedBox(height: 12.0),
                 ElevatedButton(
-                  onPressed: () {
-                    alert.open.value = false;
-                  },
+                  onPressed: () => alert.open.value = false,
                   child: const Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Text('Close Alert'),
