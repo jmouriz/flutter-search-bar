@@ -25,6 +25,11 @@ class ItemsProvider {
         icon: Icons.keyboard_capslock,
         target: const BottomSheetPage()
       ),
+      ItemModel(
+        title: 'Alerts Test',
+        icon: Icons.notifications,
+        target: const AlertsPage()
+      ),
       if (PlatformDetails().isDesktop) ItemModel(
         title: 'Exit',
         icon: Icons.exit_to_app,

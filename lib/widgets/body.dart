@@ -13,6 +13,8 @@ class BodyWidget extends StatefulWidget {
 class _BodyWidgetState extends State<BodyWidget> {
   final toolbar = Get.put(ToolbarController());
   final sidenav = Get.put(SidenavController());
+  final query = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+  static const padding = 10.0;
 
   @override
   void initState() {
@@ -35,14 +37,14 @@ class _BodyWidgetState extends State<BodyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.shortestSide;
+    //final query = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+    //double width = query.size.shortestSide;
+    final width = query.size.shortestSide;
 
     return Stack(children: width < 550 ? mobile : desktop);
   }
 
   List<Widget> get mobile {
-    final bottom = MediaQueryData.fromWindow(WidgetsBinding.instance.window).padding.bottom;
-
     return [
         SafeArea(
           child: Padding(
@@ -50,15 +52,19 @@ class _BodyWidgetState extends State<BodyWidget> {
             child: sidenav.items[sidenav.selected.value].target,
           ),
         ),
+        Positioned(
+          top: query.padding.top + kToolbarHeight + padding,
+          child: const AlertWidget(),
+        ),
+        Positioned(
+          bottom: query.padding.bottom,
+          child: const BottomSheetWidget(),
+        ),
         const Padding(
           padding: EdgeInsets.only(top: kToolbarHeight),
           child: SidenavWidget(),
         ),
         const AppBarWidget(),
-        Positioned(
-          bottom: bottom,
-          child: const BottomSheetWidget(),
-        )
       ];
   }
 
@@ -75,11 +81,15 @@ class _BodyWidgetState extends State<BodyWidget> {
             ),
           ),
         ),
-        const AppBarWidget(),
         const Positioned(
           bottom: 0,
           child: BottomSheetWidget(),
-        )
+        ),
+        Positioned(
+          top: query.padding.top + kToolbarHeight + padding,
+          child: const AlertWidget(),
+        ),
+        const AppBarWidget(),
       ];
   }
 }

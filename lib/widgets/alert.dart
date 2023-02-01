@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 
-class BottomSheetWidget extends StatefulWidget {
-  const BottomSheetWidget({super.key});
+class AlertWidget extends StatefulWidget {
+  const AlertWidget({super.key});
 
   @override
-  State<BottomSheetWidget> createState() => _BottomSheetWidgetState();
+  State<AlertWidget> createState() => _AlertWidgetState();
 }
 
-class _BottomSheetWidgetState extends State<BottomSheetWidget> {
-  final bottomSheet = Get.put(BottomSheetController());
+class _AlertWidgetState extends State<AlertWidget> {
+  final alert = Get.put(AlertController());
 
   @override
   void initState() {
-    bottomSheet.open.listen((value) {
+    alert.open.listen((value) {
       if (mounted) {
         setState(() {});
       }
@@ -25,7 +25,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
   @override
   void dispose() {
     if (!mounted) {
-      bottomSheet.dispose();
+      alert.dispose();
     }
     super.dispose();
   }
@@ -55,11 +55,30 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
       padding: padding,
       child: SizedBox(
         width: width - 2 * value,
-        height: 150.0,
         child: Material(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.red.shade700,
           elevation: 2,
-          child: const FlutterLogo(size: 64.0)
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                const Text("Hi! I'm a test alert",
+                  style: TextStyle(color: Colors.white),
+                ),
+                const SizedBox(height: 12.0),
+                ElevatedButton(
+                  onPressed: () {
+                    alert.open.value = false;
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('Close Alert'),
+                  ),
+                ),
+              ],
+            ),
+          )
         )
       ),
     );
@@ -67,8 +86,8 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 300),
       transitionBuilder: (Widget child, Animation<double> animation) {
-        double begin = animation.isCompleted ? 1.0 : -1.0;
-        if (bottomSheet.open.value) {
+        double begin = animation.isCompleted ? -1.0 : 1.0;
+        if (alert.open.value) {
           begin *= -1;
         }
         return SlideTransition(
@@ -77,7 +96,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
           child: child
         );
       },
-      child: bottomSheet.open.value ? container : null,
+      child: alert.open.value ? container : null,
     );
   }
 }
