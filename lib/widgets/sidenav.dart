@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
+import 'package:toolbar/widgets/widgets.dart';
 
 class SidenavWidget extends StatefulWidget {
   const SidenavWidget({ super.key });
@@ -52,50 +53,20 @@ class _SidenavWidgetState extends State<SidenavWidget> {
         width: 240,
         key: const ValueKey<String>('sidenav'),
         child: SafeArea(
-          child: MenuWidget(sidenav: sidenav, width: width),
+          child: MenuWidget(
+            items: sidenav.items,
+            onSelect: (index) {
+              if (sidenav.items[index].target == null) {
+                exit(0);
+              }
+              sidenav.selected.value = index;
+              if (width < 550) {
+                sidenav.open.value = false;
+              }
+            },
+          ),
         )
       ) : null
-    );
-  }
-}
-
-// TODO: Para poner el el BottomSheet
-class MenuWidget extends StatelessWidget {
-  const MenuWidget({
-    super.key,
-    required this.sidenav,
-    required this.width,
-  });
-
-  final SidenavController sidenav;
-  final double width;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: sidenav.items.length,
-      padding: EdgeInsets.zero,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: Icon(sidenav.items[index].icon),
-          horizontalTitleGap: 0,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 12.0
-          ),
-          iconColor: Colors.black,
-          textColor: Colors.black,
-          title: Text(sidenav.items[index].title),
-          onTap: () {
-            if (sidenav.items[index].target == null) {
-              exit(0);
-            }
-            sidenav.selected.value = index;
-            if (width < 550) {
-              sidenav.open.value = false;
-            }
-          },
-        );
-      },
     );
   }
 }

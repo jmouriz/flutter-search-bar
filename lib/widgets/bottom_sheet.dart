@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
+import 'package:toolbar/widgets/widgets.dart';
 
 class BottomSheetWidget extends StatefulWidget {
   const BottomSheetWidget({super.key});
@@ -35,8 +38,16 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
     MediaQueryData query = MediaQuery.of(context);
     final width = query.size.width;
     final bottom = query.padding.bottom;
+    final screen = query.size.height -
+      query.padding.top - bottom - kToolbarHeight;
     final EdgeInsets padding;
+    int items = bottomSheet.items.length;
+    double height = bottomSheet.items.length * kMinInteractiveDimension;
     const value = 10.0;
+
+    while (screen * 3/4 - height < 0) {
+      height = (1 + --items) * kMinInteractiveDimension;
+    }
 
     if (bottom > 0) {
       padding = const EdgeInsets.only(
@@ -55,11 +66,21 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
       padding: padding,
       child: SizedBox(
         width: width - 2 * value,
-        height: 150.0,
+        height: height,
         child: Material(
           borderRadius: BorderRadius.circular(20),
           elevation: 2,
-          child: const FlutterLogo(size: 64.0)
+          child: MenuWidget(
+            items: bottomSheet.items,
+            // onSelect: (index) {
+            //   if (bottomSheet.items[index].target == null) {
+            //     exit(0);
+            //   }
+            //   if (width < 550) {
+            //     bottomSheet.open.value = false;
+            //   }
+            // },
+          ),
         )
       ),
     );

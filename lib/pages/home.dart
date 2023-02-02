@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Padding(
-            padding: EdgeInsets.only(right: 12.0),
+            padding: EdgeInsets.only(right: 16.0),
             child: FlutterLogo(
               size: 64,
             ),

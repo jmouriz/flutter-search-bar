@@ -43,8 +43,9 @@ class LinkWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       onTapLink: (text, href, title) {
         print('$text, $href, $title');
+        showLicensePage(context: context);
       },
-      data: '[More info](https://tecnologica.com.ar "More info")',
+      data: '[Show Licenses](https://tecnologica.com.ar "More info")',
     );
   }
 }

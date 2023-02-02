@@ -6,12 +6,20 @@ class ItemModel {
   IconData icon;
   Widget? target;
   ItemsModel? items;
+  bool expended;
+  bool visible;
+  int? badge;
+  Function? callback;
 
   ItemModel({
     required this.title,
     required this.icon,
     this.target,
     this.items,
+    this.expended = false,
+    this.visible = true,
+    this.badge,
+    this.callback,
   });
 }
 
