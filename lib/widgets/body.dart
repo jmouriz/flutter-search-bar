@@ -11,7 +11,6 @@ class BodyWidget extends StatefulWidget {
 }
 
 class _BodyWidgetState extends State<BodyWidget> {
-  final toolbar = Get.put(ToolbarController());
   final sidenav = Get.put(SidenavController());
   final query = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
   Widget target = const SizedBox.shrink();

@@ -7,10 +7,10 @@ class AlertsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolbar = Get.put(ToolbarController());
+    final application = Get.put(ApplicationController());
     final alert = Get.put(AlertController());
 
-    toolbar.title.value = 'Alerts Test';
+    application.title = 'Alerts Test';
 
     return Center(
       child: Padding(

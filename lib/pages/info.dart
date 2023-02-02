@@ -8,9 +8,9 @@ class InfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolbar = Get.put(ToolbarController());
+    final application = Get.put(ApplicationController());
 
-    toolbar.title.value = 'Large Text Test';
+    application.title = 'Large Text Test';
 
     return Markdown(
       styleSheet: MarkdownStyleSheet(

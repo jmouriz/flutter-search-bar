@@ -16,6 +16,7 @@ class TablePage extends StatefulWidget {
 
 class _TablePageState extends State<TablePage> {
   final toolbar = Get.put(ToolbarController());
+  final application = Get.put(ApplicationController());
   final searchBar = Get.put(SearchBarController());
 
   @override
@@ -49,8 +50,8 @@ class _TablePageState extends State<TablePage> {
       rows--;
     }
 
-    toolbar.title.value = 'Search Test';
-    toolbar.search.value = true;
+    application.title = 'Search Test';
+    application.search = true;
 
     searchBar.conditions.clear();
     searchBar.conditions.addAll({

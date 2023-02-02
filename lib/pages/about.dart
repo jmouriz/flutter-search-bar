@@ -8,9 +8,9 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolbar = Get.put(ToolbarController());
+    final application = Get.put(ApplicationController());
 
-    toolbar.title.value = 'About this App';
+    application.title = 'About this App';
 
     return Padding(
       padding: const EdgeInsets.all(12.0),

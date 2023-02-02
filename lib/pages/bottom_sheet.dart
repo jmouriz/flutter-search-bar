@@ -7,10 +7,10 @@ class BottomSheetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolbar = Get.put(ToolbarController());
+    final application = Get.put(ApplicationController());
     final bottomSheet = Get.put(BottomSheetController());
 
-    toolbar.title.value = 'Bottom Sheet Test';
+    application.title = 'Bottom Sheet Test';
 
     return Center(
       child: Padding(

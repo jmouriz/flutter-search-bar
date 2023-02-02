@@ -9,9 +9,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolbar = Get.put(ToolbarController());
-    toolbar.title.value = 'Home';
+    final application = Get.put(ApplicationController());
     Size size = MediaQuery.of(context).size;
+
+    application.title = 'Home';
+
     return Center(
       child: FlutterLogo(
         size: min(size.width, size.height) * 3/4
