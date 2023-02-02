@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 
 class ApplicationController extends GetxController {
+  final String version = '1.0';
   final toolbar = Get.put(ToolbarController());
   final sidenav = Get.put(SidenavController());
   final searchBar = Get.put(SearchBarController());

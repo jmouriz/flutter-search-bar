@@ -10,13 +10,32 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final application = Get.put(ApplicationController());
-    Size size = MediaQuery.of(context).size;
 
     application.title = 'Home';
 
-    return Center(
-      child: FlutterLogo(
-        size: min(size.width, size.height) * 3/4
+    return Padding(
+      padding: const EdgeInsets.only(top: 32.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(right: 12.0),
+            child: FlutterLogo(
+              size: 64,
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Flutter ${application.version}',
+                style: const TextStyle(
+                  fontSize: 32,
+                ),
+              ),
+              const Text('A long description of this app'),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -77,7 +77,7 @@ class _BodyWidgetState extends State<BodyWidget> {
             children: [
               const SidenavWidget(),
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: double.infinity,
                   child: SingleChildScrollView(
                     child: target

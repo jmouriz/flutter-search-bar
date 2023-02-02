@@ -49,36 +49,53 @@ class _SidenavWidgetState extends State<SidenavWidget> {
         );
       },
       child: sidenav.open.value ? Drawer(
+        width: 240,
         key: const ValueKey<String>('sidenav'),
         child: SafeArea(
-          // TODO: Hacer común para el BottomSheet
-          child: ListView.builder(
-            itemCount: sidenav.items.length,
-            padding: EdgeInsets.zero,
-            itemBuilder: (context, index) {
-              return ListTile(
-                leading: Icon(sidenav.items[index].icon),
-                horizontalTitleGap: 0,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 12.0
-                ),
-                iconColor: Colors.black,
-                textColor: Colors.black,
-                title: Text(sidenav.items[index].title),
-                onTap: () {
-                  if (sidenav.items[index].target == null) {
-                    exit(0);
-                  }
-                  sidenav.selected.value = index;
-                  if (width < 550) {
-                    sidenav.open.value = false;
-                  }
-                },
-              );
-            },
-          ),
+          child: MenuWidget(sidenav: sidenav, width: width),
         )
       ) : null
+    );
+  }
+}
+
+// TODO: Para poner el el BottomSheet
+class MenuWidget extends StatelessWidget {
+  const MenuWidget({
+    super.key,
+    required this.sidenav,
+    required this.width,
+  });
+
+  final SidenavController sidenav;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: sidenav.items.length,
+      padding: EdgeInsets.zero,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: Icon(sidenav.items[index].icon),
+          horizontalTitleGap: 0,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12.0
+          ),
+          iconColor: Colors.black,
+          textColor: Colors.black,
+          title: Text(sidenav.items[index].title),
+          onTap: () {
+            if (sidenav.items[index].target == null) {
+              exit(0);
+            }
+            sidenav.selected.value = index;
+            if (width < 550) {
+              sidenav.open.value = false;
+            }
+          },
+        );
+      },
     );
   }
 }
