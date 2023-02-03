@@ -54,31 +54,29 @@ class _AlertWidgetState extends State<AlertWidget> {
     final container = Padding(
       padding: padding,
       child: SizedBox(
-        width: width - 2 * value,
-        child: Material(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.red.shade700,
-          elevation: 2,
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                const Text("Hi! I'm a test alert",
-                  style: TextStyle(color: Colors.white),
+          width: width - 2 * value,
+          child: Material(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.red.shade700,
+              elevation: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        alert.message,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(height: 12.0),
+                    IconButton(
+                      onPressed: () => alert.open.value = false,
+                      icon: const Icon(Icons.close, color: Colors.white),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 12.0),
-                ElevatedButton(
-                  onPressed: () => alert.open.value = false,
-                  child: const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text('Close Alert'),
-                  ),
-                ),
-              ],
-            ),
-          )
-        )
-      ),
+              ))),
     );
 
     return AnimatedSwitcher(
@@ -89,10 +87,9 @@ class _AlertWidgetState extends State<AlertWidget> {
           begin *= -1;
         }
         return SlideTransition(
-          position: Tween(begin: Offset(0.0, begin), end: Offset.zero)
-            .animate(animation),
-          child: child
-        );
+            position: Tween(begin: Offset(0.0, begin), end: Offset.zero)
+                .animate(animation),
+            child: child);
       },
       child: alert.open.value ? container : null,
     );
