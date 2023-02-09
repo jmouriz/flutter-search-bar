@@ -59,23 +59,38 @@ class _AlertWidgetState extends State<AlertWidget> {
               borderRadius: BorderRadius.circular(10),
               color: Colors.red.shade700,
               elevation: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        alert.message,
-                        style: const TextStyle(color: Colors.white),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (alert.title != null) Text(
+                            alert.title,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            alert.message,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 12.0),
-                    IconButton(
-                      onPressed: () => alert.open.value = false,
-                      icon: const Icon(Icons.close, color: Colors.white),
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 12.0),
+                  IconButton(
+                    onPressed: () => alert.open.value = false,
+                    icon: const Icon(Icons.close, color: Colors.white),
+                  ),
+                ],
               ))),
     );
 

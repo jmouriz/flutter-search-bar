@@ -40,6 +40,28 @@ class ItemsProvider {
         icon: Icons.info,
         target: const AboutPage()
       ),
+      ItemModel(
+        title: 'More options',
+        icon: Icons.star,
+        items: ItemsModel(items: [
+          ItemModel(
+            title: 'Another option',
+            icon: Icons.star
+          ),
+          ItemModel(
+            title: 'Another option',
+            icon: Icons.star
+          ),
+          ItemModel(
+            title: 'Another option',
+            icon: Icons.star
+          ),
+          ItemModel(
+            title: 'Another option',
+            icon: Icons.star
+          ),
+        ]),
+      ),
       if (PlatformDetails().isDesktop) ItemModel(
         title: 'Exit',
         icon: Icons.exit_to_app,

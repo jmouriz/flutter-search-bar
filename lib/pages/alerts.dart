@@ -28,7 +28,8 @@ class AlertsPage extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => alert.show(
-                message: "Hi! I'm a test alert",
+                title: "Won't worry",
+                message: "Hi! I'm a test alert\nline2\nline3\nline4",
                 timeout: timeout,
               ),
               child: const Padding(

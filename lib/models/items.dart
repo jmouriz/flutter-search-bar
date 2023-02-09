@@ -6,7 +6,7 @@ class ItemModel {
   IconData icon;
   Widget? target;
   ItemsModel? items;
-  bool expended;
+  bool expanded;
   bool visible;
   int? badge;
   Function? callback;
@@ -16,31 +16,35 @@ class ItemModel {
     required this.icon,
     this.target,
     this.items,
-    this.expended = false,
+    this.expanded = false,
     this.visible = true,
     this.badge,
     this.callback,
   });
+
+  bool get submenu => items != null;
 }
 
 class ItemsModel<ItemModel> extends ListBase<ItemModel> {
-  final List<ItemModel> _items = [];
+  final List<ItemModel> items = [];
 
-  ItemsModel();
+  ItemsModel({
+    items,
+  });
 
   @override
   set length(int length) {
-    _items.length = length;
+    items!.length = length;
   }
 
   @override
-  int get length => _items.length;
+  int get length => items.length;
 
   @override
   void operator []= (int index, ItemModel value) {
-    _items[index] = value;
+    items[index] = value;
   }
 
   @override
-  ItemModel operator [] (int index) => _items[index];
+  ItemModel operator [] (int index) => items[index];
 }

@@ -2,9 +2,11 @@ import 'package:get/get.dart';
 
 class AlertController extends GetxController {
   RxBool open = false.obs;
+  String? _title;
   String _message = '';
 
-  void show({required String message, int? timeout}) {
+  void show({required String message, String? title, int? timeout}) {
+    _title = title;
     _message = message;
     open.value = true;
 
@@ -16,4 +18,5 @@ class AlertController extends GetxController {
   }
 
   get message => _message;
+  get title => _title;
 }
