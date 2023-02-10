@@ -12,4 +12,6 @@ class SidenavController extends GetxController {
       print('option changed sidenav');
     });
   }
+
+  void close() => open.value = false;
 }

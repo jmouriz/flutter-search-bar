@@ -30,7 +30,6 @@ class ItemModel {
 }
 
 class ItemsModel<ItemModel> extends ListBase<ItemModel> {
-  // final List<ItemModel> items = [];
   List<ItemModel> _items = [];
 
   ItemsModel({items}) {

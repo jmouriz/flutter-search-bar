@@ -111,7 +111,7 @@ class _AlertWidgetState extends State<AlertWidget> {
                 ),
                 const SizedBox(height: 12.0),
                 IconButton(
-                  onPressed: () => alert.open.value = false,
+                  onPressed: () => alert.close(),
                   icon: Icon(
                     Icons.close,
                     color: foreground
@@ -131,9 +131,10 @@ class _AlertWidgetState extends State<AlertWidget> {
           begin *= -1;
         }
         return SlideTransition(
-            position: Tween(begin: Offset(0.0, begin), end: Offset.zero)
-                .animate(animation),
-            child: child);
+          position: Tween(begin: Offset(0.0, begin), end: Offset.zero)
+            .animate(animation),
+          child: child
+        );
       },
       child: alert.open.value ? container : null,
     );

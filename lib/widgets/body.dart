@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
-import 'package:toolbar/widgets/app_bar/app_bar.dart';
+import 'package:toolbar/providers/providers.dart';
 import 'package:toolbar/widgets/widgets.dart';
 
 class BodyWidget extends StatefulWidget {
@@ -13,6 +13,8 @@ class BodyWidget extends StatefulWidget {
 
 class _BodyWidgetState extends State<BodyWidget> {
   final sidenav = Get.put(SidenavController());
+  final application = Get.put(ApplicationController());
+  final bottomSheet = Get.put(BottomSheetController());
   final query = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
   Widget target = const SizedBox.shrink();
   static const padding = 10.0;
@@ -20,6 +22,10 @@ class _BodyWidgetState extends State<BodyWidget> {
   @override
   void initState() {
     target = sidenav.items[sidenav.selected.value].target;
+    if (PlatformDetails().isMobile) {
+      sidenav.open.listen((value) => setState(() {}));
+    }
+    bottomSheet.open.listen((value) => setState(() {}));
     sidenav.selected.listen((value) {
       target = sidenav.items[value].target;
       if (mounted) {
@@ -33,13 +39,14 @@ class _BodyWidgetState extends State<BodyWidget> {
   void dispose() {
     if (!mounted) {
       sidenav.dispose();
+      bottomSheet.dispose();
+      application.dispose();
     }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    //final query = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     double width = query.size.shortestSide;
 
     return Stack(children: width < 550 ? mobile : desktop);
@@ -53,6 +60,18 @@ class _BodyWidgetState extends State<BodyWidget> {
           child: SingleChildScrollView(child: target),
         ),
       ),
+      SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: GestureDetector(
+            behavior: (sidenav.open.value || bottomSheet.open.value)
+              ? HitTestBehavior.opaque
+              : HitTestBehavior.deferToChild,
+            onTap: () {
+              sidenav.close();
+              bottomSheet.close();
+            },
+          )),
       Positioned(
         top: query.padding.top + kToolbarHeight + padding,
         child: const AlertWidget(),
@@ -79,12 +98,23 @@ class _BodyWidgetState extends State<BodyWidget> {
             children: [
               const SidenavWidget(),
               Expanded(
-                child: SizedBox(
-                  height: double.infinity,
-                  child: SingleChildScrollView(
-                    child: target
+                child: Stack(children: [
+                  SizedBox(
+                    height: double.infinity,
+                    child: SingleChildScrollView(child: target),
                   ),
-                ),
+                  SizedBox(
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: GestureDetector(
+                        behavior: bottomSheet.open.value
+                          ? HitTestBehavior.opaque
+                          : HitTestBehavior.deferToChild,
+                        onTap: () {
+                          bottomSheet.close();
+                        },
+                      )),
+                ]),
               ),
             ],
           ),

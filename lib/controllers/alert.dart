@@ -27,10 +27,12 @@ class AlertController extends GetxController {
 
     if (timeout != null) {
       Future.delayed(Duration(milliseconds: timeout * 1000), () {
-        open.value = false;
+        close();
       });
     }
   }
+
+  void close() => open.value = false;
 
   get message => _message;
   get title => _title;

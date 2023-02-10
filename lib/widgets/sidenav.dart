@@ -66,7 +66,7 @@ class _SidenavWidgetState extends State<SidenavWidget> {
                   }
                   sidenav.selected.value = index;
                   if (width < 550) {
-                    sidenav.open.value = false;
+                    sidenav.close();
                   }
                 },
               ),
