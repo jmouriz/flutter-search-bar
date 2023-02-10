@@ -47,7 +47,7 @@ class _TablePageState extends State<TablePage> {
     final DataTableSource data = DataSource();
 
     if (PlatformDetails().isMobile) {
-      rows--;
+      rows -= 2;
     }
 
     application.title = 'Search Test';

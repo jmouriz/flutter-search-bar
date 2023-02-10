@@ -65,7 +65,13 @@ class ConditionModel {
 }
 
 class ConditionsModel extends MapBase<String, ConditionModel> {
-  final Map<String, ConditionModel> _conditions = {};
+  Map<String, ConditionModel> _conditions = {};
+
+  ConditionsModel({conditions}) {
+    if (conditions != null) {
+      _conditions = conditions;
+    }
+  }
 
   @override
   Iterable<String> get keys => _conditions.keys;
