@@ -36,6 +36,8 @@ class _AlertWidgetState extends State<AlertWidget> {
     final width = query.size.width;
     final bottom = query.padding.bottom;
     final EdgeInsets padding;
+    final Color background;
+    Color foreground = Colors.white;
     const value = 10.0;
 
     if (bottom > 0) {
@@ -51,13 +53,35 @@ class _AlertWidgetState extends State<AlertWidget> {
       );
     }
 
+    switch (alert.type) {
+      case AlertType.success:
+        background = Colors.green.shade700;
+        break;
+      case AlertType.error:
+        background = Colors.red.shade700;
+        break;
+      case AlertType.warning:
+        foreground = Colors.black;
+        background = Colors.yellow.shade700;
+        break;
+      case AlertType.info:
+        background = Colors.blue.shade700;
+        break;
+      case AlertType.normal:
+        background = Colors.grey.shade700;
+        break;
+      default:
+        foreground = Colors.black;
+        background = Colors.white;
+    }
+
     final container = Padding(
       padding: padding,
       child: SizedBox(
         width: width - 2 * value,
         child: Material(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.red.shade700,
+            color: background,
             elevation: 2,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,8 +94,8 @@ class _AlertWidgetState extends State<AlertWidget> {
                       children: [
                         if (alert.title != null) Text(
                           alert.title,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: foreground,
                             fontSize: 16.0,
                             fontWeight: FontWeight.w700,
                           ),
@@ -79,7 +103,7 @@ class _AlertWidgetState extends State<AlertWidget> {
                         const SizedBox(height: 4),
                         Text(
                           alert.message,
-                          style: const TextStyle(color: Colors.white),
+                          style: TextStyle(color: foreground),
                         ),
                       ],
                     ),
@@ -88,7 +112,10 @@ class _AlertWidgetState extends State<AlertWidget> {
                 const SizedBox(height: 12.0),
                 IconButton(
                   onPressed: () => alert.open.value = false,
-                  icon: const Icon(Icons.close, color: Colors.white),
+                  icon: Icon(
+                    Icons.close,
+                    color: foreground
+                  ),
                 ),
               ],
             )

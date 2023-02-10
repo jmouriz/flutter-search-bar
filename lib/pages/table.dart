@@ -212,7 +212,14 @@ class DataSource extends DataTableSource {
       DataCell(Text(_data[index]['user'])),
       DataCell(Text(_data[index]['vendor'])),
       DataCell(Text(_data[index]['price'].toStringAsFixed(2))),
-      const DataCell(Icon(Icons.delete)),
+      DataCell(
+        IconButton(
+          icon: const Icon(Icons.more_vert),
+          onPressed:() {
+            debugPrint('Pressed on $index');
+          },
+        )
+      ),
     ]);
   }
 }
