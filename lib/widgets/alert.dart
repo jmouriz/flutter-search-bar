@@ -54,44 +54,46 @@ class _AlertWidgetState extends State<AlertWidget> {
     final container = Padding(
       padding: padding,
       child: SizedBox(
-          width: width - 2 * value,
-          child: Material(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.red.shade700,
-              elevation: 2,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (alert.title != null) Text(
-                            alert.title,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w700,
-                            ),
+        width: width - 2 * value,
+        child: Material(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.red.shade700,
+            elevation: 2,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (alert.title != null) Text(
+                          alert.title,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w700,
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            alert.message,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          alert.message,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 12.0),
-                  IconButton(
-                    onPressed: () => alert.open.value = false,
-                    icon: const Icon(Icons.close, color: Colors.white),
-                  ),
-                ],
-              ))),
+                ),
+                const SizedBox(height: 12.0),
+                IconButton(
+                  onPressed: () => alert.open.value = false,
+                  icon: const Icon(Icons.close, color: Colors.white),
+                ),
+              ],
+            )
+          )
+        ),
     );
 
     return AnimatedSwitcher(

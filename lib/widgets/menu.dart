@@ -63,11 +63,19 @@ class _MenuWidgetState extends State<MenuWidget> {
                   }
                 },
               ),
-              if (item.submenu && item.expanded)
-                Padding(
+              if (item.submenu) AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return SizeTransition(
+                    sizeFactor: animation,
+                    child: child
+                  );
+                },
+                child: item.expanded ?  Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: MenuWidget(items: item.items),
-                )
+                ) : null,
+              ),
             ],
           );
         }).toList(),
