@@ -43,7 +43,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
     final EdgeInsets padding;
     int items = bottomSheet.items.length;
     double height = bottomSheet.items.length * kMinInteractiveDimension;
-    const value = 10.0;
+    const value = 10.0; // padding
 
     while (screen * 3/4 - height < 0) {
       height = (1 + --items) * kMinInteractiveDimension;

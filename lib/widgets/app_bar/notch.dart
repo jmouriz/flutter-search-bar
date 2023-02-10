@@ -8,7 +8,7 @@ class NotchWidget extends StatelessWidget {
     return Container( // NotchWidget
       height: MediaQuery.of(context).padding.top,
       width: double.infinity,
-      color: Colors.blue,
+      color: Colors.blue.shade700,
     );
   }
 }

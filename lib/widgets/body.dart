@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
+import 'package:toolbar/widgets/app_bar/app_bar.dart';
 import 'package:toolbar/widgets/widgets.dart';
 
 class BodyWidget extends StatefulWidget {
@@ -60,16 +61,17 @@ class _BodyWidgetState extends State<BodyWidget> {
         bottom: query.padding.bottom,
         child: const BottomSheetWidget(),
       ),
-      const Padding(
-        padding: EdgeInsets.only(top: kToolbarHeight),
-        child: SidenavWidget(),
-      ),
       const AppBarWidget(),
+      Padding(
+        padding: EdgeInsets.only(top: query.padding.top + kToolbarHeight),
+        child: const SidenavWidget(),
+      ),
     ];
   }
 
   List<Widget> get desktop {
     return [
+      const AppBarWidget(),
       SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: kToolbarHeight),
@@ -96,7 +98,6 @@ class _BodyWidgetState extends State<BodyWidget> {
         top: query.padding.top + kToolbarHeight + padding,
         child: const AlertWidget(),
       ),
-      const AppBarWidget(),
     ];
   }
 }

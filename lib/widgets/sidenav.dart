@@ -53,19 +53,38 @@ class _SidenavWidgetState extends State<SidenavWidget> {
       child: sidenav.open.value ? Drawer(
         width: 240,
         key: const ValueKey<String>('sidenav'),
-        child: SafeArea(
-          child: MenuWidget(
-            items: sidenav.items,
-            onSelect: (index) {
-              if (sidenav.items[index].target == null) {
-                exit(0);
-              }
-              sidenav.selected.value = index;
-              if (width < 550) {
-                sidenav.open.value = false;
-              }
-            },
-          ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: kToolbarHeight,
+              width: double.infinity,
+              child: Material(
+                color: Colors.blue,
+                elevation: 2,
+                child: Center(
+                  child: Text('UserBar',
+                    style: TextStyle(
+                      color: Colors.white
+                    ),
+                  )
+                )
+              )
+            ),
+            Expanded(
+              child: MenuWidget(
+                items: sidenav.items,
+                onSelect: (index) {
+                  if (sidenav.items[index].target == null) {
+                    exit(0);
+                  }
+                  sidenav.selected.value = index;
+                  if (width < 550) {
+                    sidenav.open.value = false;
+                  }
+                },
+              ),
+            ),
+          ],
         )
       ) : null
     );
