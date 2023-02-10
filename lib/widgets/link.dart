@@ -19,19 +19,19 @@ class LinkWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Markdown(
-      styleSheet: MarkdownStyleSheet(
-        textAlign: WrapAlignment.spaceBetween,
+    return InkWell(
+      child: Text(_label,
+        style: const TextStyle(
+          color: Colors.blue,
+          decoration: TextDecoration.underline,
+        ),
       ),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      onTapLink: (text, href, title) {
-        //print('$text, $href, $title');
+      onTap: () {
+        debugPrint(_target);
         if (_callback != null) {
-          _callback!(href);
+          _callback!(_target);
         }
       },
-      data: '[$_label]($_target "$_label")',
     );
   }
 }
