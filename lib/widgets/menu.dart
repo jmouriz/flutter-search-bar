@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mutable_icon/mutable_icon.dart';
 import 'package:toolbar/models/models.dart';
 
 class MenuWidget extends StatefulWidget {
@@ -30,11 +31,17 @@ class _MenuWidgetState extends State<MenuWidget> {
             children: [
               ListTile(
                 leading: Icon(item.icon),
-                trailing: item.submenu
-                  ? item.expanded
-                    ? const Icon(Icons.arrow_drop_up)
-                    : const Icon(Icons.arrow_drop_down)
-                  : null,
+                trailing: item.submenu ? MutableIcon(
+                  duration: const Duration(milliseconds: 300),
+                  startIcon: Icons.expand_more,
+                  endIcon: Icons.expand_less,
+                  startIconColor: Colors.black,
+                  endIconColor: Colors.black,
+                  controller: item.controller,
+                  initFrom: item.expanded ? InitFrom.end : InitFrom.start
+                ) : null,
+                // const Icon(Icons.arrow_drop_up)
+                // const Icon(Icons.arrow_drop_down)
                 horizontalTitleGap: 0,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 12.0
@@ -44,6 +51,9 @@ class _MenuWidgetState extends State<MenuWidget> {
                 title: Text(item.title),
                 onTap: () {
                   if (item.submenu) {
+                    item.expanded
+                      ? item.controller.animateToStart()
+                      : item.controller.animateToEnd();
                     item.expanded = !item.expanded;
                     setState(() {});
                   } else {

@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
+import 'package:mutable_icon/mutable_icon.dart';
 
 class ItemModel {
   String title;
@@ -10,6 +11,8 @@ class ItemModel {
   bool visible;
   int? badge;
   Function? callback;
+
+  final MutableIconController _controller = MutableIconController();
 
   ItemModel({
     required this.title,
@@ -22,15 +25,9 @@ class ItemModel {
     this.callback,
   });
 
-  bool get submenu => items != null;
+  get submenu => items != null;
+  get controller => _controller;
 }
-
-// class ItemsModel extends DelegatingList<ItemModel> {
-//   final List<ItemModel> items = [];
-//   List<ItemModel> get delegate => items;
-// }
-
-//extension ItemsModel<ItemModel> on List<ItemModel> {}
 
 class ItemsModel<ItemModel> extends ListBase<ItemModel> {
   // final List<ItemModel> items = [];
