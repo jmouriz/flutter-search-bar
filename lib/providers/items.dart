@@ -7,6 +7,71 @@ import 'package:toolbar/providers/providers.dart';
 class ItemsProvider {
   static final ItemsProvider _singleton = ItemsProvider._internal();
   static final ItemsModel _items = ItemsModel();
+  /*
+  static final ItemsModel _items = ItemsModel(items: [
+    ItemModel(
+      title: 'Home',
+      icon: Icons.home,
+      target: const HomePage()
+    ),
+    ItemModel(
+      title: 'Search Test',
+      icon: Icons.list,
+      target: const TablePage()
+    ),
+    ItemModel(
+      title: 'Bottom Sheet Test',
+      icon: Icons.keyboard_capslock,
+      target: const BottomSheetPage()
+    ),
+    ItemModel(
+      title: 'Alerts Test',
+      icon: Icons.notifications,
+      target: const AlertsPage()
+    ),
+    ItemModel(
+      title: 'Large Text Test',
+      icon: Icons.text_snippet,
+      target: const InfoPage()
+    ),
+    ItemModel(
+      title: 'About This App',
+      icon: Icons.info,
+      target: const AboutPage()
+    ),
+    ItemModel(
+      title: 'More options',
+      icon: Icons.more_vert,
+      items: ItemsModel(items: [
+        ItemModel(
+          title: 'A suboption',
+          icon: Icons.star_border
+        ),
+        ItemModel(
+          title: 'A suboption',
+          icon: Icons.star_border
+        ),
+        ItemModel(
+          title: 'A suboption',
+          icon: Icons.star_border
+        ),
+        ItemModel(
+          title: 'A suboption',
+          icon: Icons.star_border
+        ),
+      ]),
+    ),
+    if (PlatformDetails().isDesktop) ItemModel(
+      title: 'Exit',
+      icon: Icons.exit_to_app,
+    ),
+    ItemModel(title: 'Another option', icon: Icons.star),
+    ItemModel(title: 'Another option', icon: Icons.star),
+    ItemModel(title: 'Another option', icon: Icons.star),
+    ItemModel(title: 'Another option', icon: Icons.star),
+    ItemModel(title: 'Another option', icon: Icons.star),
+  ]);
+  */
   factory ItemsProvider() {
     _items.clear();
     _items.addAll([
@@ -42,23 +107,23 @@ class ItemsProvider {
       ),
       ItemModel(
         title: 'More options',
-        icon: Icons.star,
+        icon: Icons.more_vert,
         items: ItemsModel(items: [
           ItemModel(
-            title: 'Another option',
-            icon: Icons.star
+            title: 'A suboption',
+            icon: Icons.star_border
           ),
           ItemModel(
-            title: 'Another option',
-            icon: Icons.star
+            title: 'A suboption',
+            icon: Icons.star_border
           ),
           ItemModel(
-            title: 'Another option',
-            icon: Icons.star
+            title: 'A suboption',
+            icon: Icons.star_border
           ),
           ItemModel(
-            title: 'Another option',
-            icon: Icons.star
+            title: 'A suboption',
+            icon: Icons.star_border
           ),
         ]),
       ),

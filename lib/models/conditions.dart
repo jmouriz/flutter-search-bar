@@ -77,7 +77,8 @@ class ConditionsModel extends MapBase<String, ConditionModel> {
   void clear() => _conditions.clear();
 
   @override
-  void operator []= (String key, ConditionModel value) => _conditions[key] = value;
+  void operator []= (String key, ConditionModel value) =>
+    _conditions[key] = value;
 
   @override
   ConditionModel? operator [] (key) => _conditions[key];

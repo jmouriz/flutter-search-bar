@@ -25,26 +25,32 @@ class ItemModel {
   bool get submenu => items != null;
 }
 
+// class ItemsModel extends DelegatingList<ItemModel> {
+//   final List<ItemModel> items = [];
+//   List<ItemModel> get delegate => items;
+// }
+
+//extension ItemsModel<ItemModel> on List<ItemModel> {}
+
 class ItemsModel<ItemModel> extends ListBase<ItemModel> {
-  final List<ItemModel> items = [];
+  // final List<ItemModel> items = [];
+  List<ItemModel> _items = [];
 
-  ItemsModel({
-    items,
-  });
-
-  @override
-  set length(int length) {
-    items!.length = length;
+  ItemsModel({items}) {
+    if (items != null) {
+      _items = items;
+    }
   }
 
   @override
-  int get length => items.length;
+  set length(int length) => _items.length = length;
 
   @override
-  void operator []= (int index, ItemModel value) {
-    items[index] = value;
-  }
+  int get length => _items.length;
 
   @override
-  ItemModel operator [] (int index) => items[index];
+  void operator []= (int index, ItemModel value) => _items[index] = value;
+
+  @override
+  ItemModel operator [] (int index) => _items[index];
 }
