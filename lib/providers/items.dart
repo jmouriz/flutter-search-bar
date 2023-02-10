@@ -93,6 +93,7 @@ class ItemsProvider {
       ItemModel(
         title: 'Alerts Test',
         icon: Icons.notifications,
+        badge: 2,
         target: const AlertsPage()
       ),
       ItemModel(
@@ -110,16 +111,31 @@ class ItemsProvider {
         icon: Icons.more_vert,
         items: ItemsModel(items: [
           ItemModel(
-            title: 'A suboption',
-            icon: Icons.star_border
+            title: 'A magic suboption',
+            icon: Icons.star_border,
+            callback: (item) {
+              if (item.icon == Icons.star) {
+                item.icon = Icons.star_border;
+              } else {
+                item.icon = Icons.star;
+              }
+              return true;
+            }
           ),
           ItemModel(
-            title: 'A suboption',
-            icon: Icons.star_border
+            title: 'A normal suboption',
+            icon: Icons.star_border,
+            callback: (item) {
+              debugPrint('Click on ${item.title}');
+              return false;
+            }
           ),
           ItemModel(
-            title: 'A suboption',
-            icon: Icons.star_border
+            title: 'A error suboption',
+            icon: Icons.star_border,
+            callback: (item) {
+              debugPrint('Click on ${item.title}');
+            }
           ),
           ItemModel(
             title: 'A suboption',
