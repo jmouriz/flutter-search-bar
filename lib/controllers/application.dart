@@ -15,7 +15,7 @@ class ApplicationController extends GetxController {
       bottomSheet.close();
     });
     sidenav.selected.listen((value) {
-      search = false;
+      toolbar.reset();
       alert.close();
       bottomSheet.close();
     });
@@ -23,4 +23,6 @@ class ApplicationController extends GetxController {
 
   set title(value) => toolbar.title.value = value;
   set search(value) => toolbar.search.value = value;
+  set next(value) => toolbar.next = value;
+  set done(value) => toolbar.done = value;
 }

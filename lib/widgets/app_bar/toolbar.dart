@@ -25,6 +25,13 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
         });
       }
     });
+    toolbar.valid.listen((value) {
+      if (mounted) {
+        Future.delayed(Duration.zero, () {
+          setState(() {});
+        });
+      }
+    });
     toolbar.search.listen((value) {
       if (mounted) {
         Future.delayed(Duration.zero, () {
@@ -100,6 +107,26 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
             onPressed: () {
               appBar.searching.value = true;
             },
+          ) else if (toolbar.next != null) IconButton(
+            icon: Icon(
+              Icons.arrow_forward_rounded,
+              color: toolbar.valid.value
+                ? Colors.white
+                : Colors.grey.shade400,
+            ),
+            onPressed: toolbar.valid.value ? () {
+              toolbar.next!();
+            } : null,
+          ) else if (toolbar.done != null) IconButton(
+            icon: Icon(
+              Icons.done,
+              color: toolbar.valid.value
+                ? Colors.white
+                : Colors.grey.shade400,
+            ),
+            onPressed: toolbar.valid.value ? () {
+              toolbar.done!();
+            } : null,
           ) else const SizedBox(
             width: 48.0,
           ),

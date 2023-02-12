@@ -10,7 +10,8 @@ class ItemModel {
   bool expanded;
   bool visible;
   int? badge;
-  Function? callback;
+  Function(ItemModel item, BuildContext context)? callback;
+  bool Function(ItemModel item) show;
 
   final MutableIconController _controller = MutableIconController();
 
@@ -23,10 +24,14 @@ class ItemModel {
     this.visible = true,
     this.badge,
     this.callback,
+    //this.show = _show,
+    this.show = _show,
   });
 
   get submenu => items != null;
   get controller => _controller;
+
+  static bool _show(item) => true;
 }
 
 class ItemsModel<ItemModel> extends ListBase<ItemModel> {

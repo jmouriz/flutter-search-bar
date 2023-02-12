@@ -86,6 +86,11 @@ class ItemsProvider {
         target: const TablePage()
       ),
       ItemModel(
+        title: 'Form Test',
+        icon: Icons.edit,
+        target: const FormPage()
+      ),
+       ItemModel(
         title: 'Bottom Sheet Test',
         icon: Icons.keyboard_capslock,
         target: const BottomSheetPage()
@@ -113,7 +118,7 @@ class ItemsProvider {
           ItemModel(
             title: 'A magic suboption',
             icon: Icons.star_border,
-            callback: (item) {
+            callback: (item, context) {
               if (item.icon == Icons.star) {
                 item.icon = Icons.star_border;
               } else {
@@ -125,15 +130,19 @@ class ItemsProvider {
           ItemModel(
             title: 'A normal suboption',
             icon: Icons.star_border,
-            callback: (item) {
+            callback: (item, context) {
               debugPrint('Click on ${item.title}');
               return false;
             }
           ),
           ItemModel(
-            title: 'A error suboption',
+            title: 'A navigation suboption',
             icon: Icons.star_border,
-            callback: (item) {
+            callback: (item, context) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
               debugPrint('Click on ${item.title}');
             }
           ),
@@ -143,9 +152,11 @@ class ItemsProvider {
           ),
         ]),
       ),
-      if (PlatformDetails().isDesktop) ItemModel(
+      ItemModel(
         title: 'Exit',
         icon: Icons.exit_to_app,
+        //visible: PlatformDetails().isDesktop,
+        show: (item) => PlatformDetails().isDesktop,
       ),
       ItemModel(title: 'Another option', icon: Icons.star),
       ItemModel(title: 'Another option', icon: Icons.star),

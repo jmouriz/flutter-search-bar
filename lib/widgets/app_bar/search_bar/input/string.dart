@@ -18,21 +18,22 @@ class InputStringWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        focusNode: focus,
-        initialValue: condition.value,
-        style: const TextStyle(fontSize: 20),
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          hintText: condition.label,
-        ),
-        onChanged: (value) {
-          condition.value = value;
-          print(value);
-          searchBar.state();
-        });
+      focusNode: focus,
+      initialValue: condition.value,
+      style: const TextStyle(fontSize: 20),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
+        hintText: condition.label,
+      ),
+      onChanged: (value) {
+        condition.value = value;
+        print(value);
+        searchBar.state();
+      }
+    );
   }
 }

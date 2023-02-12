@@ -1,23 +1,6 @@
 import 'dart:collection';
-
 import 'package:intl/intl.dart';
-
-enum Operator {
-  start,
-  contain,
-  equal,
-  less,
-  greater,
-}
-
-enum Type {
-  string,
-  email,
-  number,
-  date,
-  list,
-  boolean,
-}
+import 'package:toolbar/types/types.dart';
 
 class ConditionModel {
   String label;

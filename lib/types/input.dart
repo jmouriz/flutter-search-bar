@@ -1,0 +1,4 @@
+enum Input {
+  email,
+  password,
+}

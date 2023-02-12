@@ -6,6 +6,7 @@ import 'package:get/instance_manager.dart';
 import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/providers/providers.dart';
 import 'package:toolbar/models/models.dart';
+import 'package:toolbar/types/types.dart';
 
 class TablePage extends StatefulWidget {
   const TablePage({super.key});

@@ -1,4 +1,5 @@
 export 'package:toolbar/controllers/application.dart';
+export 'package:toolbar/controllers/form.dart';
 export 'package:toolbar/controllers/alert.dart';
 export 'package:toolbar/controllers/sidenav.dart';
 export 'package:toolbar/controllers/bottom_sheet.dart';

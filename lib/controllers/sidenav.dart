@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/providers/providers.dart';
 import 'package:toolbar/models/models.dart';
@@ -9,7 +10,7 @@ class SidenavController extends GetxController {
 
   SidenavController() {
     selected.listen((value) {
-      print('option changed sidenav');
+      debugPrint('option changed sidenav');
     });
   }
 

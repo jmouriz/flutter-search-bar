@@ -29,18 +29,17 @@ class _MenuWidgetState extends State<MenuWidget> {
           }
           return Column(
             children: [
-              ListTile(
+              if (item.visible && item.show(item)) ListTile(
                 leading: Icon(item.icon),
-                trailing: item.submenu
-                    ? MutableIcon(
-                        duration: const Duration(milliseconds: 300),
-                        startIcon: Icons.expand_more,
-                        endIcon: Icons.expand_less,
-                        startIconColor: Colors.black,
-                        endIconColor: Colors.black,
-                        controller: item.controller,
-                        initFrom: item.expanded ? InitFrom.end : InitFrom.start)
-                    : null,
+                trailing: item.submenu ? MutableIcon(
+                  duration: const Duration(milliseconds: 300),
+                  startIcon: Icons.expand_more,
+                  endIcon: Icons.expand_less,
+                  startIconColor: Colors.black,
+                  endIconColor: Colors.black,
+                  controller: item.controller,
+                  initFrom: item.expanded ? InitFrom.end : InitFrom.start
+                ) : null,
                 // const Icon(Icons.arrow_drop_up)
                 // const Icon(Icons.arrow_drop_down)
                 horizontalTitleGap: 0,
@@ -60,8 +59,8 @@ class _MenuWidgetState extends State<MenuWidget> {
                 onTap: () {
                   if (item.submenu) {
                     item.expanded
-                        ? item.controller.animateToStart()
-                        : item.controller.animateToEnd();
+                      ? item.controller.animateToStart()
+                      : item.controller.animateToEnd();
                     item.expanded = !item.expanded;
                     setState(() {});
                   } else {
@@ -69,7 +68,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                       widget.onSelect!(index);
                     }
                     if (item.callback != null) {
-                      var state = item.callback(item);
+                      var state = item.callback(item, context);
                       if (state != null && state) {
                         setState(() {});
                       }
@@ -81,15 +80,13 @@ class _MenuWidgetState extends State<MenuWidget> {
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
                   transitionBuilder:
-                      (Widget child, Animation<double> animation) {
+                    (Widget child, Animation<double> animation) {
                     return SizeTransition(sizeFactor: animation, child: child);
                   },
-                  child: item.expanded
-                      ? Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
-                          child: MenuWidget(items: item.items),
-                        )
-                      : null,
+                  child: item.expanded ? Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: MenuWidget(items: item.items),
+                  ) : null,
               ),
             ],
           );

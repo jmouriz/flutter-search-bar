@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toolbar/widgets/app_bar/search_bar/input/input.dart';
 import 'package:toolbar/models/models.dart';
+import 'package:toolbar/types/types.dart';
 
 class SearchBarInputWidget extends StatelessWidget {
   SearchBarInputWidget({required this.condition, super.key});
