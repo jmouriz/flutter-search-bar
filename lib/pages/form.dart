@@ -10,7 +10,6 @@ class FormPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final application = Get.put(ApplicationController());
-    final toolbar = Get.put(ToolbarController());
     final form = Get.put(FormController());
     final GlobalKey<FormState> key = GlobalKey<FormState>();
 
@@ -26,12 +25,12 @@ class FormPage extends StatelessWidget {
         onChanged: () {
           Future.delayed(Duration.zero, () {
             print('form onChanged');
-            toolbar.valid.value = form.valid();
+            application.valid = form.valid();
           });
         },
         child: Column(
           children: const [
-            GenericInputWidget(label: 'EMail'),
+            GenericInputWidget(label: 'EMail', type: Input.email),
             GenericInputWidget(label: 'Password', type: Input.password),
           ],
         ),
@@ -44,7 +43,7 @@ class GenericInputWidget extends StatefulWidget {
   const GenericInputWidget({
     super.key,
     required this.label,
-    this.type = Input.email
+    this.type = Input.text
   });
 
   final String label;
@@ -60,7 +59,7 @@ class _GenericInputWidgetState extends State<GenericInputWidget> {
   final _field = FieldModel();
   bool _touched = false;
 
-  TextInputType keyboard = TextInputType.emailAddress;
+  TextInputType keyboard = TextInputType.text;
   bool obscure = false;
 
   void _touch() {
@@ -74,14 +73,33 @@ class _GenericInputWidgetState extends State<GenericInputWidget> {
     super.initState();
     form.fields.add(_field);
     switch (widget.type) {
-      case Input.email:
-        keyboard = TextInputType.emailAddress;
-        obscure = false;
-        break;
       case Input.password:
         keyboard = TextInputType.visiblePassword;
         obscure = true;
         break;
+      case Input.email:
+        keyboard = TextInputType.visiblePassword;
+        break;
+      case Input.name:
+        keyboard = TextInputType.name;
+        break;
+      case Input.address:
+        keyboard = TextInputType.streetAddress;
+        break;
+      case Input.url:
+        keyboard = TextInputType.url;
+        break;
+      case Input.phone:
+        keyboard = TextInputType.phone;
+        break;
+      case Input.number:
+        keyboard = TextInputType.number;
+        break;
+      case Input.text:
+      case Input.date:
+      case Input.time:
+      case Input.check:
+      case Input.decimal:
     }
     _focus.addListener(_touch);
   }

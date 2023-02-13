@@ -6,10 +6,13 @@ class ToolbarController extends GetxController {
   RxBool valid = false.obs;
   void Function()? next;
   void Function()? done;
+  void Function()? add;
 
   void reset() {
     search.value = false;
+    valid.value = false;
     next = null;
     done = null;
+    add = null;
   }
 }

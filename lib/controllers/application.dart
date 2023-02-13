@@ -25,4 +25,6 @@ class ApplicationController extends GetxController {
   set search(value) => toolbar.search.value = value;
   set next(value) => toolbar.next = value;
   set done(value) => toolbar.done = value;
+  set add(value) => toolbar.add = value;
+  set valid(value) => toolbar.valid = value;
 }

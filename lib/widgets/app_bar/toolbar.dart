@@ -127,6 +127,12 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
             onPressed: toolbar.valid.value ? () {
               toolbar.done!();
             } : null,
+          ) else if (toolbar.add != null) IconButton(
+            icon: const Icon(
+              Icons.add,
+              color: Colors.white
+            ),
+            onPressed: () => toolbar.add!(),
           ) else const SizedBox(
             width: 48.0,
           ),
