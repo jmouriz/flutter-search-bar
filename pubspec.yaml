@@ -40,12 +40,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   mutable_icon: ^1.1.1
-  window_manager: ^0.2.8
-  intl: ^0.17.0
+  window_manager: ^0.3.0
+  intl: ^0.18.0
   flutter_rounded_date_picker:
     git:
       url: git@github.com:jmouriz/flutter_rounded_date_picker.git
   flutter_markdown: ^0.6.13+1
+  url_launcher: ^6.1.9
 
 dev_dependencies:
   flutter_test:
