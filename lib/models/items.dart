@@ -2,15 +2,23 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:mutable_icon/mutable_icon.dart';
 
+enum Mode {
+  expand,
+  replace,
+}
+
 class ItemModel {
   String title;
-  IconData icon;
+  dynamic icon;
   Widget? target;
   ItemsModel? items;
   bool expanded;
   bool visible;
   int? badge;
+  bool setted;
+  Mode mode;
   Function(ItemModel item, BuildContext context)? callback;
+  Function(ItemModel item, BuildContext context)? setup;
   bool Function(ItemModel item) show;
 
   final MutableIconController _controller = MutableIconController();
@@ -23,8 +31,10 @@ class ItemModel {
     this.expanded = false,
     this.visible = true,
     this.badge,
+    this.setted = false,
+    this.mode = Mode.expand,
     this.callback,
-    //this.show = _show,
+    this.setup,
     this.show = _show,
   });
 

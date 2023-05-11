@@ -10,15 +10,16 @@ class SearchBarWidget extends StatefulWidget {
   State<SearchBarWidget> createState() => _SearchBarWidgetState();
 }
 
-enum Direction {
-  increase,
-  decrease,
-}
+// enum Direction {
+//   increase,
+//   decrease,
+// }
 
 class _SearchBarWidgetState extends State<SearchBarWidget> {
+  final GlobalKey<FormState> key = GlobalKey<FormState>();
   final searchBar = Get.put(SearchBarController());
   int rows = 0;
-  Direction direction = Direction.increase;
+  // Direction direction = Direction.increase;
 
   @override
   void initState() {
@@ -27,7 +28,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
     searchBar.init();
     searchBar.rows.listen((value) {
       if (mounted) {
-        direction = rows < value ? Direction.increase : Direction.decrease;
+        // direction = rows < value ? Direction.increase : Direction.decrease;
         rows = value;
         setState(() {});
       }
@@ -45,6 +46,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('rebuild');
     final media = MediaQuery.of(context);
     final screen =
       media.size.height - media.padding.top - media.padding.bottom;
@@ -61,25 +63,29 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       width: double.infinity,
       color: Colors.white,
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SearchBarMainWidget(),
-            ...List.generate(searchBar.rows.value, (index) {
-              bool delay = index == searchBar.rows.value - 1
-                && direction == Direction.increase;
-              return FutureBuilder(
-                future: delay
-                  ? Future.delayed(const Duration(milliseconds: 320))
-                  : Future.delayed(Duration.zero),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return SearchBarRowWidget(index: index +1);
-                  }
-                  return const Text('');
-                }
-              );
-            }).toList(),
-          ]
+        child: Form(
+          key: key,
+          child: Column(
+            children: [
+              SearchBarMainWidget(),
+              ...List.generate(searchBar.rows.value, (index) {
+                return SearchBarRowWidget(index: index +1);
+                // bool delay = index == searchBar.rows.value - 1
+                //   && direction == Direction.increase;
+                // return FutureBuilder(
+                //   future: delay
+                //     ? Future.delayed(const Duration(milliseconds: 320))
+                //     : Future.delayed(Duration.zero),
+                //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+                //     if (snapshot.connectionState == ConnectionState.done) {
+                //       return SearchBarRowWidget(index: index +1);
+                //     }
+                //     return const Text('');
+                //   }
+                // );
+              }).toList(),
+            ]
+          ),
         ),
       )
     );

@@ -14,4 +14,11 @@ class FormController extends GetxController {
     }
     return valid;
   }
+
+  void values() {
+    print(fields.toString());
+    for (var field in fields) {
+      print(field.toJson());
+    }
+  }
 }

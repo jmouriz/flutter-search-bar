@@ -4,17 +4,21 @@ import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/types/types.dart';
 import 'package:toolbar/widgets/widgets.dart';
 
-class FormPage extends StatelessWidget {
-  const FormPage({super.key});
+class StepperPage extends StatelessWidget {
+  const StepperPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> key = GlobalKey<FormState>();
     final application = Get.put(ApplicationController());
     final form = Get.put(FormController());
+    final GlobalKey<FormState> key = GlobalKey<FormState>();
 
-    application.title = 'Form Test';
-    application.done = () => application.busy = true; // debugPrint('next');
+    application.title = 'Form Stepper Test';
+    application.done = () {
+      debugPrint('done');
+      application.busy = true;
+      form.values();
+    }; // debugPrint('next');
     form.fields.clear();
 
     return Padding(

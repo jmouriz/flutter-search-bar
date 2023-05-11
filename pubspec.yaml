@@ -39,14 +39,16 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   get: ^4.6.5
-  mutable_icon: ^1.1.1
+  mutable_icon:
+    path: /Users/juanma/Developments.localized/flutter-packages/mutable_icon
   window_manager: ^0.3.0
-  intl: ^0.18.0
+  intl: ^0.17.0
   flutter_rounded_date_picker:
     git:
       url: git@github.com:jmouriz/flutter_rounded_date_picker.git
   flutter_markdown: ^0.6.13+1
   url_launcher: ^6.1.9
+  animate_do: ^3.0.2
 
 dev_dependencies:
   flutter_test:

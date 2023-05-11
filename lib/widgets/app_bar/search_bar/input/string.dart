@@ -6,11 +6,9 @@ import 'package:toolbar/models/models.dart';
 class InputStringWidget extends StatelessWidget {
   InputStringWidget({
     Key? key,
-    required this.focus,
     required this.condition,
   }) : super(key: key);
 
-  final FocusNode focus;
   final ConditionModel condition;
 
   final searchBar = Get.put(SearchBarController());
@@ -18,7 +16,6 @@ class InputStringWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      focusNode: focus,
       initialValue: condition.value,
       style: const TextStyle(fontSize: 20),
       decoration: InputDecoration(
@@ -31,8 +28,8 @@ class InputStringWidget extends StatelessWidget {
       ),
       onChanged: (value) {
         condition.value = value;
-        print(value);
-        searchBar.state();
+        debugPrint(value);
+        //searchBar.state();
       }
     );
   }

@@ -54,16 +54,16 @@ class SearchBarPopupWidget extends StatelessWidget {
   }
 
   PopupMenuItem<int> _popupMenuItem([String? key, ConditionModel? condition]) {
-    late final IconData icon;
+    IconData? icon;
     late final String label;
 
     if (condition == null) {
       icon = Icons.add;
       label = 'New condition';
     } else {
-      icon = condition.checked
-        ? Icons.radio_button_checked
-        : Icons.radio_button_off;
+      if (condition.checked) {
+        icon = Icons.done;
+      }
       label = condition.label;
     }
 
@@ -80,7 +80,8 @@ class SearchBarPopupWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Icon(
+          if (icon == null) const SizedBox(width: 24)
+          else Icon(
             icon,
             color: Colors.black,
           ),

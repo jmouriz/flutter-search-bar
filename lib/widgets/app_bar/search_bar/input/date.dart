@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
@@ -7,11 +8,9 @@ import 'package:toolbar/models/models.dart';
 class InputDateWidget extends StatelessWidget {
   InputDateWidget({
     Key? key,
-    required this.focus,
     required this.condition,
   }) : super(key: key);
 
-  final FocusNode focus;
   final ConditionModel condition;
 
   final searchBar = Get.put(SearchBarController());
@@ -23,20 +22,26 @@ class InputDateWidget extends StatelessWidget {
     controller.text = '$condition';
 
     void tap() async {
+      //FocusManager.instance.primaryFocus?.unfocus();
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+      DateTime? date;
+      await Future.delayed(const Duration(milliseconds: 100), () async {
       //DateTime? date = await showDatePicker(
-      DateTime? date = await showRoundedDatePicker(
-        locale: const Locale('es', 'AR'),
-        context: context,
-        height: 360,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
-        lastDate: DateTime(2101)
-      );
+      //DateTime? date = await showRoundedDatePicker(
+        date = await showRoundedDatePicker(
+          locale: const Locale('es', 'AR'),
+          context: context,
+          height: 360,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+          lastDate: DateTime(2101)
+        );
+      });
       if (date != null) {
-        condition.value = '${date.millisecondsSinceEpoch}';
+        condition.value = '${date!.millisecondsSinceEpoch}';
         controller.text = '$condition';
         print(condition);
-        searchBar.state();
+        //searchBar.state();
       }
       //} else {
       //  print('Date is not selected');
@@ -47,9 +52,10 @@ class InputDateWidget extends StatelessWidget {
       children: [
         Expanded(
           child: TextFormField(
-            focusNode: focus,
+            //focusNode: focus,
             //initialValue: '$condition',
             controller: controller,
+            keyboardType: TextInputType.datetime,
             style: const TextStyle(fontSize: 20),
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -59,7 +65,7 @@ class InputDateWidget extends StatelessWidget {
               disabledBorder: InputBorder.none,
               hintText: condition.label,
             ),
-            onTap: () => tap(),
+            //onTap: () => tap(),
           ),
         ),
         IconButton(

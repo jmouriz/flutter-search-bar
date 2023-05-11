@@ -6,11 +6,9 @@ import 'package:toolbar/controllers/controllers.dart';
 class InputBooleanWidget extends StatefulWidget {
   const InputBooleanWidget({
     Key? key,
-    required this.focus,
     required this.condition,
   }) : super(key: key);
 
-  final FocusNode focus;
   final ConditionModel condition;
 
   @override

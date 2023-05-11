@@ -1,6 +1,7 @@
 export 'package:toolbar/pages/home.dart';
 export 'package:toolbar/pages/login.dart';
 export 'package:toolbar/pages/form.dart';
+export 'package:toolbar/pages/stepper.dart';
 export 'package:toolbar/pages/about.dart';
 export 'package:toolbar/pages/info.dart';
 export 'package:toolbar/pages/table.dart';

@@ -1,13 +1,40 @@
 import 'dart:collection';
-import 'package:flutter/material.dart';
-import 'package:mutable_icon/mutable_icon.dart';
+//import 'package:toolbar/models/models.dart';
 
 class FieldModel {
   bool valid;
+  String name;
+  String? value;
 
   FieldModel({
     this.valid = false,
+    required this.name,
+    this.value,
   });
+
+  // final ValueModel _value = ValueModel();
+  // set value(value) => _value.value = value;
+  // get value => _value.value;
+  // set type(type) => _value.type = type;
+  // get type => _value.type;
+
+  @override
+  String toString() {
+    if (valid) {
+      return value!;
+    }
+    return '';
+  }
+
+  Map? toJson() {
+    if (valid) {
+      return {
+        'name': name,
+        'value': value,
+      };
+    }
+    return null;
+  } 
 }
 
 class FieldsModel<FieldModel> extends ListBase<FieldModel> {

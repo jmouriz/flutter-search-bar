@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 class ToolbarController extends GetxController {
   RxString title = ''.obs;
   RxBool search = false.obs;
+  RxBool busy = false.obs;
   RxBool valid = false.obs;
   void Function()? next;
   void Function()? done;
@@ -11,6 +12,7 @@ class ToolbarController extends GetxController {
   void reset() {
     search.value = false;
     valid.value = false;
+    busy.value = false;
     next = null;
     done = null;
     add = null;

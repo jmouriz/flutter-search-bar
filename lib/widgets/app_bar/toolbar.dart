@@ -32,6 +32,13 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
         });
       }
     });
+    toolbar.busy.listen((value) {
+      if (mounted) {
+        Future.delayed(Duration.zero, () {
+          setState(() {});
+        });
+      }
+    });
     toolbar.search.listen((value) {
       if (mounted) {
         Future.delayed(Duration.zero, () {
@@ -99,7 +106,17 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
               ),
             ),
           ),
-          if (toolbar.search.value) IconButton(
+          if (toolbar.busy.value) Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(
+                color: Colors.grey.shade400,
+                //color: Colors.white,
+              ),
+            ),
+          ) else if (toolbar.search.value) IconButton(
             icon: const Icon(
               Icons.search,
               color: Colors.white,

@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mutable_icon/mutable_icon.dart';
 
 import 'package:toolbar/models/models.dart';
 import 'package:toolbar/pages/pages.dart';
@@ -73,6 +75,7 @@ class ItemsProvider {
   ]);
   */
   factory ItemsProvider() {
+    final MutableIconController controller = MutableIconController();
     _items.clear();
     _items.addAll([
       ItemModel(
@@ -90,7 +93,12 @@ class ItemsProvider {
         icon: Icons.edit,
         target: const FormPage()
       ),
-       ItemModel(
+      ItemModel(
+        title: 'Stepper Form Test',
+        icon: Icons.edit,
+        target: const StepperPage()
+      ),
+      ItemModel(
         title: 'Bottom Sheet Test',
         icon: Icons.keyboard_capslock,
         target: const BottomSheetPage()
@@ -111,20 +119,88 @@ class ItemsProvider {
         icon: Icons.info,
         target: const AboutPage()
       ),
-      ItemModel(
+            ItemModel(
         title: 'More options',
         icon: Icons.more_vert,
         items: ItemsModel(items: [
           ItemModel(
             title: 'A magic suboption',
+            icon: MutableIcon(
+              duration: const Duration(milliseconds: 300),
+              startIcon: Icons.star_border,
+              endIcon: Icons.star,
+              startIconColor: Colors.black,
+              endIconColor: Colors.black,
+              controller: controller,
+            ),
+            setup: (item, context) {
+              item.setted 
+                ? controller.setToStart()
+                : controller.setToEnd();
+            },
+            callback: (item, context) {
+              Future.delayed(const Duration(milliseconds: 100), () {
+                item.setted
+                  ? controller.animateToStart()
+                  : controller.animateToEnd();
+                  item.setted = !item.setted;
+              });
+              return true;
+            }
+          ),
+          ItemModel(
+            title: 'A normal suboption',
             icon: Icons.star_border,
             callback: (item, context) {
-              if (item.icon == Icons.star) {
-                item.icon = Icons.star_border;
-              } else {
-                item.icon = Icons.star;
-              }
-              return true;
+              debugPrint('Click on ${item.title}');
+              return false;
+            }
+          ),
+          ItemModel(
+            title: 'A navigation suboption',
+            icon: Icons.star_border,
+            callback: (item, context) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
+              debugPrint('Click on ${item.title}');
+            }
+          ),
+          ItemModel(
+            title: 'A suboption',
+            icon: Icons.star_border
+          ),
+        ]),
+      ),
+      ItemModel(
+        title: 'More options adv.',
+        icon: Icons.more_vert,
+        mode: Mode.replace,
+        items: ItemsModel(items: [
+          ItemModel(
+            title: 'A magic suboption',
+            icon: MutableIcon(
+              duration: const Duration(milliseconds: 300),
+              startIcon: Icons.star_border,
+              endIcon: Icons.star,
+              startIconColor: Colors.black,
+              endIconColor: Colors.black,
+              controller: controller,
+            ),
+            setup: (item, context) {
+              item.setted 
+                ? controller.setToStart()
+                : controller.setToEnd();
+            },
+            callback: (item, context) {
+              Future.delayed(const Duration(milliseconds: 100), () {
+                item.setted
+                  ? controller.animateToStart()
+                  : controller.animateToEnd();
+                  item.setted = !item.setted;
+              });
+              return false;
             }
           ),
           ItemModel(
