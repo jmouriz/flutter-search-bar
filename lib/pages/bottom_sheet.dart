@@ -13,6 +13,7 @@ class BottomSheetPage extends StatelessWidget {
     application.title = 'Bottom Sheet Test';
 
     return Center(
+      heightFactor: 1,
       child: Padding(
         padding: const EdgeInsets.only(top: 32.0),
         child: ElevatedButton(

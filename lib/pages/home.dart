@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
       padding: const EdgeInsets.only(top: 32.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
             padding: EdgeInsets.only(right: 16.0),

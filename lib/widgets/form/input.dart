@@ -104,9 +104,7 @@ class _GenericInputWidgetState extends State<GenericInputWidget> {
         helperText: '',
         label: Text(widget.label),
         suffixIcon: widget.type == Input.password ? IconButton(
-          icon: Icon(
-            obscure ? Icons.visibility : Icons.visibility_off,
-          ),
+          icon: Icon(obscure ? Icons.visibility : Icons.visibility_off),
           onPressed: () {
             obscure = !obscure;
             setState(() {});

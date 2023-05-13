@@ -24,7 +24,7 @@ class FormPage extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         onChanged: () {
           Future.delayed(Duration.zero, () {
-            print('form onChanged');
+            debugPrint('form onChanged');
             application.valid = form.valid();
           });
         },

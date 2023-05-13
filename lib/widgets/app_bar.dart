@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/widgets/app_bar/app_bar.dart';
+import 'package:toolbar/widgets/notch/notch.dart';
 
 class AppBarWidget extends StatefulWidget {
   const AppBarWidget({super.key});
@@ -33,7 +34,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const NotchWidget(),
+        const TopNotchWidget(),
         Material(
           elevation: 2,
           child: AnimatedSwitcher(

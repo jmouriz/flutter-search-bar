@@ -89,6 +89,11 @@ class ItemsProvider {
         target: const TablePage()
       ),
       ItemModel(
+        title: 'Paginator',
+        icon: Icons.insert_page_break_outlined,
+        target: const PaginatorPage()
+      ),
+      ItemModel(
         title: 'Form Test',
         icon: Icons.edit,
         target: const FormPage()

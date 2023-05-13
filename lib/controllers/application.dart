@@ -9,6 +9,7 @@ class ApplicationController extends GetxController {
   final searchBar = Get.put(SearchBarController());
   final sidenav = Get.put(SidenavController());
   final bottomSheet = Get.put(BottomSheetController());
+  RxBool notch = false.obs;
 
   ApplicationController() {
     sidenav.open.listen((value) {
@@ -19,6 +20,7 @@ class ApplicationController extends GetxController {
       toolbar.reset();
       alert.close();
       bottomSheet.close();
+      notch.value = false;
     });
     appBar.searching.listen((value) {
       if (value) sidenav.close();

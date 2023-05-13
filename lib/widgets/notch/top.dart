@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class NotchWidget extends StatelessWidget {
-  const NotchWidget({ super.key });
+class TopNotchWidget extends StatelessWidget {
+  const TopNotchWidget({ super.key });
 
   @override
   Widget build(BuildContext context) {

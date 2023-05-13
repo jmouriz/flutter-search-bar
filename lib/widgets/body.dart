@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/providers/providers.dart';
+import 'package:toolbar/widgets/notch/notch.dart';
 import 'package:toolbar/widgets/widgets.dart';
 
 class BodyWidget extends StatefulWidget {
@@ -26,6 +27,9 @@ class _BodyWidgetState extends State<BodyWidget> {
       sidenav.open.listen((value) => setState(() {}));
     }
     bottomSheet.open.listen((value) => setState(() {}));
+    application.notch.listen((value) =>
+      Future.delayed(Duration.zero, () => setState(() {}))
+    );
     sidenav.selected.listen((value) {
       target = sidenav.items[value].target;
       if (mounted) {
@@ -57,21 +61,23 @@ class _BodyWidgetState extends State<BodyWidget> {
       SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: kToolbarHeight),
-          child: SingleChildScrollView(child: target),
+          //child: SingleChildScrollView(child: target),
+          child: target
         ),
       ),
       SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: GestureDetector(
-            behavior: (sidenav.open.value || bottomSheet.open.value)
-              ? HitTestBehavior.opaque
-              : HitTestBehavior.deferToChild,
-            onTap: () {
-              sidenav.close();
-              bottomSheet.close();
-            },
-          )),
+        height: double.infinity,
+        width: double.infinity,
+        child: GestureDetector(
+          behavior: (sidenav.open.value || bottomSheet.open.value)
+            ? HitTestBehavior.opaque
+            : HitTestBehavior.deferToChild,
+          onTap: () {
+            sidenav.close();
+            bottomSheet.close();
+          },
+        )
+      ),
       Positioned(
         top: query.padding.top + kToolbarHeight + padding,
         child: const AlertWidget(),
@@ -81,6 +87,9 @@ class _BodyWidgetState extends State<BodyWidget> {
         child: const BottomSheetWidget(),
       ),
       const AppBarWidget(),
+      application.notch.value
+        ? const BottomNotchWidget()
+        : const Text(''), // todo
       Padding(
         padding: EdgeInsets.only(top: query.padding.top + kToolbarHeight),
         child: const SidenavWidget(),
@@ -101,7 +110,8 @@ class _BodyWidgetState extends State<BodyWidget> {
                 child: Stack(children: [
                   SizedBox(
                     height: double.infinity,
-                    child: SingleChildScrollView(child: target),
+                    //child: SingleChildScrollView(child: target),
+                    child: target,
                   ),
                   SizedBox(
                       height: double.infinity,

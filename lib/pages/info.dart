@@ -17,7 +17,6 @@ class InfoPage extends StatelessWidget {
         textAlign: WrapAlignment.spaceBetween,
       ),
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
       onTapLink: (text, href, title) {
         print('$text, $href, $title');
       },
