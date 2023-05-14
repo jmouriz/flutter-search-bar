@@ -23,7 +23,7 @@ class _TablePageState extends State<TablePage> {
   @override
   void initState() {
     searchBar.version.listen((value) {
-      print(jsonEncode(searchBar.getConditions()));
+      debugPrint(jsonEncode(searchBar.getConditions()));
     });
     super.initState();
   }

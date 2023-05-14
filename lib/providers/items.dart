@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mutable_icon/mutable_icon.dart';
 
@@ -113,6 +112,11 @@ class ItemsProvider {
         icon: Icons.notifications,
         badge: 2,
         target: const AlertsPage()
+      ),
+      ItemModel(
+        title: 'Dialog Test',
+        icon: Icons.window,
+        target: const DialogPage()
       ),
       ItemModel(
         title: 'Large Text Test',

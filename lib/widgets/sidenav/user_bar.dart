@@ -5,25 +5,25 @@ class UserBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return const SizedBox(
       height: kToolbarHeight,
       width: double.infinity,
       child: Material(
         color: Colors.blue,
         elevation: 2,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 child: Icon(Icons.person)
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 10.0),
+                padding: EdgeInsets.only(left: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text('User',
                       style: TextStyle(
                         color: Colors.white,

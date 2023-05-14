@@ -28,12 +28,12 @@ class StepperPage extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         onChanged: () {
           Future.delayed(Duration.zero, () {
-            print('form onChanged');
+            debugPrint('form onChanged');
             application.valid = form.valid();
           });
         },
-        child: Column(
-          children: const [
+        child: const Column(
+          children: [
             GenericInputWidget(
               name: 'email',
               label: 'EMail',

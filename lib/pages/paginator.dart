@@ -53,11 +53,14 @@ class _PaginatorPageState extends State<PaginatorPage> {
                     borderRadius: BorderRadius.circular(5),
                     elevation: 2,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(2.0),
                       child: Row(
                         children: [
                           const Expanded(
-                            child: Text('Rows per page'),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 8.0),
+                              child: Text('Rows per page'),
+                            ),
                           ),
                           Expanded(
                             child: TextFormField(
@@ -73,7 +76,7 @@ class _PaginatorPageState extends State<PaginatorPage> {
                                 filled: true,
                                 fillColor: Colors.grey.shade300,
                                 contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 8.0,
+                                  vertical: 6.0,
                                   horizontal: 8.0
                                 )
                                 //hoverColor: Colors.grey.shade500,
@@ -117,15 +120,16 @@ class _PaginatorPageState extends State<PaginatorPage> {
                       settings = !settings;
                       setState(() {});
                     },
-                    child: Row(
-                      children: const [
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('100', style: TextStyle(color: Colors.white)),
+                        Text(' from ', style: TextStyle(color: Colors.white)),
                         Text('1000', style: TextStyle(color: Colors.white)),
-                        Text(' del ', style: TextStyle(color: Colors.white)),
-                        Text('10000', style: TextStyle(color: Colors.white)),
-                        Text(' al ', style: TextStyle(color: Colors.white)),
-                        Text('11000', style: TextStyle(color: Colors.white)),
-                        Text(' de ', style: TextStyle(color: Colors.white)),
-                        Text('1000000000',
+                        Text(' to ', style: TextStyle(color: Colors.white)),
+                        Text('1100', style: TextStyle(color: Colors.white)),
+                        Text(' of ', style: TextStyle(color: Colors.white)),
+                        Text('100000',
                             style: TextStyle(color: Colors.white)),
                       ],
                     ),

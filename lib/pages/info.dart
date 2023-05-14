@@ -18,7 +18,7 @@ class InfoPage extends StatelessWidget {
       ),
       shrinkWrap: true,
       onTapLink: (text, href, title) {
-        print('$text, $href, $title');
+        debugPrint('$text, $href, $title');
       },
       data: '''
 # Minimal Markdown Test

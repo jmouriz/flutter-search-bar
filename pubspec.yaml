@@ -42,10 +42,7 @@ dependencies:
   mutable_icon:
     path: /Users/juanma/Developments.localized/flutter-packages/mutable_icon
   window_manager: ^0.3.0
-  intl: ^0.17.0
-  flutter_rounded_date_picker:
-    git:
-      url: git@github.com:jmouriz/flutter_rounded_date_picker.git
+  intl: ^0.18.0
   flutter_markdown: ^0.6.13+1
   url_launcher: ^6.1.9
   animate_do: ^3.0.2

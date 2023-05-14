@@ -7,4 +7,5 @@ export 'package:toolbar/pages/info.dart';
 export 'package:toolbar/pages/table.dart';
 export 'package:toolbar/pages/bottom_sheet.dart';
 export 'package:toolbar/pages/alerts.dart';
+export 'package:toolbar/pages/dialog.dart';
 export 'package:toolbar/pages/paginator.dart';

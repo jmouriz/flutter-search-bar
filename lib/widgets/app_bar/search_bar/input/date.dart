@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/models/models.dart';
@@ -28,10 +27,10 @@ class InputDateWidget extends StatelessWidget {
       await Future.delayed(const Duration(milliseconds: 100), () async {
       //DateTime? date = await showDatePicker(
       //DateTime? date = await showRoundedDatePicker(
-        date = await showRoundedDatePicker(
+      date = await showDatePicker(
           locale: const Locale('es', 'AR'),
           context: context,
-          height: 360,
+          //height: 360,
           initialDate: DateTime.now(),
           firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
           lastDate: DateTime(2101)
@@ -40,7 +39,7 @@ class InputDateWidget extends StatelessWidget {
       if (date != null) {
         condition.value = '${date!.millisecondsSinceEpoch}';
         controller.text = '$condition';
-        print(condition);
+        debugPrint('$condition');
         //searchBar.state();
       }
       //} else {

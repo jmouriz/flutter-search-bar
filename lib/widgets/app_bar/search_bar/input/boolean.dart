@@ -51,7 +51,7 @@ class _InputBooleanWidgetState extends State<InputBooleanWidget> {
       onTap: () {
         value = !value;
         widget.condition.value = '$value';
-        print('${widget.condition}');
+        debugPrint('${widget.condition}');
         searchBar.state();
         setState(() {});
       },

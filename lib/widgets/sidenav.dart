@@ -14,9 +14,13 @@ class SidenavWidget extends StatefulWidget {
 }
 
 class _SidenavWidgetState extends State<SidenavWidget> {
-  double width =
-    MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.shortestSide;
+  //double width =
+    //MediaQueryData.fromView(WidgetsBinding.instance.window).size.shortestSide;
   final sidenav = Get.put(SidenavController());
+
+  double width(BuildContext context) {
+    return MediaQueryData.fromView(View.of(context)).size.shortestSide;
+  }
 
   @override
   void initState() {
@@ -65,7 +69,8 @@ class _SidenavWidgetState extends State<SidenavWidget> {
                     exit(0);
                   }
                   sidenav.selected.value = index;
-                  if (width < 550) {
+                  //if (width < 550) {
+                  if (width(context) < 550) {
                     sidenav.close();
                   }
                 },

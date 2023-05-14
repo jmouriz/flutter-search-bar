@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/models/fields.dart';
 
@@ -16,9 +17,9 @@ class FormController extends GetxController {
   }
 
   void values() {
-    print(fields.toString());
+    debugPrint(fields.toString());
     for (var field in fields) {
-      print(field.toJson());
+      debugPrint(field.toJson());
     }
   }
 }

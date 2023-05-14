@@ -28,8 +28,8 @@ class FormPage extends StatelessWidget {
             application.valid = form.valid();
           });
         },
-        child: Column(
-          children: const [
+        child: const Column(
+          children: [
             GenericInputWidget(
               name: 'email',
               label: 'EMail',
