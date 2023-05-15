@@ -5,6 +5,7 @@ export 'package:toolbar/widgets/dialog.dart';
 export 'package:toolbar/widgets/menu.dart';
 export 'package:toolbar/widgets/sidenav.dart';
 export 'package:toolbar/widgets/bottom_sheet.dart';
+export 'package:toolbar/widgets/paginator.dart';
 export 'package:toolbar/widgets/link.dart';
 export 'package:toolbar/widgets/body.dart';
 

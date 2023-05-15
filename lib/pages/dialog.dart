@@ -15,7 +15,6 @@ class DialogPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 32.0),
       child: Center(
-        heightFactor: 1,
         child: Column(
           children: [
             ElevatedButton(
