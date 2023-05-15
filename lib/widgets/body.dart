@@ -95,7 +95,7 @@ class _BodyWidgetState extends State<BodyWidget> {
       const AppBarWidget(),
       application.notch.value
         ? const BottomNotchWidget()
-        : const Text(''), // TODO
+        : const SizedBox.shrink(),
       Padding(
         padding: EdgeInsets.only(
           top: query(context).padding.top + kToolbarHeight

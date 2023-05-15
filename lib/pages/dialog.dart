@@ -12,26 +12,36 @@ class DialogPage extends StatelessWidget {
 
     application.title = 'Dialog Test';
 
-    return Center(
-      heightFactor: 1,
-      child: ElevatedButton(
-        onPressed: () => dialog.open.value ? dialog.close() : dialog.show(
-          body: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Padding(
-                padding: EdgeInsets.all(12.0),
-                child: Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
+    return Padding(
+      padding: const EdgeInsets.only(top: 32.0),
+      child: Center(
+        heightFactor: 1,
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () => dialog.open.value ? dialog.close() : dialog.show(
+                body: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
+                    ),
+                    TextButton(
+                      onPressed: () => dialog.close(),
+                      child: const Text('Close'),
+                    ),
+                  ],
+                ),
               ),
-              TextButton(
-                onPressed: () => dialog.close(),
-                child: const Text('Close'),
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text('Toggle dialog'),
               ),
-            ],
-          ),
-        ),
-        child: const Text('Toggle dialog'),
-      )
+            ),
+          ],
+        )
+      ),
     );
   }
 }

@@ -33,7 +33,8 @@ class _PlaceholderWidgetState extends State<PlaceholderWidget> {
   @override
   Widget build(BuildContext context) {
     return sidenav.open.value ? const SizedBox(
+      height: 1,
       width: 240,
-    ) : const Text(''); // TODO
+    ) : const SizedBox.shrink();
   }
 }
