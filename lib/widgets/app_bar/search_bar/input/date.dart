@@ -27,13 +27,25 @@ class InputDateWidget extends StatelessWidget {
       await Future.delayed(const Duration(milliseconds: 100), () async {
       //DateTime? date = await showDatePicker(
       //DateTime? date = await showRoundedDatePicker(
-      date = await showDatePicker(
+        date = await showDatePicker(
           locale: const Locale('es', 'AR'),
           context: context,
           //height: 360,
           initialDate: DateTime.now(),
           firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
-          lastDate: DateTime(2101)
+          lastDate: DateTime(2101),
+          builder: (BuildContext context, child) {
+            return Theme(
+              data: Theme.of(context).copyWith(
+                dialogTheme: DialogTheme(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                ),
+              ),
+              child: child!,
+            );
+          },
         );
       });
       if (date != null) {

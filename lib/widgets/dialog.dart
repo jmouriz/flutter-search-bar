@@ -33,12 +33,15 @@ class _DialogWidgetState extends State<DialogWidget> {
   @override
   Widget build(BuildContext context) {
     final container = Center(
-      child: Material(
-        borderRadius: BorderRadius.circular(10),
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: dialog.body,
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Material(
+          borderRadius: BorderRadius.circular(10),
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: dialog.body,
+          ),
         ),
       ),
     );

@@ -7,7 +7,10 @@ class DialogPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final application = Get.put(ApplicationController());
     final dialog = Get.put(DialogController());
+
+    application.title = 'Dialog Test';
 
     return Center(
       heightFactor: 1,
@@ -18,12 +21,12 @@ class DialogPage extends StatelessWidget {
             children: [
               const Padding(
                 padding: EdgeInsets.all(12.0),
-                child: Text('Dialog body'),
+                child: Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'),
               ),
               TextButton(
                 onPressed: () => dialog.close(),
                 child: const Text('Close'),
-              )
+              ),
             ],
           ),
         ),

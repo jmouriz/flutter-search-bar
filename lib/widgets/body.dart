@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/providers/providers.dart';
 import 'package:toolbar/widgets/notch/notch.dart';
+import 'package:toolbar/widgets/sidenav/placeholder.dart';
 import 'package:toolbar/widgets/widgets.dart';
 
 class BodyWidget extends StatefulWidget {
@@ -106,13 +107,12 @@ class _BodyWidgetState extends State<BodyWidget> {
 
   List<Widget> get desktop {
     return [
-      const AppBarWidget(),
       SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: kToolbarHeight),
           child: Row(
             children: [
-              const SidenavWidget(),
+              const PlaceholderWidget(),
               Expanded(
                 child: Stack(children: [
                   SizedBox(
@@ -137,6 +137,13 @@ class _BodyWidgetState extends State<BodyWidget> {
           ),
         ),
       ),
+      const AppBarWidget(),
+      const SafeArea(
+        child: Padding(
+          padding: EdgeInsets.only(top: kToolbarHeight),
+          child: SidenavWidget(),
+        )
+      ),
       const Positioned(
         bottom: 0,
         child: BottomSheetWidget(),
@@ -145,6 +152,7 @@ class _BodyWidgetState extends State<BodyWidget> {
         top: query(context).padding.top + kToolbarHeight + padding,
         child: const AlertWidget(),
       ),
+      const DialogWidget(),
     ];
   }
 }
