@@ -16,4 +16,11 @@ class PaginatorController extends GetxController {
   void previous() => page.value--;
   void last() => page.value = (count.value / rows.value).floor();
 
+  int get from => page.value * rows.value;
+
+  int get to {
+    int last = page.value * rows.value + rows.value;
+    return last > count.value ? count.value : last;
+  }
+
 }

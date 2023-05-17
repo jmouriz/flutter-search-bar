@@ -22,7 +22,11 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
   @override
   void initState() {
     paginator.page.listen((value) => setState(() {}));
-    paginator.rows.listen((value) => setState(() {}));
+    paginator.rows.listen((value) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
     super.initState();
   }
 
@@ -75,6 +79,11 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
                               keyboardType: TextInputType.number,
                               textInputAction: TextInputAction.done,
                               initialValue: '${paginator.rows.value}',
+                              onChanged: (value) {
+                                if (value != '') {
+                                  paginator.rows.value = int.parse(value);
+                                }
+                              },
                               textAlign: TextAlign.end,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
@@ -139,13 +148,13 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
                         const Text(' from ',
                           style: TextStyle(color: Colors.white)
                         ),
-                        Text('${paginator.rows.value * paginator.page.value}',
+                        Text('${paginator.from}',
                           style: TextStyle(color: Colors.white)
                         ),
                         const Text(' to ',
                           style: TextStyle(color: Colors.white)
                         ),
-                        Text('${paginator.rows.value * (paginator.page.value + 1)}',
+                        Text('${paginator.to}',
                           style: TextStyle(color: Colors.white)
                         ),
                         const Text(' of ',

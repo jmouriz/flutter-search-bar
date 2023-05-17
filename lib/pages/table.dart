@@ -59,6 +59,8 @@ class _TablePageState extends State<TablePage> {
     application.title = 'Search Test';
     application.search = true;
 
+    paginator.rows.value = rows;
+
     searchBar.conditions.clear();
     searchBar.conditions.addAll({
       'date': ConditionModel(
