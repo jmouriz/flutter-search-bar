@@ -9,3 +9,4 @@ export 'package:toolbar/pages/bottom_sheet.dart';
 export 'package:toolbar/pages/alerts.dart';
 export 'package:toolbar/pages/dialog.dart';
 export 'package:toolbar/pages/paginator.dart';
+export 'package:toolbar/pages/desktop.dart';

@@ -8,5 +8,6 @@ export 'package:toolbar/widgets/bottom_sheet.dart';
 export 'package:toolbar/widgets/paginator.dart';
 export 'package:toolbar/widgets/link.dart';
 export 'package:toolbar/widgets/body.dart';
+export 'package:toolbar/widgets/desktop.dart';
 
 export 'package:toolbar/widgets/form/form.dart';

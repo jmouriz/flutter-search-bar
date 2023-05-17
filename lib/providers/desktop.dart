@@ -5,8 +5,8 @@ import 'package:toolbar/models/models.dart';
 import 'package:toolbar/pages/pages.dart';
 import 'package:toolbar/providers/providers.dart';
 
-class ItemsProvider {
-  static final ItemsProvider _singleton = ItemsProvider._internal();
+class DesktopProvider {
+  static final DesktopProvider _singleton = DesktopProvider._internal();
   static final ItemsModel _items = ItemsModel();
   /*
   static final ItemsModel _items = ItemsModel(items: [
@@ -73,7 +73,7 @@ class ItemsProvider {
     ItemModel(title: 'Another option', icon: Icons.star),
   ]);
   */
-  factory ItemsProvider() {
+  factory DesktopProvider() {
     final MutableIconController controller = MutableIconController();
     _items.clear();
     _items.addAll([
@@ -276,6 +276,6 @@ class ItemsProvider {
     ]);
     return _singleton;
   }
-  ItemsProvider._internal();
+  DesktopProvider._internal();
   ItemsModel get items => _items;
 }

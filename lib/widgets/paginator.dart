@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:toolbar/controllers/application.dart';
+import 'package:toolbar/controllers/controllers.dart';
 
 class PaginatorWidget extends StatefulWidget {
   const PaginatorWidget({
@@ -16,10 +16,13 @@ class PaginatorWidget extends StatefulWidget {
 
 class _PaginatorWidgetState extends State<PaginatorWidget> {
   final application = Get.put(ApplicationController());
+  final paginator = Get.put(PaginatorController());
   bool settings = false;
 
   @override
   void initState() {
+    paginator.page.listen((value) => setState(() {}));
+    paginator.rows.listen((value) => setState(() {}));
     super.initState();
   }
 
@@ -71,6 +74,7 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
                             child: TextFormField(
                               keyboardType: TextInputType.number,
                               textInputAction: TextInputAction.done,
+                              initialValue: '${paginator.rows.value}',
                               textAlign: TextAlign.end,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
@@ -113,10 +117,11 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 InkWell(
-                    onTap: () => debugPrint('first'),
-                    child: const Icon(Icons.first_page, color: Colors.white)),
+                  onTap: () => paginator.first(),
+                  child: const Icon(Icons.first_page, color: Colors.white)
+                ),
                 InkWell(
-                  onTap: () => debugPrint('previous'),
+                  onTap: () => paginator.previous(),
                   child: const Icon(Icons.chevron_left, color: Colors.white),
                 ),
                 Expanded(
@@ -125,27 +130,39 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
                       settings = !settings;
                       setState(() {});
                     },
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('100', style: TextStyle(color: Colors.white)),
-                        Text(' from ', style: TextStyle(color: Colors.white)),
-                        Text('1000', style: TextStyle(color: Colors.white)),
-                        Text(' to ', style: TextStyle(color: Colors.white)),
-                        Text('1100', style: TextStyle(color: Colors.white)),
-                        Text(' of ', style: TextStyle(color: Colors.white)),
-                        Text('100000',
+                        Text('${paginator.page.value}',
+                          style: TextStyle(color: Colors.white)
+                        ),
+                        const Text(' from ',
+                          style: TextStyle(color: Colors.white)
+                        ),
+                        Text('${paginator.rows.value * paginator.page.value}',
+                          style: TextStyle(color: Colors.white)
+                        ),
+                        const Text(' to ',
+                          style: TextStyle(color: Colors.white)
+                        ),
+                        Text('${paginator.rows.value * (paginator.page.value + 1)}',
+                          style: TextStyle(color: Colors.white)
+                        ),
+                        const Text(' of ',
+                          style: TextStyle(color: Colors.white)
+                        ),
+                        Text('${paginator.count.value}',
                             style: TextStyle(color: Colors.white)),
                       ],
                     ),
                   ),
                 ),
                 InkWell(
-                  onTap: () => debugPrint('next'),
+                  onTap: () => paginator.next(),
                   child: const Icon(Icons.chevron_right, color: Colors.white),
                 ),
                 InkWell(
-                  onTap: () => debugPrint('last'),
+                  onTap: () => paginator.last(),
                   child: const Icon(Icons.last_page, color: Colors.white),
                 ),
               ],

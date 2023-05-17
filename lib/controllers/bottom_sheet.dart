@@ -4,7 +4,7 @@ import 'package:toolbar/models/models.dart';
 
 class BottomSheetController extends GetxController {
   RxBool open = false.obs;
-  ItemsModel items = ItemsProvider().items;
+  ItemsModel items = MenuProvider().items;
 
   void close() => open.value = false;
 }

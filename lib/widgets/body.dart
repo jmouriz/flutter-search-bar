@@ -14,8 +14,9 @@ class BodyWidget extends StatefulWidget {
 }
 
 class _BodyWidgetState extends State<BodyWidget> {
-  final sidenav = Get.put(SidenavController());
   final application = Get.put(ApplicationController());
+  final sidenav = Get.put(SidenavController());
+  final desktop = Get.put(DesktopController());
   final bottomSheet = Get.put(BottomSheetController());
   //final query = MediaQueryData.fromView(WidgetsBinding.instance.window);
   Widget target = const SizedBox.shrink();
@@ -41,6 +42,12 @@ class _BodyWidgetState extends State<BodyWidget> {
         setState(() {});
       }
     });
+    desktop.selected.listen((value) {
+      target = desktop.items[value].target;
+      if (mounted) {
+        setState(() {});
+      }
+    });
     super.initState();
   }
 
@@ -58,7 +65,7 @@ class _BodyWidgetState extends State<BodyWidget> {
   Widget build(BuildContext context) {
     double width = query(context).size.shortestSide;
 
-    return Stack(children: width < 550 ? mobile : desktop);
+    return Stack(children: width < 550 ? mobile : wide);
   }
 
   List<Widget> get mobile {
@@ -105,7 +112,7 @@ class _BodyWidgetState extends State<BodyWidget> {
     ];
   }
 
-  List<Widget> get desktop {
+  List<Widget> get wide {
     return [
       SafeArea(
         child: Padding(

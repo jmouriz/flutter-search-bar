@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
+import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/providers/providers.dart';
 import 'package:toolbar/models/models.dart';
 import 'package:toolbar/types/types.dart';
+import 'package:toolbar/widgets/widgets.dart';
 
 class TablePage extends StatefulWidget {
   const TablePage({super.key});
@@ -18,10 +19,14 @@ class TablePage extends StatefulWidget {
 class _TablePageState extends State<TablePage> {
   final toolbar = Get.put(ToolbarController());
   final application = Get.put(ApplicationController());
+  final paginator = Get.put(PaginatorController());
   final searchBar = Get.put(SearchBarController());
 
   @override
   void initState() {
+    paginator.rows.listen((value) {
+      // TODO
+    });
     searchBar.version.listen((value) {
       debugPrint(jsonEncode(searchBar.getConditions()));
     });
@@ -45,7 +50,7 @@ class _TablePageState extends State<TablePage> {
         kToolbarHeight -
         2 * headingRowHeight;
     int rows = (safe / kMinInteractiveDimension).floor();
-    final DataTableSource data = DataSource();
+    // final DataTableSource data = DataSource();
 
     if (PlatformDetails().isMobile) {
       rows -= 2;
@@ -155,72 +160,87 @@ class _TablePageState extends State<TablePage> {
       });
     }
 
-    return Theme(
-      data: Theme.of(context).copyWith(
-        cardTheme: const CardTheme(elevation: 0)
-      ),
-      child: SingleChildScrollView(
-        child: PaginatedDataTable(
-          headingRowHeight: headingRowHeight,
-          source: data,
-          sortColumnIndex: sortColumnIndex,
-          sortAscending: sortAscending,
-          rowsPerPage: rows,
-          showCheckboxColumn: false,
-          columns: [
-            const DataColumn(label: Text('#')),
-            DataColumn(
-              label: const Text('User'),
-              onSort: (int columnIndex, bool ascending) => sort<String>((d) => d, columnIndex, ascending)
-            ),
-            DataColumn(
-              label: const Text('Date'),
-              onSort: (int columnIndex, bool ascending) => sort<String>((d) => d, columnIndex, ascending)
-            ),
-            const DataColumn(label: Text('Price')),
-            const DataColumn(label: Text('')),
-          ],
+    return PaginatorWidget(
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          cardTheme: const CardTheme(elevation: 0)
+        ),
+        child: SingleChildScrollView(
+          //child: PaginatedDataTable(
+            //rowsPerPage: rows,
+          child: DataTable(
+            headingRowHeight: headingRowHeight,
+            //source: data,
+            rows: List.generate(9, (index) => DataRow(cells: [
+              DataCell(Text('$index')),
+              DataCell(Text('user$index@domain.com')),
+              DataCell(Text('vendor$index@domain.com')),
+              DataCell(Text((Random().nextDouble() * 500).toStringAsFixed(2))),
+              DataCell(IconButton(
+                icon: const Icon(Icons.more_vert),
+                onPressed: () {
+                  debugPrint('Pressed on $index');
+                },
+              )),
+            ])),
+            sortColumnIndex: sortColumnIndex,
+            sortAscending: sortAscending,
+            showCheckboxColumn: false,
+            columns: [
+              const DataColumn(label: Text('#')),
+              DataColumn(
+                label: const Text('User'),
+                onSort: (int columnIndex, bool ascending) => sort<String>((d) => d, columnIndex, ascending)
+              ),
+              DataColumn(
+                label: const Text('Date'),
+                onSort: (int columnIndex, bool ascending) => sort<String>((d) => d, columnIndex, ascending)
+              ),
+              const DataColumn(label: Text('Price')),
+              const DataColumn(label: Text('')),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class DataSource extends DataTableSource {
-  final List<Map<String, dynamic>> _data = List.generate(
-    1000,
-    (index) => {
-      'id': index,
-      'user': 'user$index@domain.com',
-      'vendor': 'vendor$index@domain.com',
-      'price': Random().nextDouble() * 500,
-    }
-  );
+// class DataSource extends DataTableSource {
+//   final List<Map<String, dynamic>> _data = List.generate(
+//     1000,
+//     (index) => {
+//       'id': index,
+//       'user': 'user$index@domain.com',
+//       'vendor': 'vendor$index@domain.com',
+//       'price': Random().nextDouble() * 500,
+//     }
+//   );
 
-  @override
-  bool get isRowCountApproximate => false;
+//   @override
+//   bool get isRowCountApproximate => false;
 
-  @override
-  int get rowCount => _data.length;
+//   @override
+//   int get rowCount => _data.length;
 
-  @override
-  int get selectedRowCount => 0;
+//   @override
+//   int get selectedRowCount => 0;
 
-  @override
-  DataRow getRow(int index) {
-    return DataRow(cells: [
-      DataCell(Text(_data[index]['id'].toString())),
-      DataCell(Text(_data[index]['user'])),
-      DataCell(Text(_data[index]['vendor'])),
-      DataCell(Text(_data[index]['price'].toStringAsFixed(2))),
-      DataCell(
-        IconButton(
-          icon: const Icon(Icons.more_vert),
-          onPressed:() {
-            debugPrint('Pressed on $index');
-          },
-        )
-      ),
-    ]);
-  }
-}
+//   @override
+//   DataRow getRow(int index) {
+//     return DataRow(cells: [
+//       DataCell(Text(_data[index]['id'].toString())),
+//       DataCell(Text(_data[index]['user'])),
+//       DataCell(Text(_data[index]['vendor'])),
+//       DataCell(Text(_data[index]['price'].toStringAsFixed(2))),
+//       DataCell(
+//         IconButton(
+//           icon: const Icon(Icons.more_vert),
+//           onPressed:() {
+//             debugPrint('Pressed on $index');
+//           },
+//         )
+//       ),
+//     ]);
+//   }
+// }
