@@ -21,6 +21,7 @@ void main() async {
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
       titleBarStyle: TitleBarStyle.hidden,
+      title: 'Demo',
     );
     windowManager.waitUntilReadyToShow(options, () async {
       await windowManager.setAsFrameless();

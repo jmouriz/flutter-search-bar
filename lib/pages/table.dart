@@ -10,7 +10,7 @@ import 'package:toolbar/types/types.dart';
 import 'package:toolbar/widgets/widgets.dart';
 
 class TablePage extends StatefulWidget {
-  const TablePage({super.key});
+  const TablePage({ super.key });
 
   @override
   State<TablePage> createState() => _TablePageState();
@@ -24,8 +24,15 @@ class _TablePageState extends State<TablePage> {
 
   @override
   void initState() {
+    paginator.page.listen((value) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
     paginator.rows.listen((value) {
-      // TODO
+      if (mounted) {
+        setState(() {});
+      }
     });
     searchBar.version.listen((value) {
       debugPrint(jsonEncode(searchBar.getConditions()));
@@ -42,24 +49,29 @@ class _TablePageState extends State<TablePage> {
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context);
-    const headingRowHeight = 56.0;
-    final safe = media.size.height -
-        media.padding.top -
-        media.padding.bottom -
-        kToolbarHeight -
-        2 * headingRowHeight;
-    int rows = (safe / kMinInteractiveDimension).floor();
-    // final DataTableSource data = DataSource();
-
-    if (PlatformDetails().isMobile) {
-      rows -= 2;
-    }
-
     application.title = 'Search Test';
     application.search = true;
+    // final DataTableSource data = DataSource();
+    const double headingRowHeight = 56.0;
+    const double paginatorHeight = 42.0;
+    const double padding = 0.0;
+    int rows;
 
-    paginator.rows.value = rows;
+    if (paginator.touched) {
+      rows = paginator.rows.value;
+    } else {
+      final MediaQueryData media = MediaQuery.of(context);
+      final double height = media.size.height - media.padding.top -
+        kToolbarHeight - 2 * padding - headingRowHeight -
+        media.padding.bottom - paginatorHeight;
+      rows = (height / kMinInteractiveDimension).floor();
+
+      // if (PlatformDetails().isMobile) {
+      //   rows -= 2;
+      // }
+      paginator.rows.value = rows;
+      paginator.touched = true;
+    }
 
     searchBar.conditions.clear();
     searchBar.conditions.addAll({
@@ -163,28 +175,33 @@ class _TablePageState extends State<TablePage> {
     }
 
     return PaginatorWidget(
-      child: Theme(
-        data: Theme.of(context).copyWith(
-          cardTheme: const CardTheme(elevation: 0)
-        ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           //child: PaginatedDataTable(
             //rowsPerPage: rows,
           child: DataTable(
             headingRowHeight: headingRowHeight,
             //source: data,
-            rows: List.generate(9, (index) => DataRow(cells: [
-              DataCell(Text('$index')),
-              DataCell(Text('user$index@domain.com')),
-              DataCell(Text('vendor$index@domain.com')),
-              DataCell(Text((Random().nextDouble() * 500).toStringAsFixed(2))),
-              DataCell(IconButton(
-                icon: const Icon(Icons.more_vert),
-                onPressed: () {
-                  debugPrint('Pressed on $index');
-                },
-              )),
-            ])),
+            rows: List.generate(paginator.rows.value, (index) {
+              final int id =
+                index + (paginator.page.value - 1) * paginator.rows.value;
+              final String price =
+                (Random().nextDouble() * 500).toStringAsFixed(2);
+              return DataRow(cells: [
+                DataCell(Text('$id')),
+                DataCell(Text('user$id@domain.com')),
+                DataCell(Text('vendor$id@domain.com')),
+                DataCell(Text(price)),
+                DataCell(IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () {
+                    debugPrint('Pressed on $index');
+                  },
+                )),
+              ]);
+            }),
             sortColumnIndex: sortColumnIndex,
             sortAscending: sortAscending,
             showCheckboxColumn: false,
@@ -192,11 +209,13 @@ class _TablePageState extends State<TablePage> {
               const DataColumn(label: Text('#')),
               DataColumn(
                 label: const Text('User'),
-                onSort: (int columnIndex, bool ascending) => sort<String>((d) => d, columnIndex, ascending)
+                onSort: (int columnIndex, bool ascending) =>
+                  sort<String>((d) => d, columnIndex, ascending)
               ),
               DataColumn(
                 label: const Text('Date'),
-                onSort: (int columnIndex, bool ascending) => sort<String>((d) => d, columnIndex, ascending)
+                onSort: (int columnIndex, bool ascending) =>
+                  sort<String>((d) => d, columnIndex, ascending)
               ),
               const DataColumn(label: Text('Price')),
               const DataColumn(label: Text('')),

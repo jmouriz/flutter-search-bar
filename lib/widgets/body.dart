@@ -5,20 +5,21 @@ import 'package:toolbar/providers/providers.dart';
 import 'package:toolbar/widgets/notch/notch.dart';
 import 'package:toolbar/widgets/sidenav/placeholder.dart';
 import 'package:toolbar/widgets/widgets.dart';
+import 'package:window_manager/window_manager.dart';
 
 class BodyWidget extends StatefulWidget {
-  const BodyWidget({super.key});
+  const BodyWidget({ super.key });
 
   @override
   State<BodyWidget> createState() => _BodyWidgetState();
 }
 
-class _BodyWidgetState extends State<BodyWidget> {
+class _BodyWidgetState extends State<BodyWidget> with WindowListener {
   final application = Get.put(ApplicationController());
   final sidenav = Get.put(SidenavController());
   final desktop = Get.put(DesktopController());
   final bottomSheet = Get.put(BottomSheetController());
-  //final query = MediaQueryData.fromView(WidgetsBinding.instance.window);
+  // final query = MediaQueryData.fromView(WidgetsBinding.instance.window);
   Widget target = const SizedBox.shrink();
   static const padding = 10.0;
 
@@ -27,7 +28,13 @@ class _BodyWidgetState extends State<BodyWidget> {
   }
 
   @override
+  void onWindowResized() {
+    setState(() {});
+  }
+
+  @override
   void initState() {
+    windowManager.addListener(this);
     target = sidenav.items[sidenav.selected.value].target;
     if (PlatformDetails().isMobile) {
       sidenav.open.listen((value) => setState(() {}));
@@ -58,6 +65,7 @@ class _BodyWidgetState extends State<BodyWidget> {
       bottomSheet.dispose();
       application.dispose();
     }
+    windowManager.removeListener(this);
     super.dispose();
   }
 
@@ -123,21 +131,23 @@ class _BodyWidgetState extends State<BodyWidget> {
               Expanded(
                 child: Stack(children: [
                   SizedBox(
+                    width: double.infinity,
                     height: double.infinity,
                     //child: SingleChildScrollView(child: target),
                     child: target,
                   ),
                   SizedBox(
-                      height: double.infinity,
-                      width: double.infinity,
-                      child: GestureDetector(
-                        behavior: bottomSheet.open.value
-                          ? HitTestBehavior.opaque
-                          : HitTestBehavior.deferToChild,
-                        onTap: () {
-                          bottomSheet.close();
-                        },
-                      )),
+                    height: double.infinity,
+                    width: double.infinity,
+                    child: GestureDetector(
+                      behavior: bottomSheet.open.value
+                        ? HitTestBehavior.opaque
+                        : HitTestBehavior.deferToChild,
+                      onTap: () {
+                        bottomSheet.close();
+                      },
+                    )
+                  ),
                 ]),
               ),
             ],

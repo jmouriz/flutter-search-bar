@@ -54,7 +54,7 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
           } else {
             icon.animateToStart();
           }
-          setState(() {});
+          //setState(() {});
         });
       }
     });
