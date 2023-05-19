@@ -23,7 +23,6 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
 
   @override
   void initState() {
-    // focus.addListener(selection);
     paginator.page.listen((value) {
       if (mounted) {
         setState(() {});
@@ -46,17 +45,6 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
     super.dispose();
   }
 
-  // void selection() {
-  //   debugPrint('selection');
-  //   if (focus.hasFocus) {
-  //     debugPrint('focus');
-  //     controller.selection = TextSelection.collapsed(
-  //       offset: controller.text.length,
-  //     );
-  //     // setState(() {});
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     application.notch.value = true;
@@ -72,7 +60,6 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
               height: double.infinity,
               child: widget.child
             ),
-            // const Ruler(),
             Positioned(
               bottom: 8.0,
               left: 8.0,
@@ -122,15 +109,9 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
                               onChanged: (value) {
                                 if (value != '') {
                                   paginator.rows.value = int.parse(value);
-                                  // controller.value = TextEditingValue(
-                                  //   selection: TextSelection.collapsed(
-                                  //     offset: -value.length
-                                  //   )
-                                  // );
                                 }
                               },
                               textAlign: TextAlign.end,
-                              // textDirection: TextDirection.ltr,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
@@ -140,27 +121,10 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
                                 filled: true,
                                 prefixIcon: IconButton(
                                   onPressed: () {
-                                    // focus.unfocus();
                                     paginator.rows.value--;
-                                    // controller.text = '${paginator.rows.value}';
                                     final String value =
                                       '${paginator.rows.value}';
                                     controller.text = value;
-                                    // Future.delayed(Duration.zero, () {
-                                    // focus.requestFocus();
-                                    // });
-                                    // Future.delayed(Duration.zero, () {
-                                    //   controller.value = TextEditingValue(
-                                    //     text: value,
-                                    //     // selection: TextSelection.collapsed(
-                                    //     //  offset: value.length
-                                    //     selection: TextSelection(
-                                    //       baseOffset: 0, // value.length,
-                                    //       extentOffset: value.length
-                                    //     )
-                                    //   );
-                                    // });
-                                    // setState(() {});
                                   },
                                   icon: const Icon(Icons.remove)
                                 ),
@@ -177,8 +141,6 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
                                   vertical: 6.0,
                                   horizontal: 8.0
                                 )
-                                //hoverColor: Colors.grey.shade500,
-                                //focusColor: Colors.grey.shade500,
                               ),
                             ),
                           ),
@@ -206,13 +168,15 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                InkWell(
-                  onTap: () => paginator.first(),
-                  child: const Icon(Icons.first_page, color: Colors.white)
+                PaginatorButton(
+                  icon: Icons.first_page,
+                  enabled: paginator.canFirst,
+                  callback: paginator.first,
                 ),
-                InkWell(
-                  onTap: () => paginator.previous(),
-                  child: const Icon(Icons.chevron_left, color: Colors.white),
+                PaginatorButton(
+                  icon: Icons.chevron_left,
+                  enabled: paginator.canPrevious,
+                  callback: paginator.previous,
                 ),
                 Expanded(
                   child: InkWell(
@@ -220,40 +184,18 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
                       settings = !settings;
                       setState(() {});
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('${paginator.page.value}',
-                          style: const TextStyle(color: Colors.white)
-                        ),
-                        const Text(' from ',
-                          style: TextStyle(color: Colors.white)
-                        ),
-                        Text('${paginator.from}',
-                          style: const TextStyle(color: Colors.white)
-                        ),
-                        const Text(' to ',
-                          style: TextStyle(color: Colors.white)
-                        ),
-                        Text('${paginator.to}',
-                          style: const TextStyle(color: Colors.white)
-                        ),
-                        const Text(' of ',
-                          style: TextStyle(color: Colors.white)
-                        ),
-                        Text('${paginator.count.value}',
-                            style: const TextStyle(color: Colors.white)),
-                      ],
-                    ),
+                    child: PaginatorDetail(paginator: paginator),
                   ),
                 ),
-                InkWell(
-                  onTap: () => paginator.next(),
-                  child: const Icon(Icons.chevron_right, color: Colors.white),
+                PaginatorButton(
+                  icon: Icons.chevron_right,
+                  enabled: paginator.canNext,
+                  callback: paginator.next,
                 ),
-                InkWell(
-                  onTap: () => paginator.last(),
-                  child: const Icon(Icons.last_page, color: Colors.white),
+                PaginatorButton(
+                  icon: Icons.last_page,
+                  enabled: paginator.canLast,
+                  callback: paginator.last,
                 ),
               ],
             ),
@@ -264,91 +206,65 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
   }
 }
 
-class Ruler extends StatelessWidget {
-  const Ruler({
+class PaginatorDetail extends StatelessWidget {
+  const PaginatorDetail({
     super.key,
+    required this.paginator,
   });
+
+  final PaginatorController paginator;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: CustomPaint(
-        painter: Painter(context),
-      )
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('${paginator.page.value}',
+          style: const TextStyle(color: Colors.white)
+        ),
+        const Text(' from ',
+          style: TextStyle(color: Colors.white)
+        ),
+        Text('${paginator.from}',
+          style: const TextStyle(color: Colors.white)
+        ),
+        const Text(' to ',
+          style: TextStyle(color: Colors.white)
+        ),
+        Text('${paginator.to}',
+          style: const TextStyle(color: Colors.white)
+        ),
+        const Text(' of ',
+          style: TextStyle(color: Colors.white)
+        ),
+        Text('${paginator.count.value}',
+            style: const TextStyle(color: Colors.white)),
+      ],
     );
   }
 }
 
-class Painter extends CustomPainter {
-  Painter(BuildContext context) {
-    media = MediaQuery.of(context);
-  }
+class PaginatorButton extends StatelessWidget {
+  const PaginatorButton({
+    super.key,
+    required this.icon,
+    required this.callback,
+    this.enabled = true,
+  });
 
-  late MediaQueryData media;
-  static const double headingRowHeight = 56.0;
-  static const double paginatorHeight = 42.0;
-  static const double padding = 0.0;
-  // rows = (safe / kMinInteractiveDimension).floor();
+  final IconData icon;
+  final Function callback;
+  final bool enabled;
 
   @override
-  void paint(Canvas canvas, Size size) {
-    double y = 0;
-    int count = 0;
-    final red = Paint()
-      ..color = Colors.red
-      ..strokeWidth = 1;
-    final green = Paint()
-      ..color = Colors.green
-      ..strokeWidth = 1;
-    double height = media.size.height - media.padding.top - 2 * padding -
-      media.padding.bottom - kToolbarHeight - paginatorHeight;
-    canvas.drawLine(Offset.zero, Offset(media.size.width, height), red);
-    canvas.drawLine(Offset(0, height), Offset(media.size.width, 0), red);
-    canvas.drawLine(Offset.zero, Offset(size.width, size.height), red);
-    canvas.drawLine(Offset(0, size.height), Offset(size.width, 0), red);
-    canvas.drawLine(Offset(0, y), Offset(size.width, y), red);
-    y += padding;
-    canvas.drawLine(Offset(0, y), Offset(size.width, y), red);
-    y += headingRowHeight;
-    canvas.drawLine(Offset(0, y), Offset(size.width, y), red);
-    debugPrint('Filas: $count');
-      
-    while (true) {
-      y += kMinInteractiveDimension;
-      if (y > height) break;
-      canvas.drawLine(Offset(0, y), Offset(size.width, y), green);
-      count++;
-      final text = reference('$count: ${y}px', size.width);
-      text.paint(canvas, Offset(2, y - 10));
-      debugPrint('Filas: $count');
-    }
-    y = size.height;
-    canvas.drawLine(Offset(0, y), Offset(size.width, y), red);
-    height -= headingRowHeight;
-    final int rows = (height / kMinInteractiveDimension).floor();
-    debugPrint('Filas: $count ($rows)');
-  }
-
-  TextPainter reference(String text, double width) {
-    return TextPainter(
-      text: TextSpan(
-        text: text,
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 8,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout(
-      minWidth: 0,
-      maxWidth: width,
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: enabled ? () => callback() : null,
+      child: Icon(icon,
+        color: enabled
+          ? Colors.white
+          : Colors.grey.shade400
+      )
     );
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
   }
 }
