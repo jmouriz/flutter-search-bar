@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 
 class AlertWidget extends StatefulWidget {
-  const AlertWidget({super.key});
+  const AlertWidget({ super.key });
 
   @override
   State<AlertWidget> createState() => _AlertWidgetState();
@@ -11,6 +11,7 @@ class AlertWidget extends StatefulWidget {
 
 class _AlertWidgetState extends State<AlertWidget> {
   final alert = Get.put(AlertController());
+  final sidenav = Get.put(SidenavController());
 
   @override
   void initState() {
@@ -33,22 +34,30 @@ class _AlertWidgetState extends State<AlertWidget> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData query = MediaQuery.of(context);
-    final width = query.size.width;
+    double width = query.size.width;
     final bottom = query.padding.bottom;
     final EdgeInsets padding;
     final Color background;
     Color foreground = Colors.white;
     const value = 10.0;
+    double left = value;
+
+    if (sidenav.open.value) {
+      left += 240;
+      width -= 240;
+    }
 
     if (bottom > 0) {
-      padding = const EdgeInsets.only(
-        left: value,
+      padding = EdgeInsets.only(
+        left: left,
         right: value,
+        top: value,
       );
     } else {
-      padding = const EdgeInsets.only(
-        left: value,
+      padding = EdgeInsets.only(
+        left: left,
         right: value,
+        top: value,
         bottom: value,
       );
     }
@@ -123,20 +132,22 @@ class _AlertWidgetState extends State<AlertWidget> {
         ),
     );
 
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        double begin = animation.isCompleted ? -1.0 : 1.0;
-        if (alert.open.value) {
-          begin *= -1;
-        }
-        return SlideTransition(
-          position: Tween(begin: Offset(0.0, begin), end: Offset.zero)
-            .animate(animation),
-          child: child
-        );
-      },
-      child: alert.open.value ? container : null,
+    return ClipRect(
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          double begin = animation.isCompleted ? -1.0 : 1.0;
+          if (alert.open.value) {
+            begin *= -1;
+          }
+          return SlideTransition(
+            position: Tween(begin: Offset(0.0, begin), end: Offset.zero)
+              .animate(animation),
+            child: child,
+          );
+        },
+        child: alert.open.value ? container : null,
+      ),
     );
   }
 }

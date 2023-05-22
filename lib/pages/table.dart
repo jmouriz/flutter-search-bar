@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
-import 'package:toolbar/providers/providers.dart';
 import 'package:toolbar/models/models.dart';
 import 'package:toolbar/types/types.dart';
 import 'package:toolbar/widgets/widgets.dart';
@@ -21,6 +20,8 @@ class _TablePageState extends State<TablePage> {
   final application = Get.put(ApplicationController());
   final paginator = Get.put(PaginatorController());
   final searchBar = Get.put(SearchBarController());
+  int sortColumnIndex = 1;
+  bool sortAscending = false;
 
   @override
   void initState() {
@@ -56,6 +57,21 @@ class _TablePageState extends State<TablePage> {
     const double paginatorHeight = 42.0;
     const double padding = 0.0;
     int rows;
+
+    final List<Map<String, String>> data = List.generate(10000, (index) => {
+      'id': index.toString(),
+      'user': 'user$index@domain.com',
+      'vendor': 'vendor$index@domain.com',
+      'price': (Random().nextDouble() * 500).toStringAsFixed(2)
+    });
+
+    paginator.count.value = data.length;
+
+    List<Map<String, String>> getData() {
+      return [{
+        'id': '0'
+      }];
+    }
 
     if (paginator.touched) {
       rows = paginator.rows.value;
@@ -163,15 +179,16 @@ class _TablePageState extends State<TablePage> {
       // ),
     });
 
-    int sortColumnIndex = 1;
-    bool sortAscending = true;
-
-    void sort<T>(Comparable<T> Function(dynamic d) getField, int columnIndex, bool ascending) {
-      //_data._sort<T>(getField, ascending);
-      setState(() {
-        sortColumnIndex = columnIndex;
-        sortAscending = ascending;
-      });
+    void sort<T>(Comparable<T> Function(dynamic) field, int column, bool ascending) {
+      // debugPrint('sort');
+      // debugPrint('$ascending');
+      data.sort((a, b) => ascending
+        ? a['id']!.compareTo(b['id']!)
+        : b['id']!.compareTo(a['id']!));
+      debugPrint('$field');
+      sortColumnIndex = column;
+      sortAscending = ascending;
+      setState(() {});
     }
 
     return PaginatorWidget(
@@ -185,21 +202,18 @@ class _TablePageState extends State<TablePage> {
             headingRowHeight: headingRowHeight,
             //source: data,
             rows: List.generate(paginator.rows.value, (index) {
-              final int id =
+              final int row =
                 index + (paginator.page.value - 1) * paginator.rows.value;
-              final String price =
-                (Random().nextDouble() * 500).toStringAsFixed(2);
+              Map<String, String> item = data[row];
               return DataRow(cells: [
-                DataCell(Text('$id')),
-                DataCell(Text('user$id@domain.com')),
-                DataCell(Text('vendor$id@domain.com')),
-                DataCell(Text(price)),
+                DataCell(Text(item['id']!)),
+                DataCell(Text(item['user']!)),
+                DataCell(Text(item['vendor']!)),
+                DataCell(Text(item['price']!)),
                 DataCell(IconButton(
                   icon: const Icon(Icons.more_vert),
-                  onPressed: () {
-                    debugPrint('Pressed on $index');
-                  },
-                )),
+                  onPressed: () => debugPrint('Pressed on $index'),
+                ))
               ]);
             }),
             sortColumnIndex: sortColumnIndex,
@@ -210,12 +224,17 @@ class _TablePageState extends State<TablePage> {
               DataColumn(
                 label: const Text('User'),
                 onSort: (int columnIndex, bool ascending) =>
-                  sort<String>((d) => d, columnIndex, ascending)
+                  sort<String>((data) => data, columnIndex, ascending),
+                // onSort: (int columnIndex, bool ascending) {
+                //   debugPrint('click on sort');
+                //   debugPrint('$ascending');
+                //   sort<String>((d) => d, columnIndex, ascending);
+                // }
               ),
               DataColumn(
                 label: const Text('Date'),
                 onSort: (int columnIndex, bool ascending) =>
-                  sort<String>((d) => d, columnIndex, ascending)
+                  sort<String>((data) => data, columnIndex, ascending)
               ),
               const DataColumn(label: Text('Price')),
               const DataColumn(label: Text('')),

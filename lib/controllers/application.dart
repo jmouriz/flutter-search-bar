@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
+import 'package:toolbar/providers/providers.dart';
 
 class ApplicationController extends GetxController {
   final String version = '1.0';
@@ -9,12 +10,14 @@ class ApplicationController extends GetxController {
   final searchBar = Get.put(SearchBarController());
   final sidenav = Get.put(SidenavController());
   final bottomSheet = Get.put(BottomSheetController());
+  final dialog = Get.put(DialogController());
   RxBool notch = false.obs;
 
   ApplicationController() {
     sidenav.open.listen((value) {
       alert.close();
       bottomSheet.close();
+      dialog.close();
     });
     sidenav.selected.listen((value) {
       toolbar.reset();
@@ -23,7 +26,7 @@ class ApplicationController extends GetxController {
       notch.value = false;
     });
     appBar.searching.listen((value) {
-      if (value) sidenav.close();
+      if (value && !PlatformDetails().isDesktop) sidenav.close();
     });
   }
 

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 class PaginatorController extends GetxController {
   RxInt page = 1.obs;
   RxInt rows = 10.obs;
-  RxInt count = 1000.obs;
+  RxInt count = 0.obs;
   bool touched = false;
   
   // PaginatorController() {
@@ -19,8 +19,8 @@ class PaginatorController extends GetxController {
 
   bool get canFirst => page.value > 1;
   bool get canPrevious => page.value > 1;
-  bool get canNext => true;
-  bool get canLast => true;
+  bool get canNext => page.value < (count.value / rows.value).floor();
+  bool get canLast => page.value < (count.value / rows.value).floor();
 
   int get from => (page.value - 1) * rows.value;
 

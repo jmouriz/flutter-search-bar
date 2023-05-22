@@ -68,15 +68,24 @@ class _GenericInputWidgetState extends State<GenericInputWidget> {
       case Input.number:
         keyboard = TextInputType.number;
         break;
+      case Input.decimal:
+        keyboard = const TextInputType.numberWithOptions(decimal: true);
+        break;
       case Input.pin:
         keyboard = TextInputType.number;
         obscure = true;
         break;
       case Input.text:
+        keyboard = TextInputType.text;
+        break;
       case Input.date:
+        keyboard = TextInputType.datetime;
+        break;
       case Input.time:
+        keyboard = TextInputType.datetime;
+        break;
       case Input.check:
-      case Input.decimal:
+        // TODO
     }
     _focus.addListener(_touch);
   }
@@ -116,6 +125,30 @@ class _GenericInputWidgetState extends State<GenericInputWidget> {
             obscure = !obscure;
             setState(() {});
           }
+        ) : widget.type == Input.date || widget.type == Input.time ? IconButton(
+          icon: const Icon(Icons.calendar_month_outlined),
+          onPressed: () async {
+            DateTime? date = await showDatePicker(
+              locale: const Locale('es', 'AR'),
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+              lastDate: DateTime(2101),
+              builder: (BuildContext context, child) {
+                return Theme(
+                  data: Theme.of(context).copyWith(
+                    dialogTheme: DialogTheme(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                    ),
+                  ),
+                  child: child!,
+                );
+              },
+            );
+            debugPrint(date.toString());
+          },
         ) : null,
       ),
       onChanged: (value) {

@@ -166,7 +166,7 @@ class _BodyWidgetState extends State<BodyWidget> with WindowListener {
         child: BottomSheetWidget(),
       ),
       Positioned(
-        top: query(context).padding.top + kToolbarHeight + padding,
+        top: query(context).padding.top + kToolbarHeight,
         child: const AlertWidget(),
       ),
       const DialogWidget(),

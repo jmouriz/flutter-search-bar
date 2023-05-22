@@ -5,7 +5,7 @@ import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/widgets/widgets.dart';
 
 class BottomSheetWidget extends StatefulWidget {
-  const BottomSheetWidget({super.key});
+  const BottomSheetWidget({ super.key });
 
   @override
   State<BottomSheetWidget> createState() => _BottomSheetWidgetState();
@@ -13,6 +13,7 @@ class BottomSheetWidget extends StatefulWidget {
 
 class _BottomSheetWidgetState extends State<BottomSheetWidget> {
   final bottomSheet = Get.put(BottomSheetController());
+  final sidenav = Get.put(SidenavController());
 
   @override
   void initState() {
@@ -35,7 +36,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData query = MediaQuery.of(context);
-    final width = query.size.width;
+    double width = query.size.width;
     final bottom = query.padding.bottom;
     final screen = query.size.height -
       query.padding.top - bottom - kToolbarHeight;
@@ -43,19 +44,25 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
     int items = bottomSheet.items.length;
     double height = bottomSheet.items.length * kMinInteractiveDimension;
     const value = 10.0; // padding
+    double left = value;
+
+    if (sidenav.open.value) {
+      left += 240;
+      width -= 240;
+    }
 
     while (screen * 3/4 - height < 0) {
       height = (1 + --items) * kMinInteractiveDimension;
     }
 
     if (bottom > 0) {
-      padding = const EdgeInsets.only(
-        left: value,
+      padding = EdgeInsets.only(
+        left: left,
         right: value,
       );
     } else {
-      padding = const EdgeInsets.only(
-        left: value,
+      padding = EdgeInsets.only(
+        left: left,
         right: value,
         bottom: value,
       );
