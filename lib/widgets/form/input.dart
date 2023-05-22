@@ -10,12 +10,14 @@ class GenericInputWidget extends StatefulWidget {
     required this.name,
     required this.label,
     this.type = Input.text,
+    this.visible = true,
     this.next = false,
   });
 
   final String name;
   final String label;
   final Input type;
+  final bool visible;
   final bool next;
 
   @override
@@ -41,6 +43,7 @@ class _GenericInputWidgetState extends State<GenericInputWidget> {
   void initState() {
     super.initState();
     _field = FieldModel(name: widget.name);
+    _field.visible = widget.visible;
     form.fields.add(_field);
     switch (widget.type) {
       case Input.password:
@@ -48,7 +51,7 @@ class _GenericInputWidgetState extends State<GenericInputWidget> {
         obscure = true;
         break;
       case Input.email:
-        keyboard = TextInputType.visiblePassword;
+        keyboard = TextInputType.emailAddress;
         break;
       case Input.name:
         keyboard = TextInputType.name;
@@ -65,6 +68,10 @@ class _GenericInputWidgetState extends State<GenericInputWidget> {
       case Input.number:
         keyboard = TextInputType.number;
         break;
+      case Input.pin:
+        keyboard = TextInputType.number;
+        obscure = true;
+        break;
       case Input.text:
       case Input.date:
       case Input.time:
@@ -76,7 +83,7 @@ class _GenericInputWidgetState extends State<GenericInputWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return !widget.visible ? const SizedBox.shrink() : TextFormField(
       focusNode: _focus,
       keyboardType: keyboard,
       obscureText: obscure,

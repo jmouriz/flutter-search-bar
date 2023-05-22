@@ -3,10 +3,12 @@ import 'dart:collection';
 
 class FieldModel {
   bool valid;
+  bool visible;
   String name;
   String? value;
 
   FieldModel({
+    this.visible = true,
     this.valid = false,
     required this.name,
     this.value,
@@ -20,14 +22,14 @@ class FieldModel {
 
   @override
   String toString() {
-    if (valid) {
+    if (visible && valid) {
       return value!;
     }
     return '';
   }
 
   Map? toJson() {
-    if (valid) {
+    if (visible && valid) {
       return {
         'name': name,
         'value': value,

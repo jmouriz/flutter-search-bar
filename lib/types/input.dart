@@ -11,4 +11,5 @@ enum Input {
   decimal,
   phone,
   url,
+  pin,
 }

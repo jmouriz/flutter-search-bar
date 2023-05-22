@@ -8,7 +8,7 @@ class FormController extends GetxController {
   bool valid() {
     bool valid = true;
     for (var field in fields) {
-      if (!field.valid) {
+      if (field.visible && !field.valid) {
         valid = false;
         break;
       }

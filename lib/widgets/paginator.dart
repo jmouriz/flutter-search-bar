@@ -120,20 +120,20 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
                                 isDense: true,
                                 filled: true,
                                 prefixIcon: IconButton(
-                                  onPressed: () {
+                                  onPressed: paginator.rows.value > 1 ? () {
                                     paginator.rows.value--;
                                     final String value =
                                       '${paginator.rows.value}';
                                     controller.text = value;
-                                  },
+                                  } : null,
                                   icon: const Icon(Icons.remove)
                                 ),
                                 suffixIcon: IconButton(
-                                  onPressed: () {
+                                  onPressed: paginator.rows.value < 100 ? () {
                                     paginator.rows.value++;
                                     controller.text = '${paginator.rows.value}';
                                     setState(() {});
-                                  },
+                                  } : null,
                                   icon: const Icon(Icons.add)
                                 ),
                                 fillColor: Colors.grey.shade300,

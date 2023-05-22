@@ -1,11 +1,25 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
 import 'package:toolbar/types/types.dart';
 import 'package:toolbar/widgets/widgets.dart';
 
-class FormPage extends StatelessWidget {
-  const FormPage({super.key});
+class FormPage extends StatefulWidget {
+  const FormPage({ super.key });
+
+  @override
+  State<FormPage> createState() => _FormPageState();
+}
+
+class _FormPageState extends State<FormPage> {
+  late bool register;
+
+  @override
+  void initState() {
+    register = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +28,14 @@ class FormPage extends StatelessWidget {
     final form = Get.put(FormController());
 
     application.title = 'Form Test';
-    application.done = () => application.busy = true; // debugPrint('next');
+    application.done = () {
+      application.busy = true;
+      Future.delayed(const Duration(seconds: 2), () {
+        application.busy = false;
+        register = !register;
+        setState(() {});
+      });
+    };
     form.fields.clear();
 
     return Padding(
@@ -28,18 +49,38 @@ class FormPage extends StatelessWidget {
             application.valid = form.valid();
           });
         },
-        child: const Column(
+        child: Column(
           children: [
-            GenericInputWidget(
+            const GenericInputWidget(
               name: 'email',
               label: 'EMail',
               type: Input.email,
               next: true
             ),
-            GenericInputWidget(
+            ClipRect(
+              child: SlideInDown(
+                child: GenericInputWidget(
+                  name: 'code',
+                  label: 'Verification code',
+                  visible: register,
+                  type: Input.pin,
+                ),
+              ),
+            ),
+            const GenericInputWidget(
               name: 'password',
               label: 'Password',
               type: Input.password
+            ),
+            ClipRect(
+              child: SlideInDown(
+                child: GenericInputWidget(
+                  name: 'repeat-password',
+                  label: 'Password repeat',
+                  visible: register,
+                  type: Input.password
+                ),
+              ),
             ),
           ],
         ),
