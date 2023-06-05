@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mutable_icon/mutable_icon.dart';
 import 'package:toolbar/controllers/controllers.dart';
+import 'package:toolbar/providers/providers.dart';
 
 class ToolbarWidget extends StatefulWidget {
   const ToolbarWidget({ super.key });
@@ -76,7 +77,7 @@ class _ToolbarWidgetState extends State<ToolbarWidget> {
     return Container(
       height: kToolbarHeight,
       width: double.infinity,
-      color: Colors.blue,
+      color: ThemeProvider().primary,
       child: Row(
         children: [
           IconButton(

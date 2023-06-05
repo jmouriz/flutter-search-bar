@@ -13,5 +13,5 @@ class PlatformDetails {
   bool get isMobile =>
     defaultTargetPlatform == TargetPlatform.iOS ||
     defaultTargetPlatform == TargetPlatform.android;
-  bool get isWeb => !(isMobile && isDesktop);
+  bool get isWeb => !(isMobile || isDesktop);
 }

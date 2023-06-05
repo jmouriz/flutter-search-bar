@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:mutable_icon/mutable_icon.dart';
 import 'package:toolbar/models/models.dart';
+import 'package:toolbar/providers/providers.dart';
 
 class MenuWidget extends StatefulWidget {
   const MenuWidget({
@@ -42,8 +43,8 @@ class _MenuWidgetState extends State<MenuWidget>
           if (submenu) ListTile(
             leading: const Icon(Icons.chevron_left),
             title: const Text('Volver'),
-            iconColor: Colors.black,
-            textColor: Colors.black,
+            iconColor: ThemeProvider().foreground,
+            textColor: ThemeProvider().foreground,
             onTap: () {
               items = widget.items;
               submenu = false;
@@ -71,8 +72,8 @@ class _MenuWidgetState extends State<MenuWidget>
                     duration: const Duration(milliseconds: 300),
                     startIcon: Icons.expand_more,
                     endIcon: Icons.expand_less,
-                    startIconColor: Colors.black,
-                    endIconColor: Colors.black,
+                    startIconColor: ThemeProvider().foreground,
+                    endIconColor: ThemeProvider().foreground,
                     controller: item.controller,
                     initFrom: item.expanded ? InitFrom.end : InitFrom.start
                   );
@@ -96,15 +97,19 @@ class _MenuWidgetState extends State<MenuWidget>
                   // const Icon(Icons.arrow_drop_down)
                   horizontalTitleGap: 0,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  iconColor: Colors.black,
-                  textColor: Colors.black,
+                  iconColor: ThemeProvider().foreground,
+                  textColor: ThemeProvider().foreground,
                   title: Row(
                     children: [
                       Expanded(
                         child: Text(item.title),
                       ),
                       if (item.badge != null) Badge(
-                        label: Text('${item.badge}'),
+                        label: Text('${item.badge}',
+                          style: const TextStyle(
+                            color: Colors.white, // TODO
+                          ),
+                        ),
                       ),
                     ]
                   ),

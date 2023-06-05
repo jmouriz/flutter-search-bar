@@ -88,6 +88,11 @@ class MenuProvider {
         target: const TablePage()
       ),
       ItemModel(
+        title: 'Preferences',
+        icon: Icons.build,
+        target: const PreferencesPage()
+      ),
+      ItemModel(
         title: 'Paginator',
         icon: Icons.insert_page_break_outlined,
         target: const PaginatorPage()

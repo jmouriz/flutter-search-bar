@@ -76,11 +76,11 @@ class _TablePageState extends State<TablePage> {
     if (paginator.touched) {
       rows = paginator.rows.value;
     } else {
-      final MediaQueryData media = MediaQuery.of(context);
+      final MediaQueryData media = MediaQueryData.fromView(View.of(context));
       final double height = media.size.height - media.padding.top -
         kToolbarHeight - 2 * padding - headingRowHeight -
         media.padding.bottom - paginatorHeight;
-      rows = (height / kMinInteractiveDimension).floor();
+      rows = (height / kMinInteractiveDimension).round();
 
       // if (PlatformDetails().isMobile) {
       //   rows -= 2;
@@ -245,42 +245,3 @@ class _TablePageState extends State<TablePage> {
     );
   }
 }
-
-// class DataSource extends DataTableSource {
-//   final List<Map<String, dynamic>> _data = List.generate(
-//     1000,
-//     (index) => {
-//       'id': index,
-//       'user': 'user$index@domain.com',
-//       'vendor': 'vendor$index@domain.com',
-//       'price': Random().nextDouble() * 500,
-//     }
-//   );
-
-//   @override
-//   bool get isRowCountApproximate => false;
-
-//   @override
-//   int get rowCount => _data.length;
-
-//   @override
-//   int get selectedRowCount => 0;
-
-//   @override
-//   DataRow getRow(int index) {
-//     return DataRow(cells: [
-//       DataCell(Text(_data[index]['id'].toString())),
-//       DataCell(Text(_data[index]['user'])),
-//       DataCell(Text(_data[index]['vendor'])),
-//       DataCell(Text(_data[index]['price'].toStringAsFixed(2))),
-//       DataCell(
-//         IconButton(
-//           icon: const Icon(Icons.more_vert),
-//           onPressed:() {
-//             debugPrint('Pressed on $index');
-//           },
-//         )
-//       ),
-//     ]);
-//   }
-// }

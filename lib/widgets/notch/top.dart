@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toolbar/providers/providers.dart';
 
 class TopNotchWidget extends StatelessWidget {
   const TopNotchWidget({ super.key });
@@ -8,7 +9,7 @@ class TopNotchWidget extends StatelessWidget {
     return Container( // NotchWidget
       height: MediaQuery.of(context).padding.top,
       width: double.infinity,
-      color: Colors.blue.shade700,
+      color: ThemeProvider().primary.shade700,
     );
   }
 }

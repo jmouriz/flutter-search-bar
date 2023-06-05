@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:toolbar/controllers/controllers.dart';
+import 'package:toolbar/providers/providers.dart';
 
 class PaginatorWidget extends StatefulWidget {
   const PaginatorWidget({
@@ -161,7 +162,7 @@ class _PaginatorWidgetState extends State<PaginatorWidget> {
           ]),
         ),
         Container(
-          color: Colors.blue,
+          color: ThemeProvider().primary,
           height: 42.0,
           child: Padding(
             padding: const EdgeInsets.all(8.0),

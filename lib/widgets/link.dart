@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toolbar/providers/providers.dart';
 
 class LinkWidget extends StatelessWidget {
   const LinkWidget({
@@ -20,8 +21,8 @@ class LinkWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       child: Text(_label,
-        style: const TextStyle(
-          color: Colors.blue,
+        style: TextStyle(
+          color: ThemeProvider().primary,
           decoration: TextDecoration.underline,
         ),
       ),

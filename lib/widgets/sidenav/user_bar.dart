@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:toolbar/providers/providers.dart';
 
 class UserBar extends StatelessWidget {
   const UserBar({ super.key });
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       height: kToolbarHeight,
       width: double.infinity,
       child: Material(
-        color: Colors.blue,
+        color: ThemeProvider().primary,
         elevation: 2,
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
-                child: Icon(Icons.person)
+                backgroundColor: ThemeProvider().primary.shade700,
+                foregroundColor: Colors.white, // TODO
+                child: const Icon(Icons.person),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(left: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

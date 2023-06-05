@@ -10,3 +10,4 @@ export 'package:toolbar/pages/alerts.dart';
 export 'package:toolbar/pages/dialog.dart';
 export 'package:toolbar/pages/paginator.dart';
 export 'package:toolbar/pages/desktop.dart';
+export 'package:toolbar/pages/preferences.dart';

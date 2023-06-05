@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:toolbar/controllers/controllers.dart';
+import 'package:toolbar/providers/providers.dart';
 
 class InfoPage extends StatelessWidget {
-  const InfoPage({super.key});
+  const InfoPage({ super.key });
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,9 @@ class InfoPage extends StatelessWidget {
     return Markdown(
       styleSheet: MarkdownStyleSheet(
         textAlign: WrapAlignment.spaceBetween,
+        blockquote: TextStyle(
+          background: Paint()..color = ThemeProvider().card,
+        )
       ),
       shrinkWrap: true,
       onTapLink: (text, href, title) {

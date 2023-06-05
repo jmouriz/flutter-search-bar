@@ -19,7 +19,6 @@ class _BodyWidgetState extends State<BodyWidget> with WindowListener {
   final sidenav = Get.put(SidenavController());
   final desktop = Get.put(DesktopController());
   final bottomSheet = Get.put(BottomSheetController());
-  // final query = MediaQueryData.fromView(WidgetsBinding.instance.window);
   Widget target = const SizedBox.shrink();
   static const padding = 10.0;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toolbar/providers/providers.dart';
 
 class BottomNotchWidget extends StatelessWidget {
   const BottomNotchWidget({ super.key });
@@ -11,7 +12,7 @@ class BottomNotchWidget extends StatelessWidget {
       right: 0,
       child: Container( // NotchWidget
         height: MediaQuery.of(context).padding.bottom,
-        color: Colors.blue.shade700,
+        color: ThemeProvider().primary.shade700,
       ),
     );
   }

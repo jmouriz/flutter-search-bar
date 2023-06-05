@@ -56,7 +56,7 @@ class DekstopItem extends StatelessWidget {
     return Material(
       borderRadius: BorderRadius.circular(10),
       elevation: 2,
-      color: Colors.white,
+      color: ThemeProvider().card,
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
